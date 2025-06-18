@@ -1,0 +1,265 @@
+%%
+\section{Discussion \& Future Outlook}
+\label{sec:future-outlook}
+
+\subsection{Stateful Tracking}
+\paragraph{Shift to First-party Cookies \& Cookie Partitioning.}
+Nearly half of top most visited websites already use first-party tracking cookies (\autoref{subsubsec:stateful-tracking-cookies}).
+%
+This trend is expected to continue with further adoption of restrictions against third-party tracking, such as blocking third-party cookies, the proliferation of content-blocking tools, and the increased use of cookie partitioning.
+%
+Cookie partitioning is a method by which cookies are siloed or ``partitioned’’ according to the context in which they are set.
+%
+Unlike traditional third-party cookies that can be read across multiple domains, partitioned cookies restrict browser-based storage to remain strictly tied to each visited site.
+
+Web browsers such as Safari, Firefox, and more recently Chrome (through proposed Privacy Sandbox features) are increasingly adopting or experimenting with partitioned storage to prevent companies from easily linking user identities and behaviors across different sites.
+
+Nevertheless, partitioned cookies do not eliminate tracking entirely: advertisers, analytics providers, and other data collectors can still use first-party scripts embedded on individual domains to correlate activity, or rely on alternative techniques such as browser fingerprinting.
+%
+As such, partitioning is best viewed as one step in a need for broader set of privacy measures rather than a complete solution.
+
+%%
+\begin{opbox}
+In a world without cookies, what alternative forms of user tracking might emerge that could increase privacy risks, and how might these risks manifest---for example, in light of Chrome’s recent decision not to deprecate third-party cookies anymore?
+\end{opbox}
+
+%%%
+
+\paragraph{More Reliance on First-party Data \& Identity Graphs.}
+\label{sec:id-providers}
+As restrictions are being put in place on third-party cookies, websites now lean on a handful of major \emph{identity providers} (\eg{}, Google\,/\,YouTube, Facebook\,/\,Meta, Apple) and on in-house ``first-party’’ data to recognize returning users across sessions and devices.
+Single Sign-On (SSO) widgets, e-mail–based login links, and device-level IDs let these gatekeepers authenticate users while quietly attaching persistent, service-specific identifiers.
+% To close the attribution gap left by blocked cookies, providers encourage sites to ship server-to-server \emph{Conversions APIs} (e.g., Meta CAPI, Google Enhanced Conversions) that forward hashed e-mail addresses, phone numbers, or purchase metadata directly from the merchant’s backend—beyond the reach of client-side tracking controls.
+Many platforms further fuse this stream with offline sources such as loyalty-card swipes and point-of-sale data, constructing proprietary \emph{identity graphs} that map a single user (or household) to multiple browsers, mobile apps, and physical transactions.
+%
+While these integrations help publishers measure conversions and personalize content under tighter browser policies, they also concentrate behavioral insight in a few dominant actors and erode users’ ability to maintain separate or pseudonymous personas, raising fresh antitrust and privacy challenges~\cite{TargetedAdvertisingAutorite2025,khanAmazonsAntitrustParadox2017,munirGooglesChromeAntitrust2024}.
+
+\begin{opbox}
+How can we detect or infer opaque server-side data flows, reveal what information is shared server-side, and quantify its privacy risks?
+\end{opbox}
+
+%%
+
+\paragraph{Tracking Tags.}
+%%
+Past research \cite{Narayanan2017WebtapSpringer,englehardtOnlineTracking1millionsite2016,lernerInternetJonesRaiders2016, bekosHitchhikersGuideFacebook2023} has primarily studied the prevalence of tracking pixels.
+%
+However, detecting the mere presence of tracking pixels does not represent the accurate understanding of what kind of user behaviors are tracked by a website.
+%
+This is because two websites using a tag from a given pixel tracking company could configure it in a completely different way in order to tracking their website visitors differently.
+%
+For example, one website may simply share page location with the tracking server while another website may share cookies, email, page metadata as well as product details besides page location with the same tracking server.
+%
+Thus, it is crucial to detect all JavaScript-based tracking tags embedded on a website and study their tracking configurations to truly understand the tracking capabilities of such tags.
+%%
+\begin{opbox}
+How are tracking tags configured differently, and what impact do these differences have on tracking behavior?
+\end{opbox}
+
+%%$$
+
+\paragraph{Session Replays.}
+Session replay (or session recording) scripts capture detailed user interactions such as keystrokes, mouse movements, and scrolling behavior, along with the full content of the visited pages.
+%
+This allows website publishers to record and playback individual visits as if they are ``looking over [visitors’] shoulders'', for purposes including marketing, analytics, and troubleshooting~\cite{AdvancedUsageInspectlet}.
+%
+Prior research has shown that session replay scripts capture sensitive personal data such as passwords, credit card details and health-related information---sometimes inadvertently~\cite{acarNoBoundariesData2020,senolLeakyFormsStudy2022,yuGotSickTracked2022}.
+%
+While session replay vendors offer measures to redact sensitive information from recordings, these protections are often fragile and limited in effectiveness~\cite{englehardtNoBoundariesCredentials2018,acarNoBoundariesData2020}.
+
+%%%
+
+\subsection{Stateless Tracking}
+
+\paragraph{Paywalls to Force Users to Remain Recognizable.}
+To avoid the limitations imposed by the increasing use of ad blockers~\cite{koreacopyrightcommissionNumberAdblockUsers2024}, some websites have started using paywalls or registration walls that require user authentication (and often payment information) before granting access to site content.
+%
+This tactic essentially reverts control back to the site operator: users who decline to identify themselves may be barred from content, reducing users' motivation to block cookies or browse privately.
+%
+In turn, once a user is authenticated, the site can collect information through first-party mechanisms, circumventing restrictions on third-party tracking.
+%
+While paywalls may support legitimate revenue models---especially for publishers facing declining ad revenues---they also create an environment where anonymity is traded for access.
+%
+Users are required to remain ``recognizable’’, giving website operators a reliable identifier that persists across sessions and is more robust than third-party cookies.
+%
+Consequently, if paywalls become more pervasive, privacy-conscious users may find it increasingly difficult to avoid sharing personal data to access online content.
+
+%%
+\begin{opbox}
+How do publishers leverage paywalls to build and enrich first-party profiles, and how do they associate authenticated user identities with online behaviors (\eg{}, shopping) to enable targeted advertising within their own networks?
+\end{opbox}
+
+%%%
+\paragraph{Server to Server Data Sharing}
+%
+To circumvent ad blocking techniques, trackers have been shifting part of their tracking logic from client to server-side.
+%
+Instead of the client directly reporting its tracking data to different tracking servers, it is the role of a centralized third-party server to dispatch it to one or more partners~\cite{fisherImprovePerformanceSecurity2020}.
+%
+Companies like Google, Meta, Amazon, or TikTok have deployed so-called \textit{conversion APIs} that, along with \textit{data clean rooms}, allow marketers to perform joint analysis of their own data with the one held inside these walled gardens in a privacy-preserving way.
+%
+But, \textit{server-side tracking} is hard to audit as APIs and signals become undetectable by client-side mechanisms~\cite{fouadDevilDetailsDetection2024}, yet, an analysis of Meta's conversion API found it to be comparable to client-side tracking, albeit with more false matches when minimal data is shared~\cite{fraihiClientsideServersideTracking2024}.
+%%
+\begin{opbox}
+How does server-side tracking work, how can it be effectively detected and mitigated?
+\end{opbox}
+
+%%%
+
+\subsection{Browser Fingerprinting}
+
+\paragraph{Real World Impact.}
+Prior studies on fingerprinting diversity have been carried out on datasets with a wide range of sizes; 470k~\cite{eckersleyHowUniqueYour2010}, 118k~\cite{laperdrixBeautyBeastDiverting2016}, 2.07M~\cite{gomez-boixHidingCrowdAnalysis2018}, 7.2M~\cite{liWhoTouchedMy2020}, and 1.5B~\cite{wuHimManyFaces2023} fingerprints. As a result, conclusions are varied with smaller datasets having more unique fingerprints globally and largest ones presenting proportionally more unique values for specific collected attributes. Thus, it is still unclear if these findings about fingerprinting effectiveness hold across different audiences and device types~\cite{berkeHowUniqueWhose2025}. A recent work also suggests automated crawls to not accurately capture fingerprinting~\cite{muthu2025beyond}. Additionally, if existing work explain how fingerprinting can be leveraged for tracking and additional security, real purposes and integration within live systems are not well understood.
+
+\begin{opbox}
+What is the real impact of fingerprinting at scale, on vulnerable populations (\eg{}, minorities, children, marginalized), and paired with other techniques?
+\end{opbox}
+%%%
+
+\paragraph{Intent of Fingerprinting.}
+%%
+A main challenge with fingerprinting is that the same techniques can be used for very different purposes by websites; (re-)identify users across the web allowing cross-site tracking and targeted advertising, but also differentiating between a bot and human visitor trying to authenticate into an account. This duality in use has hindered attempts at only allowing fingerprinting for ``benign’’ purposes, \ie{}, to ensure security, while also preserving users' privacy.
+
+%%
+\begin{opbox}
+``Good’’  vs. ``Bad’’ fingerprinting: can we determine the intent of fingerprinting and block only tracking use cases while allowing benign ones? 
+\end{opbox}
+
+%%%
+
+\paragraph{Stronger Hardware Fingerprinting Signals.}
+With the growing restrictions on storing client-side identifiers, trackers increasingly turn to hardware-level attributes to identify and re-identify users without relying on persistent cookies or local storage.
+%
+Unlike conventional browser attributes (\eg{}, User-Agent, language settings, or installed fonts), hardware-oriented fingerprints (\eg{}, signals originating from CPU and RAM imperfections during manufacturing) are more difficult for users to spoof or reset, as they tap into the intrinsic properties of a device’s components~\cite{venugopalanFPRowhammerDRAMBasedDevice2024}.
+%
+Hardware fingerprinting allows trackers to maintain cross-session and cross-site tracking capabilities---potentially circumventing existing browsers' privacy measures and users' evasion strategies to block or partition stateful identifiers.
+
+\begin{opbox}
+How can we effectively detect and prevent low-level hardware-based fingerprinting?
+\end{opbox}
+
+%%%
+
+\paragraph{A Possible End to Browser Fingerprinting?}
+Browser fingerprinting is largely enabled by the information that browsers share to improve user experience. While this was necessary in the 1990s, as browsers functioned and could render the same HTML document differently, nowadays browsers all strictly adhere to the same set of standards and rendering is consistent across devices and platforms. Thus, one can ponder if it is still relevant for such information to be passed along and if getting rid of it would effectively end browser fingerprinting.
+%
+The main challenge is to understand the exact impact this removal would have on the web. On the client side, it appears that User-Agent could be retired with minimal website breakage~\cite{intumwayaseUARadarExploringImpact2023}, but it is unknown it this conclusion extends to other attributes or if specific browser changes are needed. On the server side, when Google launched their initiative to freeze the User-Agent~\cite{weissIntentDeprecateFreeze2020}, concerns were raised about negative impact for anti-fraud and programmatic advertising systems.
+%
+All in all, removing the data that fingerprints are based on would certainly improve users' privacy but more research is needed to understand if a path towards it is possible and what the cost of this transition would be.
+
+\begin{opbox}
+Can the web function if browsers limit collection of device- or user-specific information?
+\end{opbox}
+
+
+\subsection{Measurements \& Automation}
+
+As described in~\autoref{sec:measurement-methodologies}, a multitude of techniques---each with its own set of assumptions---are used to measure privacy issues on the web. This can pose accessibility and reproducibility challenges as expertise needs to be acquired and results variability controlled for, respectively.
+%
+Efforts such as HTTP Archive~\cite{httparchiveHTTPArchive} or WebREC~\cite{hantkeWebExecutionBundles2025}, that archive results of crawls and share publicly their datasets, may provide some technical solutions to make web measurements more accessible and reproducible in the future.
+%
+Regarding technical measurement gaps that remain to be filled, we observe the need for automated frameworks to monitor web APIs changes and detect emerging side-channel fingerprinting risks in browsers for timely mitigation. Additionally, we need to better understand the purposes and legitimate uses of different tracking technologies~\cite{tothContributionPublicConsultation2020}---on the model of CookieBlock~\cite{bollingerAutomatingCookieConsent2022} that mapped cookies to their purposes---to enable compliance measurement at scale. Specifically, this would be required to separate fingerprinting techniques used for tracking from other fingerprinting techniques used for bot detection. 
+
+\begin{opbox}
+What further steps are needed to foster accessible and reproducible measurements, and develop tools that automatically assign the purposes of trackers?
+\end{opbox}
+
+%%%
+
+\subsection{Regulatory Compliance}
+\label{sec:compliance}
+
+Various studies have measured the compliance of online services by comparing the privacy policy disclosures of services against their actual behaviors to uncover inconsistencies. Results show that many websites are not compliant with their own privacy policies~\cite{libertAutomatedApproachAuditing2018,ouViopolicyDetectorAutomatedApproach2022}, or do not respect or register users’ cookie consent correctly~\cite{carpinetoAutomaticAssessmentWebsite2016,sanchezrolaCanIOptOutYet2019,matteCookieBannersRespect2020,mehrnezhadCrossPlatformEvaluationPrivacy2020,bouhoulaAutomatedLargeScaleAnalysis2024,vannortwickSettingBarLow2022,birrellSoKTechnicalImplementation2024,Kanc-etal-25-PETs}. 
+
+
+\begin{opbox}
+While the existing focus is on privacy policy and consent, other types of compliance (\eg{}, EU-US data transfer laws) is understudied.
+\end{opbox}
+
+%%
+Multiple reasons can explain such low compliance rates. First, a \textit{lack of incentive or knowledge of website publishers} who do not consider privacy compliance---except when legal requirements or respective guidelines exist~\cite{utzPrivacyRarelyConsidered2023,Stov-etal-23-PETs}---when integrating third-parties that may use dark patterns~\cite{tothDarkPatternsManipulation2022,grayDarkPatternsLegal2021}. Second, the \textit{enforcement power and legally-binding decisions of the regulators} who may not have the required manpower, financial resources, and dedicated technical departments~\cite{edpbContributionEDPBReport2023} to investigate that websites are compliant not just ``at the surface''~\cite{kyiInvestigatingDeceptiveDesign2023}. Additionally, the usable privacy community is not always aware of regulatory requirements and does not always study designs and UI dark patterns that are meaningful for regulators~\cite{Bielova2024-zr}. 
+Finally, \textit{third-parties escape legal responsibility} as current laws often place the main compliance obligations on website owners~\cite{santosConsentManagementPlatforms2021} even though  studies identified problems around default configurations of third-party services~\cite{Koch-etal-25-PETs,Rodr-etal-25-PETs}.
+
+\begin{opbox}
+How to reconcile technical compliance, regulatory requirements, 
+website publishers' incentives, third-party services responsibilities 
+and users’ expectations?
+How to show the viability of browser-based consent mechanisms, ensure their legal robustness, and enable effective enforcement?
+\end{opbox}
+
+%%%
+
+In addition to the challenges previously mentioned, online data and markets have been increasingly captured over the years by a few dominant companies such as Amazon, Apple, Facebook, Google, and Microsoft due to a lack of anti-competitive actions~\cite{TargetedAdvertisingAutorite2025}. 
+This market capture allows these actors to dictate terms when it comes to cost extracted from customer. While this cost is normally considered only in financial terms, recent research has suggested that consumers also pay a higher price in the form of data relinquished to and processed by these dominant companies ~\cite{khanAmazonsAntitrustParadox2017,munirGooglesChromeAntitrust2024}.
+
+
+\subsection{Evolving role of browsers}
+
+\paragraph{In Preventing Tracking.}
+While most modern browsers ship tracking countermeasures, passive fingerprinting (relying on IP address, HTTP and Accept headers, User-Agent, \etc{}) remains a stealthy tracking mechanism~\cite{mayerThirdPartyWebTracking2012,dotyMitigatingBrowserFingerprinting2019,fraihiClientsideServersideTracking2024}.
+%%
+In order to curb it, browser vendors reduced the information available in the User-Agent header~\cite{davisReleaseNotesSafari2017,kimura1609304ReduceGeckos2020,googleWhatUserAgentReduction2024}.
+%
+Concurrently, Chrome developers introduced an ungated JavaScript API~\cite{mdnUserAgentClientHints2024,taylorUserAgentClientHints2024a} and HTTP-based opt-in method to expose the now redacted by default features~\cite{mdnHTTPClientHints2024}. However, research revealed that advertising and analytics scripts commonly access and exfiltrate these high-entropy user agent details~\cite{intumwayaseUARadarExploringImpact2023,senolUnveilingImpactUserAgent2023}.
+%%
+In 2021, Apple released Private Relay, a paid iCloud feature that routes web traffic through two intermediate servers~\cite{appleICloudPrivateRelay2021}. Researchers found it to be vulnerable to flow correlation and website fingerprinting attacks~\cite{zohaibInvestigatingTrafficAnalysis2023}.
+%
+As part of the Privacy Sandbox project, Google proposed---but did not yet implement---a similar feature called IP Protection, where only traffic to third-party origins is routed through two hops~\cite{googleIPProtectionPrivacy2024}.
+
+
+%%
+\begin{opbox}
+What adaptive measurement, monitoring and disclosure methods can be developed to stay ahead of, and ultimately neutralize, the next-generation tracking tactics?
+\end{opbox}
+
+%%%
+
+\paragraph{In Privacy Preserving Advertising.}
+%
+The inherent tension between personalized advertising and user privacy has motivated various academic proposals aimed at balancing these competing interests~\cite{toubianaAdnosticPrivacyPreserving2010,guhaPrivadPracticalPrivacy2011,backesObliviAdProvablySecure2012}. Similarly, browsers have frequently struggled to reconcile tracking protection with advertisers' interests. Mozilla’s 2013 attempt to block third-party cookies by default was strongly opposed by advertisers~\cite{ribeiroMozillaPostponesDefault2013}, a reaction echoed when Apple implemented Safari's Intelligent Tracking Prevention (ITP) in 2017~\cite{stattAdvertisersAreFurious2017}. Google's subsequent decision in 2019 to integrate tracking protection into Chrome explicitly acknowledged the need to maintain advertiser support~\cite{schuhBuildingMorePrivate2019,chromeBuildingMorePrivate2020}.
+%
+As a result, browsers have increasingly adopted strategies for privacy-preserving advertising technologies. Mozilla experimented and demonstrated viability of on-device personalization~\cite{mozillaProvidingValuablePlatform2015}. Google and Apple similarly complemented their tracking protections with new APIs supporting advertisers. By 2024, all major browser vendors actively contribute to advertising API development within the W3C’s Private Ad Technology Community Group (PATCG), chartered in 2021~\cite{hercherW3CAdPrivacy2022}. These APIs generally fall into two categories:
+
+\parait{Ad measurement.} These APIs help advertisers measure ad effectiveness by tracking user conversions without detailed individual profiling. All major browsers now support ad measurement APIs, notably Google's Privacy Sandbox, which includes the Private Aggregation API for privacy-preserving conversion tracking through aggregated data.
+
+\parait{Ad targeting.} These APIs aim to select relevant ads based on inferred user interests, typically derived from browsing history. However, unlike measurement APIs, adoption of targeting solutions remains uneven. Google's Privacy Sandbox prominently features two key targeting mechanisms: (1) Topics API (successor to Google's FLoC proposal) infers user interests from browsing history mapped to broad interest categories, avoiding persistent profiles. (2) Protected Audience API (formerly FLEDGE) enables client-side ad auctions within browsers, facilitating privacy-friendly real-time bidding without central tracking.
+
+
+While these proposals promise enhanced privacy without compromising advertiser utility, evaluations of Google's FLoC (now deprecated)\cite{rescorlaTechnicalCommentsFLoC2021,berkePrivacyLimitationsInterestbased2022,turatiLocalitySensitiveHashingDoes2023}, Topics\cite{thomsonPrivacyAnalysisGoogles2023,jhaRobustnessTopicsAPI2023,beuginInterestdisclosingMechanismsAdvertising2024,beuginPublicReproducibleAssessment2024,alvimPrivacyUtilityTradeoffTopics2024}, Protected Audience (FLEDGE)\cite{thomsonProtectedAudiencePrivacy2024,longEvaluatingGooglesProtected2024,calderonioFledgingWillContinue2024}, User-Agent APIs\cite{senolUnveilingImpactUserAgent2023,intumwayaseUARadarExploringImpact2023}, and Apple's Private Click Measurement~\cite{thomsonAnalysisApplesPrivate2022} reveal significant privacy limitations. Issues include insufficient anonymity guarantees, new fingerprinting vectors, flawed implementations, and potential fragmentation due to inconsistent browser support~\cite{munirGooglesChromeAntitrust2024}.
+
+\begin{opbox}
+What novel problems and opportunities do privacy-preserving advertising technologies bring with respect to security, privacy, and autonomy?
+\end{opbox}
+
+
+
+\subsection{Tracking in Other Ecosystems}
+While our focus was on web tracking, similar tracking mechanisms also exist in mobile apps and IoT ecosystems---using often a richer set of sensor information available via operating system APIs rather than web APIs. Some key differences and similarities exist: where web tracking relies on cookies, app tracking has access to device-level identifiers such as the the Ad ID (known as ``IDFA'' on iOS, ``AAID'' on Android, or ``TIFA'' on Samsung Smart TVs), additionally vendors may make different design choices across ecosystems. For instance, while Apple's Safari blocks third-party cookies by default, iOS instead asks permission  to give access to device-level identifier. In the meantime, Google's Chrome and Android-based operating systems do not block by default third-party cookies or device-level identifiers, respectively. 
+
+%%
+\begin{opbox}
+As web and app platform capabilities and policies evolve differently, how do tracking mechanisms and protections diverge across the ecosystems? 
+\end{opbox}
+
+%%
+\begin{opbox}
+If cross-device tracking is understood theoretically, characterizing its occurrence in practice and defending against it requires more systematic efforts.
+\end{opbox}
+
+%%%
+
+\subsection{Generative AI}
+%%
+Generative AI models are already being deployed to improve ad targeting~\cite{adv-week-genai-targeting} and contextual advertising~\cite{cognitiv2024cookieless}.
+%
+Moreover, while generative AI deployed in web browsers~\cite{google2024chromeai} or as browser assistants~\cite{vekaria2025big} may enable novel capabilities, it may also amplify the harms (\eg{}, privacy risks) or create new attack surfaces~\cite{mcp-security}. 
+%
+We believe browsers have a key role to play here to ensure that security and privacy are key considerations as AI is integrated into web browsers.
+
+
+\begin{opbox}
+How will browsers manage the tension between the responsible use of generative AI and its potential for amplifying personalization, and thereby privacy risks?
+\end{opbox}
+
+
+

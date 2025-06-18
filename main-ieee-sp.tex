@@ -1,0 +1,222 @@
+\documentclass[conference,compsoc]{IEEEtran}
+\pdfcompresslevel=0
+\pdfobjcompresslevel=0
+
+\ifCLASSOPTIONcompsoc
+  % IEEE Computer Society needs nocompress option
+  % requires cite.sty v4.0 or later (November 2003)
+  \usepackage[nocompress]{cite}
+\else
+  % normal IEEE
+  \usepackage{cite}
+\fi
+
+\input{imports}
+
+% correct bad hyphenation here
+% \hyphenation{op-tical net-works semi-conduc-tor}
+
+% Squeeze space on paragraphs
+\renewcommand{\paragraph}[1]{\vspace{0.1in}\noindent\textbf{#1}}
+
+
+\begin{document}
+%
+% paper title
+% Titles are generally capitalized except for words such as a, an, and, as,
+% at, but, by, for, in, nor, of, on, or, the, to and up, which are usually
+% not capitalized unless they are the first or last word of the title.
+% Linebreaks \\ can be used within to get better formatting as desired.
+% Do not put math or special symbols in the title.
+\title{\LARGE{\textbf{SoK: Advances and Open Problems in Web Tracking}}}
+
+
+
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+\ifanonymous
+\author{\em Anonymous Authors}
+\else
+\author{
+    \IEEEauthorblockN{
+        Yash Vekaria~\ucDavis{}, 
+        Yohan Beugin~\uwMadison{}, 
+        Shaoor Munir~\ucDavis{}, 
+        Gunes Acar~\radboud{}, 
+        Nataliia Bielova~\inria{}, \\
+        Steven Englehardt~\independent{}, 
+        Umar Iqbal~\washU{},
+        Alexandros Kapravelos~\ncstate{},   
+        Pierre Laperdrix~\cnrs{},
+        Nick Nikiforakis~\stonybrook{},\\ 
+        Jason Polakis~\uic{},
+        Franziska Roesner~\uwashington{},
+        Zubair Shafiq~\ucDavis{}, 
+        Sebastian Zimmeck~\wu{}
+    }
+    \IEEEauthorblockA{\ucDavis{}~University of California, Davis, USA}
+    \IEEEauthorblockA{\uwMadison{}~University of Wisconsin–Madison, USA}
+    \IEEEauthorblockA{\radboud{}~Radboud University, Netherlands}
+    \IEEEauthorblockA{\inria{}~Inria Centre at Université Côte d’Azur, France}
+    \IEEEauthorblockA{\independent{}~Independent Researcher, USA}
+    \IEEEauthorblockA{\washU{}~Washington University in St. Louis, USA}
+    \IEEEauthorblockA{\ncstate{}~North Carolina State University, USA}
+    \IEEEauthorblockA{\cnrs{}~Centre National de la Recherche Scientifique (CNRS), France}
+    \IEEEauthorblockA{\stonybrook{}~Stony Brook University, USA}
+    \IEEEauthorblockA{\uic{}~University of Illinois Chicago, USA}
+    \IEEEauthorblockA{\uwashington{}~University of Washington, USA}
+    \IEEEauthorblockA{\wu{}~Wesleyan University, USA}
+}
+% \author{
+%     \IEEEauthorblockN{
+%         Yash Vekaria\IEEEauthorrefmark{1}, 
+%         Yohan Beugin\IEEEauthorrefmark{2}, 
+%         Shaoor Munir\IEEEauthorrefmark{1}, \\
+%         Gunes Acar\IEEEauthorrefmark{3}, 
+%         Nataliia Bielova\IEEEauthorrefmark{4}, 
+%         Steven Englehardt\IEEEauthorrefmark{5}, 
+%         Umar Iqbal\IEEEauthorrefmark{6}, 
+%         Alexandros Kapravelos\IEEEauthorrefmark{7}, 
+%         Pierre Laperdrix\IEEEauthorrefmark{8}, \\ 
+%         Nick Nikiforakis\IEEEauthorrefmark{9}, 
+%         Jason Polakis\IEEEauthorrefmark{10}, 
+%         Franziska Roesner\IEEEauthorrefmark{11}, 
+%         Zubair Shafiq\IEEEauthorrefmark{1}, 
+%         Sebastian Zimmeck\IEEEauthorrefmark{13}
+%     }
+%     \IEEEauthorblockA{\IEEEauthorrefmark{1}University of California, Davis, USA}
+%     \IEEEauthorblockA{\IEEEauthorrefmark{2}University of Wisconsin–Madison, USA}
+%     \IEEEauthorblockA{\IEEEauthorrefmark{3}Radboud University, Netherlands}
+%     \IEEEauthorblockA{\IEEEauthorrefmark{4}Inria, France}
+%     \IEEEauthorblockA{\IEEEauthorrefmark{5}Independent Researcher, USA}
+%     \IEEEauthorblockA{\IEEEauthorrefmark{6}Washington University in St. Louis, USA}
+%     \IEEEauthorblockA{\IEEEauthorrefmark{7}North Carolina State University, USA}
+%     \IEEEauthorblockA{\IEEEauthorrefmark{8}Centre National de la Recherche Scientifique (CNRS), France}
+%     \IEEEauthorblockA{\IEEEauthorrefmark{9}Stony Brook University, USA}
+%     \IEEEauthorblockA{\IEEEauthorrefmark{10}University of Illinois Chicago, USA}
+%     \IEEEauthorblockA{\IEEEauthorrefmark{11}University of Washington, USA}
+%     \IEEEauthorblockA{\IEEEauthorrefmark{13}Wesleyan University, USA}
+% }
+
+\fi
+
+% make the title area
+\maketitle
+
+
+% no keywords
+
+%-------------------------------------------------------------------------------
+\input{ieee-sp/0-abstract}
+%-------------------------------------------------------------------------------
+
+
+
+
+%-------------------------------------------------------------------------------
+\input{ieee-sp/1-introduction}
+%-------------------------------------------------------------------------------
+
+
+
+
+%-------------------------------------------------------------------------------
+\input{ieee-sp/2-methodology}
+%-------------------------------------------------------------------------------
+
+
+
+
+%-------------------------------------------------------------------------------
+\input{ieee-sp/3-background}
+%-------------------------------------------------------------------------------
+
+
+
+%-------------------------------------------------------------------------------
+\input{ieee-sp/4-threat-model}
+%-------------------------------------------------------------------------------
+
+
+
+
+
+%-------------------------------------------------------------------------------
+\input{ieee-sp/5-stateful-tracking}
+\input{ieee-sp/6-stateless-tracking}
+\input{ieee-sp/7-cross-device-tracking}
+\input{ieee-sp/8-measurement-techniques}
+%-------------------------------------------------------------------------------
+
+
+
+%-------------------------------------------------------------------------------
+\input{ieee-sp/9-privacy-regulation}
+%-------------------------------------------------------------------------------
+
+
+
+
+%-------------------------------------------------------------------------------
+\input{ieee-sp/10-future-outlook}
+%-------------------------------------------------------------------------------
+
+
+
+
+%-------------------------------------------------------------------------------
+\input{ieee-sp/11-conclusion}
+%-------------------------------------------------------------------------------
+
+\begin{comment}
+% use section* for acknowledgment
+\ifCLASSOPTIONcompsoc
+  % The Computer Society usually uses the plural form
+  \section*{Acknowledgments}
+\else
+  % regular IEEE prefers the singular form
+  \section*{Acknowledgment}
+\fi
+\ifanonymous
+Anonymized for review.
+\else
+
+\input{acknowledgment}
+
+\fi
+\end{comment}
+
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+
+
+\newpage
+
+% \bibliographystyle{IEEEtran}
+% \bibliography{references}
+
+% trick to reduce the size of the bibliography (capped at 5 pages)
+\let\oldbibliography\thebibliography
+\renewcommand{\thebibliography}[1]{%
+  \oldbibliography{#1}%
+  \setlength{\itemsep}{0.4pt}%
+}
+
+\bibliographystyle{./short-bib}
+{
+\newcommand\biburl[1]{{\scriptsize \url{#1}}}
+\newcommand\compressabit[1]{{\fontdimen4\font=0.2em #1}}
+\newcommand\compressmore[1]{{\fontdimen4\font=0.4em #1}}
+\footnotesize
+\bibliography{references}
+}
+
+\end{document}
+

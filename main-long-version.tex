@@ -1,0 +1,218 @@
+\documentclass[conference,compsoc]{IEEEtran}
+\pdfcompresslevel=0
+\pdfobjcompresslevel=0
+
+
+\IEEEoverridecommandlockouts %%% Added for footnote in title
+
+\ifCLASSOPTIONcompsoc
+  % IEEE Computer Society needs nocompress option
+  % requires cite.sty v4.0 or later (November 2003)
+  \usepackage[nocompress]{cite}
+\else
+  % normal IEEE
+  \usepackage{cite}
+\fi
+
+\input{imports}
+\usepackage{xurl} % break long urls
+
+
+\begin{comment}
+%% Edit format and spacing around section headings with the titlesec package
+\newcommand{\subparagraph}{}%IEEEtran.cls does not define subparagraph so we need this before importing titlesec
+
+\usepackage{titlesec}
+
+\setcounter{secnumdepth}{3}%to not have counter showing for paragraph and subparagraph
+
+%set with titlesec baselineskip before and after subsubsection title
+
+\titlespacing{\subsubsection}{\parindent}{1\baselineskip plus 0.25\baselineskip minus 0.25\baselineskip}{1\baselineskip plus 0.25\baselineskip minus 0.25\baselineskip}
+
+%set with titlesec paragraph to be bolded and with baselinskip before/after
+\titleformat{\paragraph}[hang]{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+
+\titlespacing{\paragraph}{0pt}{1\baselineskip plus 0.25\baselineskip minus 0.25\baselineskip}{1\baselineskip plus 0.25\baselineskip minus 0.25\baselineskip}
+
+%set with titlesec subparagraph to be bolded and in italic, without spacing after
+\titleformat{\subparagraph}[runin]{\normalfont\normalsize\bfseries\itshape}{\thesubparagraph}{1em}{}
+
+\titlespacing{\subparagraph}{0pt}{0ex plus 0.1ex minus 0.1ex}{1em}
+\end{comment}
+
+
+
+% correct bad hyphenation here
+% \hyphenation{op-tical net-works semi-conduc-tor}
+
+% Squeeze space on paragraphs
+\renewcommand{\paragraph}[1]{\vspace{0.1in}\noindent\textbf{#1}}
+
+\anonymousfalse{}
+
+
+\IfFileExists{version.tex}%
+  {\input{version.tex}}
+  {}
+
+\begin{document}
+%
+% paper title
+% Titles are generally capitalized except for words such as a, an, and, as,
+% at, but, by, for, in, nor, of, on, or, the, to and up, which are usually
+% not capitalized unless they are the first or last word of the title.
+% Linebreaks \\ can be used within to get better formatting as desired.
+% Do not put math or special symbols in the title.
+
+%%this is to automatically add the git commit info as "(release git commit) when built by GitHub Actions
+\IfFileExists{version.tex}%
+  {\title{\LARGE{\textbf{SoK: Advances and Open Problems in Web Tracking}}\thanks{\textbf{\href{https://github.com/privacysandstorm/sok-advances-open-problems-web-tracking}{This is the extended live version of the SoK built on \today{} (release \version{}).}}}}}
+  {\title{\LARGE{\textbf{SoK: Advances and Open Problems in Web Tracking}}\thanks{\textbf{\href{https://github.com/privacysandstorm/sok-advances-open-problems-web-tracking}{This is the extended live version of the SoK built on \today{}.}}}}}
+
+
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+\ifanonymous
+\author{\em Anonymous Authors}
+\else
+\author{
+    \IEEEauthorblockN{
+        Yash Vekaria~\ucDavis{}, 
+        Yohan Beugin~\uwMadison{}, 
+        Shaoor Munir~\ucDavis{}, 
+        Gunes Acar~\radboud{}, 
+        Nataliia Bielova~\inria{}, \\
+        Steven Englehardt~\independent{}, 
+        Umar Iqbal~\washU{},
+        Alexandros Kapravelos~\ncstate{},   
+        Pierre Laperdrix~\cnrs{},
+        Nick Nikiforakis~\stonybrook{},\\ 
+        Jason Polakis~\uic{},
+        Franziska Roesner~\uwashington{},
+        Zubair Shafiq~\ucDavis{}, 
+        Sebastian Zimmeck~\wu{}
+    }
+    \IEEEauthorblockA{\ucDavis{}~University of California, Davis, USA}
+    \IEEEauthorblockA{\uwMadison{}~University of Wisconsin–Madison, USA}
+    \IEEEauthorblockA{\radboud{}~Radboud University, Netherlands}
+    \IEEEauthorblockA{\inria{}~Inria Centre at Université Côte d’Azur, France}
+    \IEEEauthorblockA{\independent{}~Independent Researcher, USA}
+    \IEEEauthorblockA{\washU{}~Washington University in St. Louis, USA}
+    \IEEEauthorblockA{\ncstate{}~North Carolina State University, USA}
+    \IEEEauthorblockA{\cnrs{}~Centre National de la Recherche Scientifique (CNRS), France}
+    \IEEEauthorblockA{\stonybrook{}~Stony Brook University, USA}
+    \IEEEauthorblockA{\uic{}~University of Illinois Chicago, USA}
+    \IEEEauthorblockA{\uwashington{}~University of Washington, USA}
+    \IEEEauthorblockA{\wu{}~Wesleyan University, USA}
+}
+
+\fi
+
+% make the title area
+\maketitle
+
+%%%% Page number and header bar
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\setcounter{page}{1}
+
+%-------------------------------------------------------------------------------
+\input{long-version/0-abstract}
+%-------------------------------------------------------------------------------
+
+
+
+
+%-------------------------------------------------------------------------------
+\input{long-version/1-introduction}
+%-------------------------------------------------------------------------------
+
+
+
+
+%-------------------------------------------------------------------------------
+\input{long-version/2-methodology}
+%-------------------------------------------------------------------------------
+
+
+
+
+%-------------------------------------------------------------------------------
+\input{long-version/3-background}
+%-------------------------------------------------------------------------------
+
+
+
+%-------------------------------------------------------------------------------
+\input{long-version/4-threat-model}
+%-------------------------------------------------------------------------------
+
+
+
+
+
+%-------------------------------------------------------------------------------
+\input{long-version/5-stateful-tracking}
+\input{long-version/6-stateless-tracking}
+\input{long-version/7-cross-device-tracking}
+\input{long-version/8-measurement-techniques}
+%-------------------------------------------------------------------------------
+
+
+
+%-------------------------------------------------------------------------------
+\input{long-version/9-privacy-regulation}
+%-------------------------------------------------------------------------------
+
+
+
+
+%-------------------------------------------------------------------------------
+\input{long-version/10-future-outlook}
+%-------------------------------------------------------------------------------
+
+
+
+
+%-------------------------------------------------------------------------------
+\input{long-version/11-conclusion}
+%-------------------------------------------------------------------------------
+
+% \begin{comment}
+% use section* for acknowledgment
+\ifCLASSOPTIONcompsoc
+  % The Computer Society usually uses the plural form
+  \section*{Acknowledgments}
+\else
+  % regular IEEE prefers the singular form
+  \section*{Acknowledgment}
+\fi
+\ifanonymous
+Anonymized for review.
+\else
+
+\input{acknowledgment}
+
+\fi
+% \end{comment}
+
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+
+
+\newpage
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+
+\end{document}

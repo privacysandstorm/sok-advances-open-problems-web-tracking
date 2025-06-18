@@ -1,0 +1,46 @@
+{
+    "name": "sok_web_tracking_paper",
+    "dockerFile": "Dockerfile",
+    "runArgs": [],
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+    "workspaceFolder": "/workspace",
+    "postCreateCommand": "",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "james-yu.latex-workshop",
+                // Git
+                "eamodio.gitlens",
+                // Other helpers
+                "shardulm94.trailing-spaces",
+                "valentjn.vscode-ltex" //Grammar Spell Checking
+            ],
+            "settings": {
+                // General settings
+                "files.eol": "\n",
+                "rewrap.autoWrap.enabled": false,
+                "editor.formatOnSave": false,
+                // Latex settings
+                "latex-workshop.linting.chktex.enabled": true,
+                "latex-workshop.latex.clean.subfolder.enabled": true,
+                "latex-workshop.latex.autoClean.run": "onBuilt",
+                "files.associations": {
+                    "*.tex": "latex"
+                },
+                "latex-workshop.formatting.latexindent.path": "latexindent",
+                "latex-workshop.formatting.latexindent.args": [
+                    "-c",
+                    "%DIR%/",
+                    "%TMPFILE%",
+                    "-y=defaultIndent: '%INDENT%'"
+                ],
+                "ltex.latex.commands": {
+                    "\\label{}": "ignore",
+                    "\\documentclass[]{}": "ignore",
+                    "\\cite{}": "dummy",
+                    "\\cite[]{}": "dummy"
+                }
+            }
+        }
+    }
+}

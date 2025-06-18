@@ -1,0 +1,156 @@
+%%
+\section{Background on Web as an Ecosystem}
+\label{sec:background}
+\vspace{-1mm}
+
+%%
+The Web comprises of a client-server architecture built on the HTTP(S) protocol where browsers (client) send HTTP requests to servers---identified by URLs that specify the scheme (protocol), host (domain name), and resource path---sharing requested resources as HTTP responses.
+%
+% The web server shares the requested resource as an HTTP response to the user's browser.
+
+%%
+\noindent \textbf{Website Structure.} 
+%
+A typical website is composed of a primary HTML document embedded with numerous resources. 
+%
+These resources are either hosted on the web server of the site directly visited by the user (\ie{}, \textit{first-party}) or on other web servers (\ie{}, \textit{third-party}).
+%
+The HTML document defines the webpage structure and is parsed by the browser to build a logical representation of the document objects, \ie{}, the DOM or Document Object Model. 
+%
+At a high level, resources are included on a webpage in two ways: (1)~as inline content, directly within the HTML tags (\eg{},~\texttt{<style>}, \texttt{<script>}, or \texttt{<img>} tags) or (2)~as external references to fetch content (\eg{},~\texttt{<script src="...">}, \texttt{<img src="...">}, and \texttt{<iframe src="...">}). 
+%
+As the browser processes HTML to construct the DOM, it immediately renders inline content such as text and images or executes scripts, and for each external inclusion it issues additional HTTP requests to retrieve those resources. 
+%
+% Modern websites often include and fetch hundreds of such resources from a mix of site’s own server and external servers (\eg{}, CDNs or third-party service providers such as analytics or advertising). 
+%
+Notably, different resource types have different behaviors upon their inclusion in a webpage.
+%
+An image or a video is treated as passive content and cannot execute code, but triggers a loading request to the host web server.
+%
+Whereas a script fetched from an external URL can execute in context of the including page once loaded.
+%
+An \texttt{<iframe>} is a special case that embeds a completely separate HTML document inside a parent page.
+%
+Thus, multiple parties can be present in the context of a single webpage.
+
+
+%%
+\noindent \textbf{Browser's Origin Model.} 
+%
+Web browsers use a strict boundary called ``origin'', which is defined as a triplet of scheme (protocol), host (domain or IP address), and port. 
+%
+Two URLs have the same origin only if all three components match exactly. 
+%
+Browsers also group related origins into a broader notion of ``site'' based on the effective top-level domain plus one (eTLD+1)~\cite{WebKitTrackingPrevention} using public suffix lists~\cite{mozillafoundationPublicSuffixList2007}.
+%
+This origin boundary is fundamental to web security: by tagging and isolating content per origin, browsers ensure that code and data from different origins (or site groupings) cannot read, modify or interfere maliciously with each other's state.
+%
+This enforcement is called Same-Origin Policy (SOP)~\cite{mdnSameoriginPolicySecurity2024}.
+% and ensures that a script running in a web page is only allowed to access or interfere with the DOM, Javascript state and storage of another page if both pages share the same origin, preventing any cross-origin access or manipulations. 
+%
+% Browser tags each webpage document with it's origin.
+%
+% Moreover, browser’s scripting engine and storage mechanisms enforce boundaries so that scripts running in one origin cannot directly read or modify data from another origin.
+
+
+%%
+\noindent \textbf{Browser’s Context Model.} 
+%
+A browsing context is the environment that contains the document along with a scripting environment (\eg{}, the global window object in HTML). 
+%
+In practice, it corresponds to a browser tab, window, mainframe comprising the loaded webpage or any of its iframes~\cite{MDNBrowsingContext}. 
+%
+When a webpage loads, the browser creates a new context (or uses an existing one for navigation) and associates it with the page’s origin. 
+%
+Third-party iframes run in a nested browsing context, with a separate document, tagged with their own origin.
+%
+Each context is isolated in terms of the DOM and JavaScript runtime---by default, code in one context cannot arbitrarily interfere with a document in another context, especially if their origins differ.
+%
+The browser maintains this isolation by labeling each context with the origin of its active document and enforcing boundaries between contexts. 
+
+
+
+%%
+\noindent \textbf{Browser's Security Model: Context-Origin Boundaries.} 
+%
+The browsing context model denotes that every document runs in a container (frame or window) that maintains its state (such as its DOM, variables, and scripts) separate from others, while browser's origin model associates the document with an origin determining the code’s privileges.
+%
+Thus, the browser uses both the origin and context when enforcing policies---it isolates different contexts from each other, and when an interaction is attempted, it checks the origins involved. 
+%
+If two browsing contexts share the same origin, they are allowed to interact freely as part of the same trust domain, otherwise they can not under the SOP.
+%
+% Conversely, if the contexts are from different origins, the browser’s same-origin policy enforces separation---scripts in one context cannot directly read or modify the content of the other.
+
+
+
+
+%%
+% \noindent \textbf{\textit{Browser-Enforced Policies on Execution and Storage}.} 
+% %
+% \noindent \textbf{Cross-Origin Resource Inclusion and Sharing Policies:} 
+% %
+% The browser initiates network requests to include and load different resources regardless of its origin. 
+% %
+% Requesting a resource doesn’t violate the same-origin policy because the including page isn’t directly accessing or manipulating the embedded resource’s DOM, state or data; it’s either displaying it or executing it as intended.
+% %
+% This consent is managed via Cross-Origin Resource Sharing (CORS)~\cite{mdnCORS2024}. 
+% %
+% The CORS policy is an HTTP-header based mechanism that allows a server to indicate any origin(s) other than its own from which a browser should permit loading resources. 
+% %
+% In the absence of such a header, the browser, after fetching the resource, will prevent the calling script from seeing the response content, treating it as a cross-origin read violation.
+% %
+% Some resources (such as \texttt{<script src="...">} tags or \texttt{image} loads) are exempt from CORS checks because they do not grant the loader direct access to the raw data---i.e., a script is executed, but not read by the including page as data. 
+% %
+% However, for \texttt{XHR}/\texttt{fetch} and other cases where the script including the resource would directly consume the response, CORS prevents unauthorized sharing. 
+% %
+% This suggests that image resources can perform cross-origin tracking more easily than scripts.
+% %
+% CORS thus complements the SOP by opening safe channel for cross-site data access when needed, without collapsing the default restrictions.
+
+
+%%
+% \noindent \textbf{\textit{Script Execution}.} 
+\noindent \textbf{Browser-Enforced Policies on Script Execution.} 
+%
+A script's execution privileges are tied to its context’s origin---implying that it always ``acts as'' whatever origin its document has.
+%
+As a result, when an external script is included in a document from an origin different from the including document's origin, the browser does not enforce any origin-based restriction.
+%
+The script executes with full privileges of the context that included it---it can access the including page’s DOM, make network requests as that page, read and set storage of that page, and generally do anything the page’s own scripts could do. 
+%
+The act of inclusion signifies an implicit trust declaration by the webpage as if it trusts that code with its own origin’s privileges~\cite{WebKitTrackingPrevention}. 
+
+
+%%
+% \noindent \textbf{\textit{Browser Storage}.} 
+\noindent \textbf{Browser-Enforced Policies on Browser Storage.} 
+%
+Browser-provided client-side storage mechanisms (such as \texttt{localStorage}, \texttt{sessionStorage}, and \texttt{IndexedDB}) are partitioned by origin.
+%
+So scripts from one origin cannot read or write to another origin’s storage. 
+%
+However, there is one notable exception in how the browser treats cookies---cookies are scoped by domain (and path), not just the full origin. 
+%
+% By design, a script on \texttt{foo.news.com} can set a cookie for \texttt{.news.com} (a higher-level domain), which makes that cookie accessible to all subdomains under \texttt{news.com}, but not \texttt{news.com} itself or other eTLD+1 domains in future requests. 
+%
+% However, browsers disallow setting cookies for a domain that is a public suffix (like ``.com'' or ``.co.uk'') to prevent unrelated sites from sharing cookies.
+%
+Cookies may either be JavaScript cookies or HTTP cookies. 
+%
+Functionally, they both store data in a user's browser, however, they differ in how they are accessed and their scope.
+%
+HTTP cookies are automatically read and included in the network request or set by the browser from the response using corresponding headers based on specified cookie's domain and path information.
+%
+While JavaScript cookies (\ie{}, cookies set using JavaScript or HTTP cookies that are not flagged to be HTTPOnly) are set and/or accessed by client-side scripts running in the browser. 
+%
+JavaScript cookies can be accessed (\eg{}, using \texttt{document.cookie} or CookieStore API) by any script running in the same execution context regardless of its source. 
+%
+This means that third-party scripts included in the main execution context can read/write first-party cookies. 
+%
+JavaScript cookies are shared either in the query string or the request payload with a remote server.
+%
+% Third-party cookies also allow cross-site tracking---if a third-party is embedded as a resource (\eg{}, iframe) on multiple first-party websites, it can set and read user ID cookie across those first-party websites.
+
+
+%%
+Understanding these models and constraints is important to study how web tracking techniques must work within (or attempt to work around) the browser’s framework.

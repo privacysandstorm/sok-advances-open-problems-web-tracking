@@ -1,0 +1,12 @@
+main*.gz
+main*.pdf
+main*.bbl
+main*.blg
+main*.aux
+main*.fdb_latexmk
+main*.fls
+main*.log
+main*.out
+comment.cut
+.vscode
+*.tar.gz

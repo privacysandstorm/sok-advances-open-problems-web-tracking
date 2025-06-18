@@ -1,0 +1,15 @@
+%%
+\vspace{-2mm}
+\section{Cross-device Tracking}
+\label{sec:cross-device}
+\vspace{-4mm}
+
+\paragraph{Types of Cross-device Tracking.} Cross-device tracking can be \textit{deterministic} or \textit{probabilistic}~\cite{kimProbabilisticVisitorStitching2017,cottaOffPolicyEvaluationProbabilistic2019,brookmanCrossDeviceTrackingMeasurement2017}. Traditionally, user’s account information such as username or email addresses have been used to link or associate browsing activity across devices. When these deterministic identifiers fail, for example, if the user is logged out, probabilistic signals are used such as (a) IP addresses shared by multiple devices belonging to the same user~\cite{diaz-moralesCrossDeviceTrackingMatching2015}, (b) URL browsing patterns since people tend to visit the same websites and apps across devices~\cite{phanCrossDeviceMatching2017}, (c) OS and hardware characteristics~\cite{caoCrossBrowserFingerprintingOS2017}, or (d) typing behavior~\cite{yuanCrossdeviceTrackingIdentification2018}. These features are combined by trackers into \textit{cross-device graphs}~\cite{zimmeckPrivacyAnalysisCrossdevice2017,wangGraphTrackGraphbasedCrossDevice2022}.
+
+\para{Limitations.} However, probabilistic techniques do not always provide a reliable identifier (\eg{} ISPs dynamically rotate and share public IP addresses across several households). As a result, trackers employ proprietary algorithms to eliminate noise, such as ignoring commercial, private, and proxied IP ranges from cross-device graph computations, or setting fine temporal thresholds for observed identifiers to be considered originating from the same user.
+
+\para{Regulation.} To inform the ad industry of the privacy-invasive nature of cross-device tracking, the FTC held a cross-device tracking workshop in 2015~\cite{ftcCrossDeviceTracking2015}. It also issued warning letters to developers integrating Silverpush, an ad network performing cross-device tracking via inaudible ultrasound signals~\cite{ftcFTCIssuesWarning2016}. Various subsequent studies~\cite{mavroudisPrivacySecurityUltrasound2017,arpPrivacyThreatsUltrasonic2017,matyuninTrackingPrivateBrowsing2018} highlighted the invasiveness of this technique. 
+
+\para{Defenses Against Cross-device Tracking.} Deterministic cross-device tracking protections are inherently limited by user's account login from different devices. On the other hand, probabilistic cross-device protections are, principally, the same as against traditional tracking, \eg{}, limiting the disclosure of user data that could be used to correlate users. 
+On mobile devices, techniques have been introduced to intercept, inspect, and block outgoing packets from apps~\cite{shubaNoMoAdsEffectiveEfficient2018}. With respect to the use of inaudible ultrasound signals, efforts have pushed for the standardization of beacons and OS-level APIs to better control access to the functionality and selectively suppress certain frequencies~\cite{mavroudisPrivacySecurityUltrasound2017}.
+

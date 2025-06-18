@@ -1,0 +1,33 @@
+name: Build Paper
+on:
+  push:
+    branches:
+      - main  # Set a branch name to trigger deployment
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+        contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build docker image
+        run: docker build -t latex-local-setup .devcontainer/
+      - name: Build
+        run: docker run --user root --rm -v ${PWD}:/workspace -w /workspace latex-local-setup -c "git config --global --add safe.directory /workspace && make main-long-version.pdf"
+      - id: release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: release-${{ github.sha }}
+          release_name: Release ${{ github.sha }}
+          draft: false
+          prerelease: false
+      - uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: ./main-long-version.pdf
+          asset_name: main-long-version.pdf
+          asset_content_type: application/pdf

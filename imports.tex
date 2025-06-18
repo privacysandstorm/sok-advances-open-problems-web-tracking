@@ -1,0 +1,116 @@
+\usepackage[all]{nowidow}
+\usepackage{siunitx}
+\usepackage{multirow}
+\usepackage{amsmath}
+% Enable those needed
+% \usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+% \usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+% \usepackage{caption}
+\usepackage{subcaption}
+% \usepackage{colortbl}
+% % \usepackage[subtle]{savetrees}
+% \usepackage{diagbox, eqparbox, hhline}
+% %autoref rename subsection
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{comment}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{pifont} %dingautolist 
+
+\renewcommand{\sectionautorefname}{Section}
+\renewcommand{\subsectionautorefname}{Section}
+\renewcommand{\subsubsectionautorefname}{Section}
+\renewcommand{\appendixautorefname}{Appendix}
+% \renewcommand{\algorithmautorefname}{Algorithm}
+
+\usepackage{xspace}
+% Add a period to the end of an abbreviation unless there's one
+% already, then \xspace.
+\makeatletter
+\DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
+\def\@onedot{\ifx\@let@token.\else.\null\fi\xspace}
+
+\def\eg{e.g\onedot}\def\Eg{E.g\onedot}
+\def\ie{i.e\onedot} \def\Ie{I.e\onedot}
+\def\cf{c.f\onedot} \def\Cf{C.f\onedot}
+\def\etc{etc\onedot} \def\vs{vs\onedot}
+\def\wrt{w.r.t\onedot} \def\dof{d.o.f\onedot}
+\def\etal{et al\onedot}
+\makeatother
+
+
+\newcommand{\todo}[1]{\textcolor{red}{[#1]}}
+\newcommand{\subscript}[2]{$#1 _ #2$}
+
+\setlength{\doublerulesep}{2.5pt}
+
+\newif{\ifanonymous}
+\anonymoustrue{} % hide or show authors and other parts of the paper that should not appear at submission time
+
+
+%% Open Froblem Boxed Frame
+\newcommand{\openproblem}{\textbf{Open Problem}:}
+
+\usepackage[strict]{changepage}
+\usepackage{framed}
+\usepackage{color}
+
+\newenvironment{opbox}{%
+  \def\FrameCommand{%
+    {\color{darkgray}\vrule width 2pt}%
+    % {\color{lightgray}\vrule width 4pt}%
+    \colorbox{lightgray}%
+  }%
+  \MakeFramed{\advance\hsize-\width\FrameRestore}%
+  \noindent\hspace{-4.55pt}%
+  \begin{adjustwidth}{}{7pt}%
+  \openproblem%
+}
+{%
+% \vspace{2pt}
+\end{adjustwidth}\endMakeFramed%
+}
+
+
+
+% TBD to create a warning at compilation (i.e., to not forget to edit later)
+\newcommand{\TBD}[2]{\errmessage{#1}{[#2]}}
+% \newcommand{\TBD}[1]{\errmessage{TBD}{\color{red}{[#1]}}}
+
+%% Students
+\newcommand{\yash}[1]{\textcolor{red}{[\textbf{Yash Vekaria}: #1]}}
+\newcommand{\yohan}[1]{\textcolor{olive}{[\textbf{Yohan Beugin}: #1]}}
+\newcommand{\shaoor}[1]{\textcolor{blue}{[\textbf{Shaoor Munir}: #1]}}
+
+%% Professors
+\newcommand{\alexandros}[1]{\textcolor{cyan}{[\textbf{AK}: #1]}}
+\newcommand{\franzi}[1]{\textcolor{magenta}{[\textbf{Franziska Roesner}: #1]}}
+\newcommand{\gunes}[1]{\textcolor{yellow}{[\textbf{Güneş Acar}: #1]}}
+\newcommand{\jason}[1]{\textcolor{brown}{[\textbf{Jason Polakis}: #1]}}
+\newcommand{\nataliia}[1]{\textcolor{cyan}{[\textbf{Nataliia Bielova}: #1]}}
+\newcommand{\nick}[1]{\textcolor{green}{[\textbf{Nick Nikiforakis}: #1]}}
+\newcommand{\pierre}[1]{\textcolor{orange}{[\textbf{Pierre Laperdrix}: #1]}}
+\newcommand{\sebastian}[1]{\textcolor{pink}{[\textbf{Sebastian Zimmeck}: #1]}}
+\newcommand{\steven}[1]{\textcolor{purple}{[\textbf{Steven Englehardt}: #1]}}
+\newcommand{\umar}[1]{\textcolor{teal}{[\textbf{Umar Iqbal}: #1]}}
+\newcommand{\zubair}[1]{\textcolor{violet}{[\textbf{Zubair Shafiq}: #1]}}
+
+
+\newcommand{\para}[1]{\smallskip \noindent \textbf{#1}}
+\newcommand{\parait}[1]{\smallskip \noindent \textit{#1}}
+
+%Logos
+\newcommand{\ucDavis}{\raisebox{2pt}{\includegraphics[width=30pt]{figures/logos/uc-davis.pdf}}}
+\newcommand{\uwMadison}{\includegraphics[height=10pt]{figures/logos/uw-madison.pdf}}
+\newcommand{\radboud}{\includegraphics[height=10pt]{figures/logos/radboud.pdf}}
+\newcommand{\inria}{\includegraphics[height=10pt]{figures/logos/inria.pdf}}
+\newcommand{\cnrs}{\includegraphics[height=10pt]{figures/logos/cnrs.pdf}}
+\newcommand{\washU}{\includegraphics[height=10pt]{figures/logos/washU.jpg}}
+\newcommand{\ncstate}{\raisebox{2pt}{\includegraphics[width=30pt]{figures/logos/ncstate.pdf}}}
+\newcommand{\stonybrook}{\includegraphics[height=10pt]{figures/logos/stonybrook.pdf}}
+\newcommand{\uic}{\includegraphics[height=10pt]{figures/logos/uic.pdf}}
+\newcommand{\uwashington}{\includegraphics[height=8pt]{figures/logos/uwashington.pdf}}
+\newcommand{\wu}{\includegraphics[height=10pt]{figures/logos/wu.pdf}}
+\newcommand{\independent}{\raisebox{2pt}{$\dagger$}}
