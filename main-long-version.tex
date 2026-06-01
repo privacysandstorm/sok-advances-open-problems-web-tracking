@@ -80,8 +80,8 @@
 \else
 \author{
     \IEEEauthorblockN{
-        Yash Vekaria~\ucDavis{}, 
-        Yohan Beugin~\uwMadison{}, 
+        Yash Vekaria\IEEEauthorrefmark{1}~\ucDavis{}, 
+        Yohan Beugin\IEEEauthorrefmark{1}~\uwMadison{}, 
         Shaoor Munir~\ucDavis{}, 
         Gunes Acar~\radboud{}, 
         Nataliia Bielova~\inria{}, \\
@@ -113,6 +113,10 @@
 
 % make the title area
 \maketitle
+
+\begingroup\renewcommand\thefootnote{\IEEEauthorrefmark{1}}
+\footnotetext{Equal contribution.}
+\endgroup
 
 %%%% Page number and header bar
 \pagestyle{fancy}
@@ -159,7 +163,6 @@
 \input{long-version/5-stateful-tracking}
 \input{long-version/6-stateless-tracking}
 \input{long-version/7-cross-device-tracking}
-\input{long-version/8-measurement-techniques}
 %-------------------------------------------------------------------------------
 
 
@@ -211,8 +214,10 @@ Anonymized for review.
 
 \newpage
 
-\bibliographystyle{IEEEtran}
+\bibliographystyle{custom-style}%IEEEtran
 \bibliography{references}
 
+\appendix
+\input{long-version/appendix}
 
 \end{document}

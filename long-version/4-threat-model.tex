@@ -6,7 +6,7 @@
 %%
 Our threat model of web tracking considers four main entities: user, browser, first-party website, and third-parties included in the website. 
 %
-The user is an individual accessing websites on the Internet through their browser (also known as user agent~\cite{mdnUserAgentMDN2025}), seeking to keep their online behavior private and hence considered the \textit{victim}. % or at least under control. 
+The user is an individual accessing websites on the internet through their browser (also known as user agent~\cite{mdnUserAgentMDN2025}), seeking to keep their online behavior private and hence considered the \textit{victim}. % or at least under control. 
 %
 Browsers mediate all interactions between the user and the web content, enforcing different policies described in~\autoref{sec:background}. % and providing necessary functionality for webpages. 
 %
@@ -25,13 +25,10 @@ We consider first- and third-party trackers as \textit{adversaries}, where their
 
 
 \begin{figure}
-    \vspace{-2mm}
     \centering
     \includegraphics[width=0.99\linewidth]{figures/threat-model.pdf}
     \caption{Threat model of web tracking}
     \label{fig:threat-model}
-    % \vspace{-6mm} % submission
-    \vspace{-3mm} % arxiv
 \end{figure}
 
 
@@ -83,7 +80,7 @@ A third-party tracker could be embedded as an inline resource (\eg{}, image/scri
 %
 A tracker aims to collect user data through available browser features by either executing JavaScript code or reading browser storage.
 %
-By including an executable resource (\eg{}, script) on the webpage, tracker gains the ability to run code in the user’s browser, subject to script execution context requirements governed by browser's context model discussed in Section~\ref{sec:background}.
+By including an executable resource (\eg{}, script) on the webpage, tracker gains the ability to run code in the user’s browser, subject to script execution context requirements governed by browser's context model discussed in~\autoref{sec:background}.
 %
 With an embedded non-executable resource (\eg{}, image), a tracker can still initiate resource loading requests to its server, sharing cookies along with the request.
 %

@@ -18,6 +18,9 @@ main-arxiv.pdf, main-arxiv.bbl:
 main-ieeesp.pdf:
 	latexmk -pdflatex='pdflatex -interaction nonstopmode' -bibtex -pdf main-ieeesp.tex
 
+main-usenix.pdf:
+	latexmk -pdflatex='pdflatex -interaction nonstopmode' -bibtex -pdf main-usenix.tex
+
 main-long-version.pdf:
 	git rev-parse --short HEAD | xargs printf '\\newcommand*{\\version}{%s}' > version.tex
 	latexmk -pdflatex='pdflatex -interaction nonstopmode' -bibtex -pdf main-long-version.tex

@@ -1,19 +1,18 @@
 %%
 \section{Background on Web as an Ecosystem}
 \label{sec:background}
-\vspace{-1mm}
 
 %%
-The Web comprises of a client-server architecture built on the HTTP(S) protocol where browsers (client) send HTTP requests to servers---identified by URLs that specify the scheme (protocol), host (domain name), and resource path---sharing requested resources as HTTP responses.
+The Web is comprised of a client-server architecture built on the HTTP(S) protocol where browsers (client) send HTTP requests to servers---identified by URLs that specify the scheme (protocol), host (domain name), and resource path---sharing requested resources as HTTP responses.
 %
 % The web server shares the requested resource as an HTTP response to the user's browser.
 
 %%
-\noindent \textbf{Website Structure.} 
+\para{Website Structure.} 
 %
 A typical website is composed of a primary HTML document embedded with numerous resources. 
 %
-These resources are either hosted on the web server of the site directly visited by the user (\ie{}, \textit{first-party}) or on other web servers (\ie{}, \textit{third-party}).
+These resources are either hosted on the web server of the site directly visited by the user (\ie{}, \textit{first-party}) or on other websites (\ie{}, \textit{third-party}).
 %
 The HTML document defines the webpage structure and is parsed by the browser to build a logical representation of the document objects, \ie{}, the DOM or Document Object Model. 
 %
@@ -35,17 +34,17 @@ Thus, multiple parties can be present in the context of a single webpage.
 
 
 %%
-\noindent \textbf{Browser's Origin Model.} 
+\para{Browser's Origin Model.} 
 %
 Web browsers use a strict boundary called ``origin'', which is defined as a triplet of scheme (protocol), host (domain or IP address), and port. 
 %
-Two URLs have the same origin only if all three components match exactly. 
+Two URLs are considered to have the same origin only if all three components match exactly. 
 %
-Browsers also group related origins into a broader notion of ``site'' based on the effective top-level domain plus one (eTLD+1)~\cite{WebKitTrackingPrevention} using public suffix lists~\cite{mozillafoundationPublicSuffixList2007}.
+Browsers also group related origins into a broader notion of ``site'' based on the effective top-level domain plus one (eTLD+1)~\cite{TrackingPreventionWebKit2020} using the Public Suffix List\footnote{see \url{https://publicsuffix.org/}}.
 %
 This origin boundary is fundamental to web security: by tagging and isolating content per origin, browsers ensure that code and data from different origins (or site groupings) cannot read, modify or interfere maliciously with each other's state.
 %
-This enforcement is called Same-Origin Policy (SOP)~\cite{mdnSameoriginPolicySecurity2024}.
+This enforcement is called the Same-Origin Policy (SOP)~\cite{mdnSameoriginPolicySecurity2024}.
 % and ensures that a script running in a web page is only allowed to access or interfere with the DOM, Javascript state and storage of another page if both pages share the same origin, preventing any cross-origin access or manipulations. 
 %
 % Browser tags each webpage document with it's origin.
@@ -54,11 +53,11 @@ This enforcement is called Same-Origin Policy (SOP)~\cite{mdnSameoriginPolicySec
 
 
 %%
-\noindent \textbf{Browser’s Context Model.} 
+\para{Browser’s Context Model.} 
 %
 A browsing context is the environment that contains the document along with a scripting environment (\eg{}, the global window object in HTML). 
 %
-In practice, it corresponds to a browser tab, window, mainframe comprising the loaded webpage or any of its iframes~\cite{MDNBrowsingContext}. 
+In practice, it corresponds to a browser tab, window, top-level browsing context comprising the loaded webpage, or any of its iframes~\cite{MDNBrowsingContext}. 
 %
 When a webpage loads, the browser creates a new context (or uses an existing one for navigation) and associates it with the page’s origin. 
 %
@@ -66,18 +65,18 @@ Third-party iframes run in a nested browsing context, with a separate document, 
 %
 Each context is isolated in terms of the DOM and JavaScript runtime---by default, code in one context cannot arbitrarily interfere with a document in another context, especially if their origins differ.
 %
-The browser maintains this isolation by labeling each context with the origin of its active document and enforcing boundaries between contexts. 
+The browser maintains this isolation by labeling each context with the origin of its active document and enforcing context boundaries. 
 
 
 
 %%
-\noindent \textbf{Browser's Security Model: Context-Origin Boundaries.} 
+\para{Browser's Security Model: Context-Origin Boundaries.} 
 %
-The browsing context model denotes that every document runs in a container (frame or window) that maintains its state (such as its DOM, variables, and scripts) separate from others, while browser's origin model associates the document with an origin determining the code’s privileges.
+The browser's context model denotes that every document runs in a container (frame or window) that maintains its state (\eg{}, its DOM, variables, and scripts) separate from others, while the origin model associates the document with an origin determining the code’s privileges.
 %
-Thus, the browser uses both the origin and context when enforcing policies---it isolates different contexts from each other, and when an interaction is attempted, it checks the origins involved. 
+Thus, the browser uses both the origin and context to enforce policies---it isolates contexts from each other, and when an interaction is attempted, it checks the origins involved. 
 %
-If two browsing contexts share the same origin, they are allowed to interact freely as part of the same trust domain, otherwise they can not under the SOP.
+Under the SOP, two contexts are allowed to interact freely only if they share the same origin.
 %
 % Conversely, if the contexts are from different origins, the browser’s same-origin policy enforces separation---scripts in one context cannot directly read or modify the content of the other.
 
@@ -85,9 +84,9 @@ If two browsing contexts share the same origin, they are allowed to interact fre
 
 
 %%
-% \noindent \textbf{\textit{Browser-Enforced Policies on Execution and Storage}.} 
+% \para{\textit{Browser-Enforced Policies on Execution and Storage}.} 
 % %
-% \noindent \textbf{Cross-Origin Resource Inclusion and Sharing Policies:} 
+% \para{Cross-Origin Resource Inclusion and Sharing Policies:} 
 % %
 % The browser initiates network requests to include and load different resources regardless of its origin. 
 % %
@@ -109,8 +108,8 @@ If two browsing contexts share the same origin, they are allowed to interact fre
 
 
 %%
-% \noindent \textbf{\textit{Script Execution}.} 
-\noindent \textbf{Browser-Enforced Policies on Script Execution.} 
+% \para{\textit{Script Execution}.} 
+\para{Browser-Enforced Policies on Script Execution.} 
 %
 A script's execution privileges are tied to its context’s origin---implying that it always ``acts as'' whatever origin its document has.
 %
@@ -118,14 +117,14 @@ As a result, when an external script is included in a document from an origin di
 %
 The script executes with full privileges of the context that included it---it can access the including page’s DOM, make network requests as that page, read and set storage of that page, and generally do anything the page’s own scripts could do. 
 %
-The act of inclusion signifies an implicit trust declaration by the webpage as if it trusts that code with its own origin’s privileges~\cite{WebKitTrackingPrevention}. 
+Inclusion represents an implicit trust declaration by the webpage, as it trusts that code with its own origin’s privileges~\cite{TrackingPreventionWebKit2020}. 
 
 
 %%
-% \noindent \textbf{\textit{Browser Storage}.} 
-\noindent \textbf{Browser-Enforced Policies on Browser Storage.} 
+% \para{\textit{Browser Storage}.} 
+\para{Browser-Enforced Policies on Browser Storage.} 
 %
-Browser-provided client-side storage mechanisms (such as \texttt{localStorage}, \texttt{sessionStorage}, and \texttt{IndexedDB}) are partitioned by origin.
+Browser-provided client-side storage mechanisms (\eg{},~\texttt{localStorage}, \texttt{sessionStorage}, and \texttt{IndexedDB}) are partitioned by origin.
 %
 So scripts from one origin cannot read or write to another origin’s storage. 
 %
@@ -143,11 +142,11 @@ HTTP cookies are automatically read and included in the network request or set b
 %
 While JavaScript cookies (\ie{}, cookies set using JavaScript or HTTP cookies that are not flagged to be HTTPOnly) are set and/or accessed by client-side scripts running in the browser. 
 %
-JavaScript cookies can be accessed (\eg{}, using \texttt{document.cookie} or CookieStore API) by any script running in the same execution context regardless of its source. 
+Thus, JavaScript cookies can be accessed (\eg{}, using \texttt{document.cookie} or CookieStore API) by any script running in the same execution context regardless of its source. 
 %
 This means that third-party scripts included in the main execution context can read/write first-party cookies. 
 %
-JavaScript cookies are shared either in the query string or the request payload with a remote server.
+JavaScript cookies are shared either in the query string or the request payload with a server.
 %
 % Third-party cookies also allow cross-site tracking---if a third-party is embedded as a resource (\eg{}, iframe) on multiple first-party websites, it can set and read user ID cookie across those first-party websites.
 

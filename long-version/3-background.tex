@@ -72,7 +72,7 @@ This origin boundary is fundamental to web security: by default, content from on
 %
 This \textit{same-origin policy} (SOP)~\cite{mdnSameoriginPolicySecurity2024} prevents, for instance, a script from \texttt{news.com} from accessing sensitive data in a page from \texttt{sports.com}.
 %
-Modern browsers also group related origins into a broader notion of ``site'' based on the effective top-level domain plus one (eTLD+1)~\cite{WebKitTrackingPrevention} using public suffix lists~\cite{mozillafoundationPublicSuffixList2007}.
+Modern browsers also group related origins into a broader notion of ``site'' based on the effective top-level domain plus one (eTLD+1)~\cite{TrackingPreventionWebKit2020} using public suffix lists\footnote{\eg{}, \url{https://publicsuffix.org/}}.
 %
 For instance, the site of \texttt{foo.news.com} is \texttt{news.com}, which it shares with other subdomains like \texttt{bar.news.com}, whereas \texttt{sports.com} constitutes a different site.
 %
@@ -186,7 +186,7 @@ In other words, if \texttt{news.com} requests a third-party script from \texttt{
 %
 Following browser's context-origin model, it can access the including page’s DOM, make network requests as that page, read and set storage for \texttt{news.com}, and generally do anything the page’s own scripts could do. 
 %
-The act of inclusion in this case is essentially an implicit trust declaration by the webpage as if it trusts that code with its own origin’s privileges~\cite{WebKitTrackingPrevention}. 
+The act of inclusion in this case is essentially an implicit trust declaration by the webpage as if it trusts that code with its own origin’s privileges~\cite{TrackingPreventionWebKit2020}. 
 %
 The browser does not enforce any origin-based restriction on the script’s execution once it’s injected.
 %

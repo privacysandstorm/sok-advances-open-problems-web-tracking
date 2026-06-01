@@ -1,0 +1,66 @@
+%%
+\section{Introduction}
+\label{sec:introduction}
+
+%%
+Users access a variety of free content and services on the web, which are largely funded through online advertising.
+%
+In turn, advertising is heavily dependent on monitoring users' online activities for various purposes 
+%
+such as analytics, (re)targeting, and conversion tracking.
+%
+To realize these objectives, user tracking has become a pervasive part of the web.
+%
+% Online advertising in the US alone is set to exceed \$400 billion in 2025~\cite{adSpendEmarketer2025}.
+
+%%
+Ever since the introduction of cookies on the web in the mid-1990s, web tracking has evolved into a significantly more prevalent and sophisticated practice.
+%
+Around 92\% of webpages today embed at least one third-party tracker~\cite{urban2024WebAlmanac2024}.
+%
+Moreover, user tracking and profiling often involves collection of user's personal details (\eg{}, name, email, and location), device characteristics (\eg{}, device model and operating system), browsing history, and behavioral signals (\eg{}, time spent on a page and performed interactions).
+%
+As a result, web tracking has become an active area in online privacy research.
+
+%%
+Over the years, researchers have conducted numerous studies to examine the evolution of web tracking mechanisms, browser developments, and regulatory compliance. 
+%
+Most survey papers have either been too high-level~\cite{ermakova2018web} or too narrowly-focused on specific forms of web tracking such as caching and browser fingerprinting~\cite{bujlowSurveyWebTracking2017, laperdrix2020browser}. 
+%
+Overall, despite a considerable body of work, major findings remain scattered across many disparate studies.
+%%
+Furthermore, as privacy defenses improve in browsers, trackers continually adapt with new evasion techniques~\cite{narayanan2018web, localmess-usenix-sec-26}.
+%
+The result is an ever-shifting technical landscape of tracking techniques.
+%
+Regulations often govern tracking practices and ensure that browsers provide necessary protections to safeguard user privacy.
+%
+Although these regulatory changes have had a more gradual impact than browser-based technical interventions, together they have continued to reshape the ecosystem. 
+%
+Today, web tracking is undergoing a transformative change due to the introduction of privacy-enhancing protections in major web browsers and evolving regulatory frameworks.
+%
+% Recent advancements in online advertising comprise the introduction of privacy-preserving paradigms and adoption of generative AI on the web~\cite{builtin-ai,chavezUpdatePlansPrivacy2025}.
+At the same time, advertising paradigms that do not rely on cross-site tracking have been introduced, and are being standardized at the W3C~\cite{chavezUpdatePlansPrivacy2025, hercherW3CAdPrivacy2022}.
+%
+% In light of these shifts, it is important and timely to 
+These shifts call for a comprehensive and systematic study of emerging trends in the evolving tracking landscape to identify crucial research gaps.
+%
+% Thus, the research community can clearly benefit from a unified resource that consolidates and systematizes the state of knowledge, helping researchers to make meaningful contributions to the field and ensure a structured approach at addressing new privacy issues.
+
+%%
+To this end, in this SoK, we synthesize the disparate lines of research and practices in web tracking---spanning across technical mechanisms, browser mitigations, as well as regulatory changes---to systematically provide an overview of the current state of web tracking. 
+%
+We scope this work to how the data is \textit{collected} about users, not how that data might then be \textit{used}. 
+%
+This unified perspective enables a critical reflection on how far the community has come and which research directions it should prioritize.
+% in terms of research directions.
+%
+Our contributions are: % as follows:
+%
+\begin{itemize}
+    \item We systematically organize the extensive body of research on web tracking, providing a consolidated knowledge base of advances in the field, highlighting evolving trends, bridging emerging but related tracking mechanisms and identifying gaps in the field.
+    % \vspace{-2.5mm}
+    \item We provide an overview of major browser-based anti-tracking interventions and relevant regulatory frameworks across the EU and the US to assess how they have altered the ecosystem over the years.
+    % \vspace{-2.5mm}
+    \item We identify key open challenges and promising future directions in the domain of web tracking for the community to address in the coming years.
+\end{itemize}

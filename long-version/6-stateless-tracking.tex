@@ -9,9 +9,9 @@
 %%
 Browser (or device) fingerprinting is a technique used to collect information on users’ browsers and devices. 
 %
-By using HTTP headers and calling specific JavaScript API endpoints, a website can collect a wide range of information on the browser and its configuration (\eg{} browser version, screen size, installed list of fonts, GPU model, timezone and preferred languages) to the underlying operating system and the hardware. 
+By using HTTP headers and calling specific JavaScript APIs, a website can collect a wide range of information on the browser and its configuration (\eg{} browser version, screen size, installed list of fonts, GPU model, timezone and preferred languages) to the underlying operating system and the hardware. 
 %
-Research has shown that the diversity of Internet-connected devices is so vast that the combination of collected attributes can be unique, leading to the identification of a specific device~\cite{eckersleyHowUniqueYour2010, laperdrixBeautyBeastDiverting2016,gomez-boixHidingCrowdAnalysis2018}. 
+Research has shown that the diversity of internet-connected devices is so vast that the combination of collected attributes can be unique, leading to the identification of a specific device~\cite{eckersleyHowUniqueYour2010, laperdrixBeautyBeastDiverting2016,gomez-boixHidingCrowdAnalysis2018}. 
 %
 \autoref{fig:stateless-tracking} depicts how fingerprinting works.
 %
@@ -30,12 +30,10 @@ Unlike techniques described in~\autoref{sec:stateful-tracking}, fingerprinting:
 3) is also difficult to evade as users keep the same device for months or years, resulting in stable fingerprints over time.
 
 \begin{figure}[htbp]
-    \vspace{-2mm}
     \centering
     \includegraphics[width=0.8\linewidth]{figures/tracking-mechanisms-fingerprinting.pdf}
     \caption{Stateless Tracking via Browser Fingerprinting}
     \label{fig:stateless-tracking}
-    \vspace{-2mm}
 \end{figure}
 
 %%
@@ -108,9 +106,9 @@ Constructively, fingerprinting can be thought of as a form of intrusion detectio
 %
 Web applications can learn about the browsing environment of their first-party users and associate it with specific user identities~\cite{LinPhishSheepsClothing2022}. 
 %
-For example, a website can learn that the user Alice is using a smartphone with specific dimensions or a desktop browser with a specific kind of GPU. 
+For example, a website can learn that the user is using a smartphone with specific dimensions or a desktop browser with a specific kind of GPU. 
 %
-If Alice's credentials are ever stolen and an attacker attempts to login to that service, the service can extract the attacker's fingerprint, observe a major difference against Alice's fingerprints from prior sessions, and request additional authentication data from the attacker (such as a one-time password).
+If the user's credentials are ever stolen and an attacker attempts to login to that service, the service can extract the attacker's fingerprint, observe a major difference against fingerprints from prior sessions, and request additional authentication data from the attacker (such as a one-time password).
 %
 The same techniques can be constructively used to differentiate real users from malicious bots, as well as attackers engaging in ad fraud.
 

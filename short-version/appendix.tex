@@ -1,0 +1,150 @@
+%%
+\section{Thematic Literature Analysis}
+\label{sec:thematic-analysis}
+%%
+
+\autoref{tab:tracking-topics} shows the distribution of papers across 40 topics generated during the thematic analysis of the web tracking literature from 2005 to 2024, published at one of the seven top security and privacy venues--IEEE S\&P, USENIX Security, ACM CCS, NDSS, ACM IMC, PETS, and WWW. This thematic organization is available at \href{https://osf.io/zsy7e/overview?view_only=a346b98bf89244b5b17d842f6fb3fb13}{this URL}.
+
+\begin{table}
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+
+\begin{tabular}{l r}
+\hline
+\noalign{\vskip 1.5pt}
+\textbf{Topic} & \textbf{\# Papers} \\
+\noalign{\vskip 1.5pt}
+\hline
+\noalign{\vskip 1.5pt}
+Tracking Measurements & 50 \\
+Tracking in Browsers & 23 \\
+Browser Fingerprinting Measurement/Detection & 20 \\
+Regulation Compliance & 20 \\
+Online Profiling & 19 \\
+Tracking in Mobile & 19 \\
+Third-party Tracking & 18 \\
+Cookie Consent/Banners & 17 \\
+Cookie Measurements & 17 \\
+User Studies on Tracking & 15 \\
+Ad Blocking Measurements & 13 \\
+Javascript-based Tracking & 10 \\
+Side Channel Tracking & 10 \\
+ATS Defense Solutions & 9 \\
+Browser Extension Fingerprinting & 8 \\
+Tracker-Advertiser Flows & 7 \\
+URL-based Tracking & 7 \\
+Browser Fingerprinting Defense & 6 \\
+Cross-site Tracking & 6 \\
+Anti Ad Blocking & 5 \\
+Same-site Tracking & 5 \\
+Tracking Analysis Tools & 5 \\
+Cross-device Tracking & 4 \\
+Device Fingerprinting & 4 \\
+PII-based Tracking & 4 \\
+Privacy Sandbox & 4 \\
+Ad Blocking Solution & 3 \\
+Bounce Tracking & 3 \\
+Breakage Studies & 3 \\
+First-party Tracking & 3 \\
+Privacy Policy Analysis & 3 \\
+Privacy Studies of Browser Extensions & 3 \\
+Search Engine Privacy & 3 \\
+Behavioral Tracking & 2 \\
+Cookie Blocking & 2 \\
+Cookie Syncing & 2 \\
+DNS Tracking & 2 \\
+Form-based Tracking & 2 \\
+Location-based Tracking & 2 \\
+Pixel Tracking & 2 \\
+\noalign{\vskip 1.5pt}
+\hline
+\end{tabular}
+
+\caption{Distribution of papers across different topics.}
+\label{tab:tracking-topics}
+\end{table}
+
+
+%%
+\section{Measurement Methodologies}
+\label{sec:measurement-methodologies}
+
+%%
+\subsection{Crawling Measurements}
+\label{sec:crawling}
+
+Web crawling with instrumented browsers is the most common approach to measure online tracking.
+Browser instrumentation can take two forms: \textit{out-of-band} or \textit{in-band}. Out-of-band, or deep instrumentation, modifies directly the browser or JavaScript engine. In contrast, in-band leverages instrumentation hooks, like prototype patching, at the JavaScript level to overwrite functionality of interest.
+
+\para{User Agent.} Most measurements require a browser supporting modern web features.
+Simplified user agents which do not execute JavaScript or have incomplete support for web APIs can be appropriate for targeted measurements (\eg{}, Apache Nutch\footnote{\url{https://nutch.apache.org/}}). 
+
+\para{Automation Frameworks with Instrumentation Hooks.} To drive full consumer browsers, researchers rely on automation tooling built for website and browser testing: \eg{}, Chrome DevTools Protocol (CDP) for Blink-based browsers and Marionette for Gecko-based browsers. These internal interfaces are used by cross-browser automation libraries like Selenium or Puppeteer~\cite{
+cross-browser-testing-1-2020,puppeteer-support-firefox-2024}.
+Many researchers make direct use of these libraries, while several projects which bundle full browser automation with additional instrumentation and measurement tooling also exist~\cite{englehardtOnlineTracking1millionsite2016,openwpm4StudiesUsing,mayerFourthpartyFourthpartyFourthParty2011}.
+
+
+\para{Deep Instrumentation.} Many attempts have been made in leveraging deep instrumentation for security-related web measurements~\cite{neasbittWebCapsuleLightweightForensic2015,liJSgraphEnablingReconstruction2018, acarFPDetectiveDustingWeb2013, IncontextStoreIncontext1998, chenMystiqueUncoveringInformation2018}. The fundamental problem is that the browser evolves rapidly, rendering research prototypes obsolete quickly, as maintaining the patches is difficult or impossible~\cite{chenMystiqueUncoveringInformation2018}.  
+Two major efforts try to overcome this limitation: VisibleV8~\cite{jueckstockVisibleV8InbrowserMonitoring2019} and PageGraph\footnote{\url{https://github.com/brave/brave-browser/wiki/PageGraph}}.
+%
+PageGraph is maintained directly by the Brave Browser team, making it the only deep instrumentation framework that has browser support. 
+%
+VisibleV8\footnote{\url{https://github.com/wspr-ncsu/visiblev8}} is designed so that its patches are minimal (67 lines of code for the actual JavaScript monitoring) and has been successful in providing builds from Chromium 63 to 137 (version at submission time) with minimal effort~\cite{ jueckstockVisibleV8InbrowserMonitoring2019}. A major benefit is that deep instrumentation is agnostic to what needs to be monitored: \textit{all} web APIs can be hooked, even when not knowing the responsible APIs beforehand~\cite{suAutomaticDiscoveryEmerging2023}.
+
+\para{Stealthiness.}
+A significant threat to the validity of active web measurements is the ability of websites to detect crawlers and instrumented browsers. Upon detection, websites may block crawlers or alter their behavior (a practice known as \textit{cloaking})~\cite{invernizzi2016cloak}. Automation frameworks often inject detectable artifacts in the JavaScript context or alter the user-agent string. Researchers may need to deploy further evasion techniques\footnote{\url{https://www.npmjs.com/package/puppeteer-extra-plugin-stealth}} to avoid differential treatment.
+
+\para{Site lists.} Top lists of popular websites are published by several sources based on different methodologies: Alexa Top Million (now deprecated), Cisco Umbrella Popularity List, Majestic Million, Tranco~\cite{lepochatTrancoResearchOrientedTop2019}, Google CrUX, or Cloudflare Radar. 
+%
+Their use as a proxy to study websites and real users' behaviors has raised some skepticism in the past as these lists can be unstable, inconsistent, and prone to manipulation. Moreover, the choice of top list can sometimes impact research findings~\cite{lepochatTrancoResearchOrientedTop2019,ruthTopplingTopLists2022}.
+
+\para{Existing Crawl Datasets.}
+Another strategy is to leverage existing web crawl datasets. Nonprofit organizations and community-driven projects such as the Internet Archive\footnote{\url{https://archive.org/}}, Common Crawl\footnote{\url{https://commoncrawl.org/}}, and the HTTP Archive\footnote{\url{https://httparchive.org/}} routinely crawl websites and publish their data openly. Other initiatives such as \textit{privacytests.org}\footnote{\url{https://privacytests.org}} perform continuous open testing of web browser privacy across different vendors and tracking vectors, but do not include more sophisticated tracking approaches. 
+
+\para{Limitations.} Representativeness and generalizability issues arise due to 
+bot detection measures~\cite{krumnowHowGullibleAre2022},
+measurement vantage points~\cite{samarasingheGlobalPerspectiveWeb2019},
+device form factors~\cite{yangComparativeMeasurementStudy2020,casselOmniCrawlComprehensiveMeasurement2022}
+and potential differences in results obtained from crawls versus real browsing by humans~\cite{zeberRepresentativenessAutomatedWeb2020}. Directly related, studies are often very difficult to reproduce and replicate as differences in methodologies and experimental setups are not always fully documented by researchers~\cite{demirReproducibilityReplicabilityWeb2022,hantkeWebExecutionBundles2025}.
+
+
+%%
+\subsection{User Studies}
+\label{sec:user-studies}
+%%
+
+In practice, user studies can take multiple forms; they can be conducted through \textit{usability surveys or interviews}, or be based on data collected from real users through \textit{field measurements, crowdsourcing, or direct collection} through a browser extension or application. As an example, the National Internet Observatory\footnote{\url{https://nationalinternetobservatory.org/index.html}}, a nascent effort, invites US residents to volunteer data about their online behaviors and allows privacy-preserving access to researchers for scientific studies~\cite{steningUnprecedentedDataCollection2022,callahanCanWeBetter2021,fealIntroductionNationalInternet2024}.
+%
+With these techniques, researchers have mostly investigated participants’ comprehension, perception, and interaction with respect to cookie  dialogs~\cite{birrellSoKTechnicalImplementation2024,machuletzMultiplePurposesMultiple2020,bermejofernandezThisWebsiteUses2021,habibOkayWhateverEvaluation2022,singhWhatCookieConsent2022,bielovaSurveyAcademicStudies2022,Bielova2024-zr}. They typically study and compare different consent dialog designs, finding that many current designs effectively nudge participants towards more privacy-preserving options~\cite{machuletzMultiplePurposesMultiple2020,bermejofernandezThisWebsiteUses2021}. These studies also recommend that consent choices be \textit{reject by default} and that users should be able to easily revisit choices they have made~\cite{habibOkayWhateverEvaluation2022,Kanc-etal-25-PETs}.
+
+
+\section{Need for Fingerprinting}
+\label{sec:need-for-fingerprinting}
+
+%%
+Constructively, fingerprinting can be thought of as a form of intrusion detection. 
+%
+Web applications can learn about the browsing environment or behavior of their first-party users and associate it with specific user identities~\cite{LinPhishSheepsClothing2022}. 
+%
+For example, a website can learn that the user is using a smartphone with specific dimensions or a desktop browser with a specific kind of GPU. 
+%
+If the user's credentials are ever stolen and an attacker attempts to login to that service, the service can extract the attacker's fingerprint, observe a major difference against fingerprints from prior sessions, and request additional authentication data from the attacker (such as a one-time password).
+%
+The same techniques can be constructively used to differentiate real users from malicious bots or attackers engaging in ad fraud.
+%
+In practice, large online services commonly incorporate fingerprinting-derived signals into broader abuse-mitigation pipelines to detect automated account creation, credential stuffing, and spam. 
+%
+These signals are typically combined with behavioral features and rate-limiting mechanisms, enabling services to adapt authentication requirements based on assessed risk and maintaining service integrity in adversarial environments where traditional identifiers are unreliable.
+
+%%
+Destructively, the same techniques that can identify user-impersonating attackers and bots, turning against users who wish to keep their identity anonymous. 
+%
+With fingerprinting, a web app may be able to determine that a certain anonymous user is in fact eponymous, since their browser fingerprint matches that of a known user on the same platform. 
+%
+This undesired re-identification occurs despite user's attempt to hide by deleting cookies or using the browser's private mode. 
+%
+In a cross-site context, fingerprinting can be abused to link unrelated website visits, even when 3P cookies are disabled.
+
+
+\include{tables/appendix-tracking-mechanisms-countermeasures-comparison}

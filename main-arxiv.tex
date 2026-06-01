@@ -46,8 +46,8 @@
 \else
 \author{
     \IEEEauthorblockN{
-        Yash Vekaria~\ucDavis{}, 
-        Yohan Beugin~\uwMadison{}, 
+        Yash Vekaria\IEEEauthorrefmark{1}~\ucDavis{}, 
+        Yohan Beugin\IEEEauthorrefmark{1}~\uwMadison{}, 
         Shaoor Munir~\ucDavis{}, 
         Gunes Acar~\radboud{}, 
         Nataliia Bielova~\inria{}, \\
@@ -80,6 +80,10 @@
 % make the title area
 \maketitle
 
+\begingroup\renewcommand\thefootnote{\IEEEauthorrefmark{1}}
+\footnotetext{Equal contribution.}
+\endgroup
+
 %%%% Page number and header bar
 \pagestyle{fancy}
 \fancyhf{}
@@ -91,65 +95,17 @@
 % no keywords
 
 %-------------------------------------------------------------------------------
-\input{ieee-sp/0-abstract}
-%-------------------------------------------------------------------------------
-
-
-
-
-%-------------------------------------------------------------------------------
-\input{ieee-sp/1-introduction}
-%-------------------------------------------------------------------------------
-
-
-
-
-%-------------------------------------------------------------------------------
-\input{ieee-sp/2-methodology}
-%-------------------------------------------------------------------------------
-
-
-
-
-%-------------------------------------------------------------------------------
-\input{ieee-sp/3-background}
-%-------------------------------------------------------------------------------
-
-
-
-%-------------------------------------------------------------------------------
-\input{ieee-sp/4-threat-model}
-%-------------------------------------------------------------------------------
-
-
-
-
-
-%-------------------------------------------------------------------------------
-\input{ieee-sp/5-stateful-tracking}
-\input{ieee-sp/6-stateless-tracking}
-\input{ieee-sp/7-cross-device-tracking}
-\input{ieee-sp/8-measurement-techniques}
-%-------------------------------------------------------------------------------
-
-
-
-%-------------------------------------------------------------------------------
-\input{ieee-sp/9-privacy-regulation}
-%-------------------------------------------------------------------------------
-
-
-
-
-%-------------------------------------------------------------------------------
-\input{ieee-sp/10-future-outlook}
-%-------------------------------------------------------------------------------
-
-
-
-
-%-------------------------------------------------------------------------------
-\input{ieee-sp/11-conclusion}
+\input{short-version/0-abstract}
+\input{short-version/1-introduction}
+\input{short-version/2-methodology}
+\input{short-version/3-background}
+\input{short-version/4-threat-model}
+\input{short-version/5-stateful-tracking}
+\input{short-version/6-stateless-tracking}
+\input{short-version/7-cross-device-tracking}
+\input{short-version/8-privacy-regulation}
+\input{short-version/9-future-outlook}
+\input{short-version/10-conclusion}
 %-------------------------------------------------------------------------------
 
 % \begin{comment}
@@ -181,9 +137,11 @@ Anonymized for review.
 
 \newpage
 
-\bibliographystyle{IEEEtran}
+\bibliographystyle{custom-style}
 \bibliography{references}
 
+\appendix
+\input{short-version/appendix}
 
 \end{document}
 
