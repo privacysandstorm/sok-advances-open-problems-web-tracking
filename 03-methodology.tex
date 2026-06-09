@@ -94,9 +94,16 @@ We use our domain expertise to structure the SoK around this taxonomy to systema
  & \textbf{Tracking technique}: What tracking technique does this tracking defense protect against? & see Table~\ref{tab:} \\
  & \textbf{Defense Artifact}: What tracking artifact(s) does this defense apply protection to? & see Table~\ref{tab:} \\
  & \textbf{Defense Development}: Who developed this tracking defense? & Research-based, Community-based, Industrial \\
- & \textbf{Defense Support}: What is support for this and other related practically deployed defenses? & see Figure~\ref{fig:} \\
+ & \textbf{Defense Deployment}: How can or is this defense deployed? & \dNative in-browser, \dExt extension, offline / list-augmentation or auditing tool (\dTool\ );  server-, network-, protocol-, or OS-level (\dServer\ ). \\
+ & \textbf{Defense Support}: What is support for this and other related practically deployed defenses? & see Figure~\ref{fig:} for browser-specific support\\
  & \textbf{Gaps}: What are potential gap(s) in the evolution of these tracking defenses? & see Section~\ref{sec:} \\
  & \textbf{Open problems}: What are potential future research direction(s) for defenses? & see Section~\ref{sec:} \\
+
+ \newcommand{\dNative}{\ding{108}} % in-browser
+\newcommand{\dExt}{\ding{117}} % extension
+\newcommand{\dTool}{\ding{109}} % offline/list tool
+\newcommand{\dServer}{\ding{115}} % server/network/protocol/OS
+\newcommand{\dNo}{\textemdash}
 
 \midrule
 
@@ -111,16 +118,19 @@ We use our domain expertise to structure the SoK around this taxonomy to systema
 
 \subsection{Approach Limitations}
 
-We acknowledge the following methodological limitations. 
+\noindent We acknowledge the following limitations in our approach.
 % with our metho that are inherent from any SoK effort.
 
-\para{Relevant Literature Missing.} We scope our SoK to seven of the top security and privacy conferences where web tracking research has been commonly published. Consequently, some publications relevant to web tracking techniques, defenses, and regulations published elsewhere may have been left out from our systematization approach. 
+\para{Selection Bias.} We scope our SoK to seven of the top security and privacy conferences where web tracking research has been commonly published. Consequently, some publications relevant to web tracking techniques, defenses, and regulations published elsewhere may have been left out from our systematization approach. 
 % Mitigations: 
 % - broad search further refined automatically on identified exclusion keywords and manual evaluation
 % - venues aligned with our expertise and where we have seen most relevant papers in the past to web tracking
 % - 
 
-\para{Bias When Coding Papers.}
+\para{Coding Bias.}
+As with any qualitative analysis, our systematization is subject to a degree of subjectivity in how papers are evaluated against the criteria in Table~\ref{tab:systematization-criteria}. We mitigate this following Clarke and Braun's thematic analysis approach~\cite{clarke2013successful}
+% , in which two expert researchers collaboratively deliberated ambiguities and refined the taxonomy through consensus
+. While this approach reduces inconsistencies, it does not entirely eliminate the possibility that different researchers may arrive at slightly varying interpretations of the taxonomy.
 % coding + interpretation
 % extracting general and common trends
 
