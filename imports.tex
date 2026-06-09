@@ -24,12 +24,33 @@
 \usepackage{amssymb}
 \usepackage{fancyhdr}
 \usepackage{pifont} %dingautolist 
+% break urls
+\usepackage{breakurl}
+\def\UrlBreaks{\do\/\do-}
 
 \renewcommand{\sectionautorefname}{Section}
 \renewcommand{\subsectionautorefname}{Section}
 \renewcommand{\subsubsectionautorefname}{Section}
 \renewcommand{\appendixautorefname}{Appendix}
+% For appendix in IEEE template
+\newcommand{\refappendix}[1]{\hyperref[#1]{Appendix~\ref*{#1}}}
 % \renewcommand{\algorithmautorefname}{Algorithm}
+
+% Prior work comparison table
+\usepackage{graphicx}
+\newcommand*\rot{\rotatebox{90}}
+%Circles
+\usepackage{tikz}
+\newcommand{\emptypie}{%
+\begin{tikzpicture}
+ \draw (0,0) circle (.75ex);
+\end{tikzpicture}%
+}
+\newcommand{\pie}[1]{%
+\begin{tikzpicture}
+ \draw (0,0) circle (.75ex);\fill[rotate=90] (.75ex,0) arc (0:#1:.75ex) -- (0,0) -- cycle;
+\end{tikzpicture}%
+}
 
 \usepackage{xspace}
 % Add a period to the end of an abbreviation unless there's one
@@ -46,7 +67,6 @@
 \def\etal{et al\onedot}
 \makeatother
 
-
 \newcommand{\todo}[1]{\textcolor{red}{[#1]}}
 \newcommand{\subscript}[2]{$#1 _ #2$}
 
@@ -56,17 +76,54 @@
 \anonymoustrue{} % hide or show authors and other parts of the paper that should not appear at submission time
 
 
-%% Open Froblem Boxed Frame
+%% Gaps and Open Problem Boxed Frame
+\newcommand{\gap}{\textbf{Gaps}:}
 \newcommand{\openproblem}{\textbf{Open Problem}:}
 
 \usepackage[strict]{changepage}
 \usepackage{framed}
 \usepackage{color}
 
+\definecolor{cosmiclatte}{rgb}{1.0, 0.97, 0.91}
+\definecolor{darkred}{HTML}{AE4132}
+\definecolor{lightred}{HTML}{FAD9D5}
+
+% keywords search criteria
+\newenvironment{framedBox}{%
+  \def\FrameCommand{%
+    {\color{cosmiclatte}\vrule width 2pt}%
+    \colorbox{cosmiclatte}%
+  }%
+  \MakeFramed{\advance\hsize-\width\FrameRestore}%
+  \noindent\hspace{-4.55pt}%
+  \begin{adjustwidth}{}{7pt}%
+}
+{%
+% \vspace{2pt}
+\end{adjustwidth}\endMakeFramed%
+}
+
+% gaps
+\newenvironment{gapbox}{%
+  \def\FrameCommand{%
+    {\color{darkred}\vrule width 2pt}%
+    \colorbox{lightred}%
+  }%
+  \MakeFramed{\advance\hsize-\width\FrameRestore}%
+  \noindent\hspace{-4.55pt}%
+  \begin{adjustwidth}{}{7pt}%
+  \gap%
+}
+{%
+% \vspace{2pt}
+\end{adjustwidth}\endMakeFramed%
+}
+
+
+% open problems
 \newenvironment{opbox}{%
   \def\FrameCommand{%
     {\color{darkgray}\vrule width 2pt}%
-    % {\color{lightgray}\vrule width 4pt}%
     \colorbox{lightgray}%
   }%
   \MakeFramed{\advance\hsize-\width\FrameRestore}%

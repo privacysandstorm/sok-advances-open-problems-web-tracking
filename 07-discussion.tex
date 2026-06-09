@@ -1,0 +1,46 @@
+\section{Discussion \& Future Outlook}
+\label{sec:future-outlook}
+
+% \subsection{Measurements \& Automation}
+
+% Efforts such as HTTP Archive\footnote{\url{https://httparchive.org/}} or WebREC~\cite{hantkeWebExecutionBundles2025}, that archive results of crawls and share publicly their datasets, may provide some technical solutions to make web measurements more accessible and reproducible in the future.
+% %
+% Regarding technical measurement gaps that remain to be filled, we observe the need for automated frameworks to monitor web API changes and detect emerging side-channel fingerprinting risks in browsers for timely mitigation. Also, we need to better understand the purposes and legitimate uses of different tracking technologies~\cite{tothContributionPublicConsultation2020}---on the model of CookieBlock~\cite{bollingerAutomatingCookieConsent2022} that mapped cookies to their purposes---to enable compliance measurement at scale. Specifically, this would be required to identify fingerprinting used for tracking versus bot detection. 
+
+% \begin{opbox}
+% What further steps are needed to foster accessible and reproducible measurements, and develop tools that automatically assign the purposes of trackers?
+% \end{opbox}
+
+\subsection{Browsers as Gatekeepers and Second-Party Tracking}
+
+
+\subsection{Tracking in Other Ecosystems}
+
+While our focus was on web tracking, similar tracking mechanisms also exist in mobile apps and IoT ecosystems---using often a richer set of sensor information available via operating system APIs rather than web APIs. Some key differences and similarities exist: where web tracking relies on cookies, app tracking has access to device-level identifiers such as the Ad ID (known as ``IDFA'' on iOS, ``AAID'' on Android, or ``TIFA'' on Samsung Smart TVs), additionally vendors may make different design choices across ecosystems. For instance, while Apple's Safari blocks third-party cookies by default, iOS instead asks permission  to give access to device-level identifier. In the meantime, Google's Chrome and Android-based operating systems do not block by default third-party cookies or device-level identifiers, respectively.  
+
+
+%%
+\begin{opbox}
+As web and app platform capabilities and policies evolve differently, how do tracking mechanisms and protections diverge across the ecosystems? 
+\end{opbox}
+
+
+%%
+\begin{opbox}
+If cross-device tracking is understood theoretically, characterizing its occurrence in practice and defending against it requires more systematic efforts.
+\end{opbox}
+
+%%
+\subsection{Generative AI}
+%%
+Generative AI models are already being deployed to improve ad targeting~\cite{adv-week-genai-targeting} and contextual advertising~\cite{cognitiv2024cookieless}. 
+%
+On the flip side, introduction of ads in chatbots (e.g., ChatGPT) calls for investigation into the role of targeted advertising in generative AI.
+%
+Moreover, while generative AI deployed in web browsers~\cite{google2024chromeai} or as browser assistants~\cite{vekaria2025big} may enable novel capabilities, it may also amplify the harms (\eg{}, privacy risks) or create new attack surfaces~\cite{mcp-security}. 
+%
+Browsers have a key role in ensuring security and privacy of novel AI integrations.
+
+\begin{opbox}
+How can we counter the privacy, security, and safety risks amplified from the use of generative AI by browsers, websites, and embedded third-parties for tracking, profiling, and personalization?
+\end{opbox}

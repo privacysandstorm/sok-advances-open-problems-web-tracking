@@ -1,0 +1,27 @@
+\section{Need for Fingerprinting}
+\label{sec:need-for-fingerprinting}
+
+%%
+Constructively, fingerprinting can be thought of as a form of intrusion detection. 
+%
+Web applications can learn about the browsing environment or behavior of their first-party users and associate it with specific user identities~\cite{LinPhishSheepsClothing2022}. 
+%
+For example, a website can learn that the user is using a smartphone with specific dimensions or a desktop browser with a specific kind of GPU. 
+%
+If the user's credentials are ever stolen and an attacker attempts to login to that service, the service can extract the attacker's fingerprint, observe a major difference against fingerprints from prior sessions, and request additional authentication data from the attacker (such as a one-time password).
+%
+The same techniques can be constructively used to differentiate real users from malicious bots or attackers engaging in ad fraud.
+%
+In practice, large online services commonly incorporate fingerprinting-derived signals into broader abuse-mitigation pipelines to detect automated account creation, credential stuffing, and spam. 
+%
+These signals are typically combined with behavioral features and rate-limiting mechanisms, enabling services to adapt authentication requirements based on assessed risk and maintaining service integrity in adversarial environments where traditional identifiers are unreliable.
+
+%%
+Destructively, the same techniques that can identify user-impersonating attackers and bots, turning against users who wish to keep their identity anonymous. 
+%
+With fingerprinting, a web app may be able to determine that a certain anonymous user is in fact eponymous, since their browser fingerprint matches that of a known user on the same platform. 
+%
+This undesired re-identification occurs despite user's attempt to hide by deleting cookies or using the browser's private mode. 
+%
+In a cross-site context, fingerprinting can be abused to link unrelated website visits, even when thir-party cookies are disabled.
+

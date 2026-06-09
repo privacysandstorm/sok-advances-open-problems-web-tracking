@@ -1,0 +1,50 @@
+% =========================================================
+% Appendix Table A3: Detection, blocking, and compliance mechanisms
+% =========================================================
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{p{2.8cm} Y Y}
+\toprule
+\textbf{Theme} & \textbf{Tracking-related challenge / risk (with citations)} & \textbf{Mitigations / approaches (with citations)} \\
+\midrule
+
+Ecosystem measurement &
+Tracking is multi-party and dynamic (redirect chains, inclusion graphs, shifting endpoints), complicating attribution and policy enforcement \cite{englehardtOnlineTracking1millionsite2016,lernerInternetJonesRaiders2016,yuTrackingTrackers2016}. &
+Large-scale measurement and improved instrumentation to characterize behaviors and flows in situ \cite{englehardtOnlineTracking1millionsite2016,yuTrackingTrackers2016}. \\
+
+Blocklists and evasion &
+Filter lists can under-block and over-block; trackers adapt via domain churn and “first-party cover” techniques \cite{iqbalAdWarsRetrospective2017,fouadMissedFilterLists2020}. &
+Maintain lists and detect gaps \cite{fouadMissedFilterLists2020}; complement static rules with automated generation and behavioral methods \cite{leAutoFRAutomatedFilter2023}. \\
+
+Graph/flow-based blocking &
+URL heuristics miss identifier sharing and indirect data flows across the ad/analytics graph \cite{bashirTracingInformationFlows2016,papadopoulosCookieSynchronizationEverything2019}. &
+Graph-/flow-based attribution and blocking to capture structure beyond URLs \cite{iqbalAdGraphGraphBasedApproach2020,sibyWebGraphCapturingAdvertising2022,yangWTAGRAPHWebTracking2022}. \\
+
+JS blocking vs. breakage &
+Aggressive JS blocking may reduce tracking but can cause significant site breakage and UX regressions \cite{amjadBlockingJavaScriptBreaking2023}. &
+Selective blocking and replacement strategies; evaluate breakage systematically to improve deployability \cite{amjadBlockingJavaScriptBreaking2023}. \\
+
+Cookie consent UX and dark patterns &
+Consent dialogs can be manipulative and non-compliant; users misunderstand controls; revocation and “do not sell” flows are inconsistent \cite{dabrowskiMeasuringCookiesWeb2019,sanchezrolaCanIOptOutYet2019,utzUninformedConsentStudying2019,habibOkayWhateverEvaluation2022,rasaiiThouShaltNot2023,khandelwalAutomatedCookieNotice2023,sorensenGDPRChangesThird2019,vannortwickSettingBarLow2022,carpinetoAutomaticAssessmentWebsite2016,ouViopolicyDetectorAutomatedApproach2022}. &
+Measure compliance and detect dark patterns; improve UX and enforcement via automated auditing and clearer requirements \cite{habibOkayWhateverEvaluation2022,rasaiiThouShaltNot2023,khandelwalAutomatedCookieNotice2023}. \\
+
+Global Privacy Control (GPC) &
+A standardized opt-out signal must be usable and enforceable; deployments and compliance vary \cite{berjonGPCGDPR2021,zimmeckUsabilityEnforceabilityGlobal2023,zimmeckGlobalPrivacyControl2024}. &
+Design and evaluate opt-out signals and enforcement mechanisms; build generalizable active privacy control frameworks \cite{zimmeckGeneralizableActivePrivacy2024,zimmeckUsabilityEnforceabilityGlobal2023,zimmeckGlobalPrivacyControl2024}. \\
+
+User-facing cookie controls &
+Users want to block tracking cookies without breaking websites, but mental models and UI design matter \cite{schoniBlockCookiesNot2024}. &
+Design/evaluate cookie-control tools and improve usability of privacy controls \cite{schoniBlockCookiesNot2024}. \\
+
+Arms-race dynamics &
+As browsers restrict third-party state, trackers shift to first-party techniques, link decoration, server-side tracking, and fingerprinting \cite{narayanan2018web,callahanCanWeBetter2021}. &
+Holistic mitigations combining technical controls, measurement, and governance to anticipate adaptation pathways \cite{callahanCanWeBetter2021,narayanan2018web}. \\
+
+\bottomrule
+\end{tabularx}
+\caption{Literature on \textbf{measurement, blocking, and compliance} intersecting with web tracking and mitigations (citations embedded inline).}
+\label{tab:appendix-mitigation-literature}
+\end{table*}

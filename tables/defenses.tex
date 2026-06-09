@@ -1,0 +1,231 @@
+% =========================================================
+% Systematization Table: tracking mechanisms x defenses
+%   (research-based + industrial/browser defenses)
+% Deployment legend (research column):
+%   \ding{108} in-browser / engine-level (Chromium/Firefox/WebKit modification, shippable as native)
+%   \ding{117} browser extension / add-on
+%   \ding{109} offline / list-augmentation or auditing tool (aids filter lists, not user-deployed)
+%   \ding{115} server-, network-, protocol-, or OS-level (requires server/ISP/network/mobile-OS adoption)
+% =========================================================
+\newcommand{\dNative}{\ding{108}}   % in-browser
+\newcommand{\dExt}{\ding{117}}      % extension
+\newcommand{\dTool}{\ding{109}}     % offline/list tool
+\newcommand{\dServer}{\ding{115}}   % server/network/protocol/OS
+\newcommand{\dNo}{\textemdash}      % no/unknown industrial defense
+
+\begin{table*}[tp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\renewcommand{\arraystretch}{1.05}
+\begin{tabularx}{\textwidth}{%
+  >{\raggedright\arraybackslash}p{1.55cm}     % mechanism
+  >{\raggedright\arraybackslash}p{1.7cm}      % targeted artifacts
+  >{\raggedright\arraybackslash}p{3.1cm}      % research-based defenses
+  *{5}{>{\raggedright\arraybackslash}X}}      % 5 browsers
+\toprule
+\multirow{2}{*}{\makecell[tl]{\textbf{Tracking}\\\textbf{Mechanism}}} &
+\multirow{2}{*}{\makecell[tl]{\textbf{Targeted}\\\textbf{Artifacts}}} &
+\multirow{2}{*}{\makecell[tl]{\textbf{Research-based Defenses}\\{\tiny(name + deployment symbol)}}} &
+\multicolumn{5}{c}{\textbf{Industrial Defenses}} \\
+\cmidrule(lr){4-8}
+ & & & \textbf{Edge} & \textbf{Chrome} & \textbf{Firefox} & \textbf{Brave} & \textbf{Safari} \\
+\midrule
+
+\rowcolor{secgray}\multicolumn{8}{l}{\rule{0pt}{1.15em}\textbf{\textsc{Stateful tracking}}}\\
+\addlinespace[1.5pt]
+
+% --- Third-party cookies ---
+Third-party cookies &
+Storage \& cache; HTTP &
+TrackingFree\,\dNative, TrackMeOrNot\,\dExt, WebGraph\,\dTool &
+Tracking Prevention (Disconnect; Balanced) &
+SameSite=Lax; CHIPS partitioning &
+ETP + Total Cookie Protection &
+Block 3p cookies; ephemeral 3p storage &
+ITP: full 3p block by default \\
+
+% --- Cookie syncing ---
+Cookie syncing &
+HTTP; navigational &
+WebGraph\,\dTool, Khaleesi\,\dExt &
+via Tracking Prevention &
+3p-cookie controls; partitioning &
+ETP blocks sync endpoints &
+3p block severs sync &
+ITP 3p block \\
+
+% --- First-party cookies (script-set) ---
+First-party cookies (script-set) &
+Storage \& cache; JS APIs &
+CookieGraph\,\dExt, CookieGuard\,\dExt, Semantics-aware\,\dTool &
+\dNo\ (Chromium) &
+\dNo\ (1p untouched) &
+\dNo\ default &
+Cap script-set lifetime (7\,d); Forgetful Browsing &
+ITP: 7-day storage cap \\
+
+% --- Supercookies / respawning ---
+Supercookies / respawning &
+Storage \& cache; network &
+TrackingFree\,\dNative; state clearing &
+Storage/cache partitioning &
+HTTP-cache + storage partitioning &
+Network partitioning; Cookie Clearing &
+Partition net.\ state; ephemeral storage &
+Partitioned cache; ITP caps \\
+
+% --- CNAME cloaking ---
+CNAME cloaking &
+Network; storage &
+CookieGraph\,\dExt, CookieGuard\,\dExt &
+\dNo &
+\dNo &
+\dNo\ (uBO uncloaks) &
+CNAME uncloaking &
+ITP CNAME detection \\
+
+% --- Tracking pixels / tags ---
+Tracking pixels / tags &
+HTTP; JS APIs &
+TGNN\,\dTool, AdFlush\,\dExt, Khaleesi\,\dExt &
+Tracking Prevention &
+\dNo\ (extensions) &
+ETP blocks pixels &
+Shields block pixels/tags &
+ITP / tracker blocking \\
+
+% --- Link decoration ---
+Link decoration &
+Navigational; JS APIs &
+PURL\,\dExt &
+\dNo &
+\dNo &
+Query Param Stripping (ETP Strict) &
+Query-param stripping &
+Link Tracking Protection \\
+
+% --- Bounce / navigational tracking ---
+Bounce / navigational tracking &
+Navigational; storage &
+Khaleesi\,\dExt &
+Bounce Mitigations &
+Bounce Tracking Mitigations &
+Bounce/Redirect Protection &
+Debouncing; Unlinkable Bouncing &
+ITP bounce detection \\
+
+% --- Tracking scripts (JS-based) ---
+Tracking scripts \& requests &
+JS APIs; HTTP &
+AdGraph\,\dNative, WebGraph\,\dTool, AdFlush\,\dExt, TrackerSift\,\dTool, AutoFR\,\dTool, SINBAD\,\dTool, Duumviri\,\dExt &
+Tracking Prevention &
+\dNo\ (MV3 extensions) &
+ETP + SmartBlock &
+PageGraph ML + SugarCoat &
+ITP + WebKit blocking \\
+
+% --- Server-side tracking ---
+Server-side tracking &
+HTTP; network &
+GDPR-Runtime\,\dServer &
+\dNo &
+\dNo &
+\dNo &
+De-AMP; shims &
+\dNo \\
+
+\addlinespace[1.5pt]
+\rowcolor{secgray}\multicolumn{8}{l}{\rule{0pt}{1.15em}\textbf{\textsc{Stateless tracking}}}\\
+\addlinespace[1.5pt]
+
+% --- Browser fingerprinting ---
+Browser fingerprinting (canvas/WebGL/audio) &
+JS APIs &
+FP-Inspector\,\dTool, PriVaricator\,\dNative, FP-Sandbox\,\dNative, ML-CB\,\dExt, FP-tracer\,\dNative, Byte-by-Byte\,\dTool &
+Blocks known FP &
+\dNo\ (Privacy Budget dropped) &
+RFP; FP blocking; randomization &
+Farbling &
+Adv.\ FP Protection (API noise) \\
+
+% --- Device / hardware fingerprinting ---
+Device / hardware fingerprinting &
+Hardware; JS APIs &
+Rendered-Private/UNIGL\,\dNative &
+\dNo &
+\dNo &
+RFP reduces precision &
+Farbling; reduced precision &
+AFP; OS MAC randomization \\
+
+% --- Extension fingerprinting ---
+Extension fingerprinting &
+Extensions; JS APIs &
+Simulacrum\,\dNative &
+\dNo &
+\dNo &
+\dNo &
+\dNo &
+\dNo \\
+
+% --- Behavioral tracking ---
+Behavioral tracking / fingerprinting &
+History \& interaction; HTTP &
+HARPO\,\dExt, Bloom-Cookies\,\dExt, UPS\,\dServer &
+\dNo &
+\dNo &
+via ETP &
+Shields block scripts &
+\dNo \\
+
+% --- Passive fingerprinting (IP/UA) ---
+Passive fingerprinting (IP / UA) &
+Network; HTTP headers &
+Nymble\,\dServer, IP-Address-Mixing\,\dServer &
+UA Reduction &
+UA Reduction; IP Protection (Incognito) &
+UA freeze / reduction &
+UA + font randomization &
+UA reduction; IP hiding (Private Relay) \\
+
+% --- Side-channels ---
+Side-channels (timing/storage/net, XS-Leaks) &
+JS APIs; storage; net &
+XSinator\,\dTool, Net-track\,\dServer, browser-state\,\dNative &
+Site Isolation; partitioning &
+Site Isolation; cache/storage/history partitioning &
+Network partitioning &
+Pool-party protections &
+Partitioned caches \\
+
+\addlinespace[1.5pt]
+\rowcolor{secgray}\multicolumn{8}{l}{\rule{0pt}{1.15em}\textbf{\textsc{Cross-cutting}}}\\
+\addlinespace[1.5pt]
+
+% --- Cross-device / cross-context ---
+Cross-device / cross-context tracking &
+Network; hardware &
+CSAL\,\dServer, identity-reform\,\dServer &
+\dNo &
+\dNo &
+Containers / 1p Isolation &
+\dNo &
+\dNo \\
+
+% --- Authentication-based ---
+Auth.-based tracking &
+HTTP; navigational &
+SPRESSO\,\dServer, CSAL\,\dServer &
+Storage Access API; FedCM &
+Storage Access API; FedCM &
+Storage Access API &
+Google Sign-In gate &
+Storage Access API (ITP origin) \\
+
+\bottomrule
+\end{tabularx}
+\caption{\textbf{Systematization of research-based and industrial defenses by tracking mechanism and targeted artifact.}
+Research-defense deployment: \dNative\ in-browser/engine-level; \dExt\ browser extension; \dTool\ offline / list-augmentation or auditing tool; \dServer\ server-, network-, protocol-, or OS-level. \dNo\ indicates no (or no dedicated) industrial defense in that browser. Industrial columns report each browser's \emph{current} (state-of-the-art) deployed defense, whereas the research column lists the major proposals across the years; \autoref{tab:appendix-stateful-tracking} and \autoref{tab:appendix-stateless-tracking} enumerate the full set. \autoref{fig:evolution} gives the chronological view of all defenses.}
+\label{tab:systematization}
+\end{table*}

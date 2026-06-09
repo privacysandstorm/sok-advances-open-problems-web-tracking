@@ -106,24 +106,24 @@
 \maketitle
 
 \begingroup\renewcommand\thefootnote{\IEEEauthorrefmark{1}}
-\footnotetext{Equal contribution.}
+%\footnotetext{Equal contribution.}
 \endgroup
 
 % no keywords
 
 %-------------------------------------------------------------------------------
-\input{short-version/0-abstract}
-\input{short-version/1-introduction}
-\input{short-version/2-methodology}
-\input{short-version/3-background}
-\input{short-version/4-threat-model}
-\input{short-version/5-stateful-tracking}
-\input{short-version/6-stateless-tracking}
-\input{short-version/7-cross-device-tracking}
-\input{short-version/8-privacy-regulation}
-\input{short-version/9-future-outlook}
-\input{short-version/10-conclusion}
+\input{00-abstract}
+\input{01-introduction}
+\input{02-background}
+\input{03-methodology}
+\input{04-tracking-techniques}
+\input{05-tracking-mitigations}
+\input{06-regulations}
+\input{07-discussion}
+\input{10-conclusion}
 %-------------------------------------------------------------------------------
+
+
 
 
 \begin{comment}
@@ -153,12 +153,17 @@ Anonymized for review.
 %\IEEEtriggercmd{\enlargethispage{-5in}}
 
 
-\newpage
+% \newpage
 
 \bibliographystyle{custom-style}
-\bibliography{references}
+\bibliography{refs-avoid-editing,refs-new,refs-sok}
 
-\appendix
-\input{short-version/appendix}
+\appendices
+\input{appendix/ethics}
+\input{appendix/open-science}
+\input{appendix/sok-methodology}
+% \input{appendix/web-measurements}
+\input{appendix/need-for-fp}
+
 \end{document}
 

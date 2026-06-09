@@ -1,0 +1,194 @@
+\section{Background \& Prior Work}
+\label{sec:background}
+
+For general details about the Web, its client-server architecture built on the HTTP(S) protocol, and website structure we refer interested readers to the following~\todo{textbook/publication/cite to add}. Next, we provide a brief overview of important concepts studied in the rest of the SoK about how web tracking techniques must work within (or attempt to work around) the browser’s framework, outline the threat model of web tracking, and compare our approach to prior systematization work in the field.
+
+\subsection{Terminology}
+\label{sec:terminology}
+
+\para{Browser's Security Model: Context-Origin Boundaries.}
+% A typical website is composed of a primary HTML document embedded with numerous inline or external resources fetched from a \textit{first-party} or \textit{third-party} web server. Upon inclusion, these resources can exhibit different behaviors depending on their type, context, and origin.
+% % 
+% By what is known as the \textit{Same-Origin Policy (SOP)}~\cite{mdnSameoriginPolicySecurity2024}, browsers tag and isolate content per origin, ensuring that code and data from different origins (or site groupings) cannot read, modify, or interfere maliciously with each other's state.
+% % 
+% Additionally, browsers label each context with the origin of its active document to enforce context boundaries and isolate each context in terms of the DOM and JavaScript runtime. By default, code in one context cannot arbitrarily interfere with a document in another context, especially if their origins differ.
+The browser's context model denotes that every document runs in a container (frame or window) that maintains its state (\eg{}, its DOM, variables, and scripts) separate from others, while the origin model associates the document with an origin determining the code’s privileges.
+%
+Thus, the browser uses both the origin and context to enforce policies---it isolates contexts from each other, and when an interaction is attempted, it checks the origins involved. 
+%
+Under the \textit{Same-Origin Policy (SOP)}~\cite{mdnSameoriginPolicySecurity2024}, two contexts are allowed to interact freely only if they share the same origin.
+
+%%
+\para{Browser-Enforced Policies on Script Execution.} 
+%
+A script's execution privileges are tied to its context’s origin---implying that it always ``acts as'' whatever origin its document has.
+%
+As a result, when an external script is included in a document from an origin different from the including document's origin, the browser does not enforce any origin-based restriction. 
+%
+% The script executes with full privileges of the context that included it---it can access the including page’s DOM, make network requests as that page, read and set storage of that page, and generally do anything the page’s own scripts could do. 
+%
+Inclusion implicitly declares that the webpage trusts that code with its own origin’s privileges~\cite{TrackingPreventionWebKit2020}. 
+
+
+%%
+\para{Browser-Enforced Policies on Browser Storage.} 
+%
+Browser-provided client-side storage mechanisms (\eg{},~\texttt{localStorage}, \texttt{sessionStorage}, and \texttt{IndexedDB}) are partitioned by origin.
+%
+So scripts from one origin cannot read or write to another origin’s storage. 
+%
+However, there is one notable exception in how the browser treats cookies---cookies are traditionally scoped by domain (and path), not just the full origin.
+%
+As a result, JavaScript cookies can be accessed (\eg{}, using \texttt{document.cookie} or CookieStore API) by any script running in the same execution context regardless of its source. 
+%
+This means that third-party scripts included in the main execution context can read/write first-party cookies. 
+
+
+\subsection{Threat Model of Web Tracking}
+\label{sec:threat-model}
+
+\para{Entities.}
+%%
+The threat model of web tracking comprises four main entities.
+% Our threat model for web tracking considers four main entities: user, browser, first-party website, and third-parties included in the website. 
+%
+\textbf{\textit{User}.} 
+The user is an individual accessing websites on the internet through their browser (also known as user agent~\cite{mdnUserAgentMDN2025}), seeking to keep their online behavior private. % and hence considered the \textit{victim}. % or at least under control. 
+%
+\textbf{\textit{Browser}.} 
+The browser mediates all interactions between the user and the web content, enforcing the different policies described in~\autoref{sec:terminology}. % and providing necessary functionality for webpages. 
+%
+\textbf{\textit{First-party website}.} 
+This is the webpage that the user directly visits to browse content. 
+%
+\textbf{\textit{Third-parties}.} 
+It often includes resources from third-parties that are not directly visited by the user and are typically hosted on a different domain than the first-party website~\cite{mdnDomainMDNWeb2024}.
+%
+A tracker is any party whose goal is to collect data about the user’s activities in order to profile or identify the user’s behavior across one site (\textit{same-site tracking}), several sites (\textit{cross-site tracking}), or across devices (\textit{cross-device tracking}). 
+%
+We consider first- and third-party trackers as \textit{adversaries}, where their aim is to gather maximum information on users. %consistent with their capabilities.
+%
+\autoref{fig:threat-model} provides a conceptual overview of our model where \texttt{news.com} and \texttt{sports.com} are the first-party websites visited by the user from their personal device(s). 
+%
+\texttt{tracker1.com} and \texttt{tracker2.com} are the third-parties embedded on the first-party websites.
+
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/threat-model.pdf}
+    \caption{Threat model of web tracking.}
+    \label{fig:threat-model}
+    % \vspace{-5mm}
+\end{figure}
+
+
+
+%%
+\para{Adversary Goals.} 
+%
+% The primary goal of an adversary is to identify and correlate user data across the web for purposes such as profiling, analytics, or ad targeting.
+%
+% User data can be divided into two categories: (1) identifiers such as email, or identifying information such as network, software, or hardware configurations, and (2) browsing activity comprising webpages visited and website interactions performed by the user. 
+% %
+% The tracker's goal can be distinguished into different scopes:
+% %
+% \textbf{\textit{Same-site}.} 
+% The tracker aims to profile or identify a returning user on the same first-party website across multiple visits or page loads. 
+% %
+% \textbf{\textit{Cross-site}.} 
+% %
+% Trackers embedded on multiple unrelated first-party websites often aim to profile or identify a user across these sites in order to link different website activities to the same user.
+% %
+% \textbf{\textit{Cross-device}.} 
+% %
+% A tracker may also aim to profile or identify the same user as they browse the internet using different devices or browsers. 
+%
+The adversary's primary goal is to persistently and uniquely label the user or the user’s browser/device and to collect user data tied to that label, across navigations, sites, and over time, for purposes such as profiling, analytics, or ad targeting.
+%
+Besides, a secondary goal of the tracker may be to avoid detection or prevention; \ie{}, achieving their goal despite anti-tracking measures.
+
+
+%%
+\para{Adversary Capabilities.} 
+%
+% A tracker's capabilities are shaped by the web's architecture and browser's security model discussed in ~\autoref{sec:background}.
+%
+% To achieve their goals, an adversary's capabilities can be explained in context of \textit{inclusion}, \textit{collection}, \textit{storage}, and \textit{sharing} of the user data, subject to the browser's context-origin restrictions discussed in~\autoref{sec:terminology}.
+%
+The adversary is considered capable enough to track users either in presence of the browser-enforced policy restrictions discussed in~\autoref{sec:terminology} or by circumventing them.
+%
+\textbf{\textit{Inclusion}.} 
+%
+A first-party tracker is assumed to directly monitor user activities within the top-level browsing context.
+%
+A third-party tracker could be embedded as an inline resource (\eg{}, image/script tag) within the mainframe by the first-party assuming trust delegation, an iframe with a separate context under its origin (\ie{}, with its own DOM, state, and resources), or as a resource within a third-party iframe, isolated from the mainframe context. 
+%
+\textbf{\textit{Execution}.}
+%
+A tracker aims to collect user data through available browser features by executing JavaScript code within the context where it is embedded.
+%
+\textbf{\textit{Storage}.}
+%
+Trackers may also read, write, or modify data in the user's browser using browser storages such as \texttt{localStorage}, \texttt{sessionStorage}, \texttt{indexedDB}, and the cookie jar.
+%
+The stored data can be accessed by the tracker in subsequent visits to either the same site or a different site.
+%
+\textbf{\textit{Sharing}.}
+%
+To share the collected user data with its own servers or a partner's tracking server, trackers can initiate network requests including the user data in one of four ways: (1)~as a request URL query parameter, (2)~request payload, (3)~request header, or (4)~through HTTP cookies.
+%
+% Approaches 1-3 require tracking scripts to explicitly include user data, whereas HTTP cookies associated with the tracker's domain are automatically included in all requests to the tracker's server. % (\eg{}, setting a custom request header for tracking).
+%
+% In case of 4, browsers automatically attach the previously set tracker's cookies with the requests sent to the tracker’s domain as a request header, even if that request originates in a first-party context. 
+%
+\textbf{\textit{Observation}.}
+%
+A tracker present outside the browser (e.g., at a network vantage point) can also observe or analyze the traffic in transit from the user's browser or device to track them. 
+%%
+% We use this threat model to understand different web tracking mechanisms and their evolution over time.
+
+\begin{table*}[!ht]
+    \centering
+    \begin{tabular}{ccc}
+    \toprule
+    \textbf{Work} & \textbf{Year} & \textbf{Scope}\\
+    \midrule
+         Mayer and Mitchell~\cite{mayerThirdPartyWebTracking2012} & 2012 & \\
+         
+         Bujlow et al.~\cite{bujlowSurveyWebTracking2017} & 2017 & Techniques and defenses\\
+         
+         Sanchez-Rola et al.~\cite{sanchez-rolaWebWatchingYou2017} & 2017 & Techniques and countermeasures\\
+         
+         Laperdrix et al.~\cite{laperdrix2020browser} & 2020 & \\
+         
+         % Schnitzler et al.~\cite{schnitzlerSoKManagingLongitudinal2021} & 2021 & \\ %out-of-scope (online service/social media data sharing)
+         
+         Rokicki et al.~\cite{rokickiSoKSearchLost2021} & 2021 & JS timers-based attacks\\
+         
+         Sprecher et al.~\cite{sprecherSoKAllNothing2022} & 2022 & Script inclusion and permissions\\
+         
+         Subramani et al.~\cite{subramaniSoKWorkeroundsCategorizing2022} & 2022 & Service workers-based attacks and mitigations\\
+         
+         Stafeev and Pellegrino~\cite{stafeevSoKStateKrawlers2024} & 2024 & Measurement crawlers and methodology\\
+         
+         Birrell et al.~\cite{birrellSoKTechnicalImplementation2024} & 2024 & \\
+         
+         Rieder et al.~\cite{riederSoKDecadesWeb2026} & 2026 & Tracker detection (methodology measurements)\\
+         
+         \hline
+         Ours & 2026 & Techniques, mitigations, and regulations\\
+     \bottomrule
+    \end{tabular}
+    \caption{Comparison overview to prior SoK and survey papers related to web tracking.}
+    \label{tab:prior-sok-comparaisons}
+\end{table*}
+
+
+\subsection{Related Systematization Work}
+
+\todo{comparison w.r.t. to prior SoKs related to web tracking - see notes in GG doc}
+
+% for table:
+% Author et al. or Title [cite], year, scope, (audience?), technique, defense, regulations, future directions, nb papers/refs
+

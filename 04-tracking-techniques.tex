@@ -1,0 +1,418 @@
+\section{Tracking Techniques}
+%%
+\subsection{Stateful Tracking}
+\label{sec:stateful-tracking}
+%%
+The most straightforward approach to tracking a user involves storing a unique identifier in their browser and retrieving it or modifying it as they browse different websites, which is a process known as ``stateful tracking''. 
+%
+Browsers provide a number of interfaces (\eg{}, cookies, see \autoref{tab:appendix-stateful-tracking}) that are designed to associate \textit{state} to the user's visit, and others that store information as a side effect of some other functionality provided to the website (\eg{}, E-Tags, HSTS upgrades), which trackers can sometimes abuse to encode a unique identifier~\cite{englehardtAutomatedDiscoveryPrivacy2018,ashkansoltaniFlashCookiesPrivacy2011,solomosTalesFaviconsCaches2021}.
+%
+% \noindent The capabilities of a tracker %depends on the restrictions 
+% are governed by browsers security model defined in \autoref{sec:background}: (1) script execution privileges (2) context of inclusion (3) storage access policies.
+
+
+
+\begin{gapbox}
+Can we automatically assign the purposes of trackers to determine fingerprinting intent and block only tracking use cases while allowing benign ones?
+\end{gapbox}
+
+
+\begin{opbox}
+Can we automatically assign the purposes of trackers to determine fingerprinting intent and block only tracking use cases while allowing benign ones?
+\end{opbox}
+
+
+\include{tables/stateful-tracking}
+
+
+
+%%
+\subsubsection{Third-party Stateful Tracking}
+\label{sec:tp-stateful}
+
+\para{Cookies.} Cookies---first specified by Lou Montulli at Netscape in 1990s---allow maintaining a state when the browser communicates with a web server via HTTP, a stateless protocol~\cite{kristolHTTPCookiesStandards2001}. 
+%
+For example, a website can store a user’s authentication token in the browser via a cookie, which is then shared with the web server with each request that the user’s browser makes, allowing the website to verify the user’s authentication status. 
+%
+Browsers mediate which resources and domains are able to access specific cookies~\cite{beugin2024WebAlmanac2024,singhIncoherenciesWebBrowser2010,mdnSameoriginPolicySecurity2024}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{figures/tracking-mechanisms-cookie.pdf}
+    % \vspace{-6mm}
+    \caption{Cookie-based Tracking.}
+    \label{subfig:cookie-tracking}
+    % \vspace{-5mm}
+\end{figure}
+
+%%
+First- or third-party domains on a webpage can set and receive cookies through either \texttt{cookie} and \texttt{set-cookie} headers in network requests and responses respectively or via the \texttt{document.cookie} or CookieStore JavaScript API.
+%
+Cookies set in a first-party context on a website are called first-party cookies, allowing a user to be re-identified to the website that they visit. 
+%
+Similarly cookies set in a third-party context are classified as third-party cookies and they allow cross-site tracking. 
+%
+For example, in \autoref{subfig:cookie-tracking}, \texttt{news.com} and \texttt{sports.com} both include iframes with ads from \texttt{tracker.com}. 
+%
+As a result, the user’s browser will send the same \texttt{tracker.com} cookie with requests to load the iframes on both pages. 
+%
+On \texttt{tracker.com} server's side, these two requests can be attributed to the same user and combined with additional information about the user-visited website. 
+% (from the HTTP Referrer header or query parameters passed along when the request to load the iframe is made). 
+%
+Privacy concerns with third-party cookies were identified as early as their introduction~\cite{montulliHTTPStateManagement1997,kristolHTTPCookiesStandards2001} as public concern over web tracking grew.
+% elevated to the point where the FTC held a workshop on the topic in 1997. 
+% and the United States government banned and audited the use of cookies on government websites~\cite{SenatorRaisesPrivacy2001}. Nonetheless, this mechanism 
+Nonetheless, cookies have been the dominant form of web tracking for many years. 
+
+%%
+
+\para{Cookie Syncing.}
+%%
+Third-parties included on a few websites, are only able to track users across that limited number of sites~\cite{roesnerDetectingDefendingThirdparty2012,lernerInternetJonesRaiders2016}. 
+%
+Moreover, under the SOP restriction, a third-party on a webpage cannot share its cookies with another third-party domain by directly initiating a request to it.
+%
+To overcome these constraints and exchange information collected about the user on different websites, third-party companies rely on cookie syncing or cookie matching~\cite{acarWebNeverForgets2014}---first described by Olejnik et al.~\cite{olejnikSellingPrivacyAuction2014} and also named as ``referred tracking'' by Roesner et al.~\cite{roesnerDetectingDefendingThirdparty2012}. 
+%
+Earlier works formalized cookie syncing detection approach~\cite{acarWebNeverForgets2014,englehardtOnlineTracking1millionsite2016,bashirTracingInformationFlows2016}, that has been further improved~\cite{papadopoulosCookieSynchronizationEverything2019} and used to build sophisticated ML-based detection approaches~\cite{papadopoulosCookieSynchronizationEverything2019, iqbalKhaleesiBreakerAdvertising2022}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{figures/tracking-mechanisms-cookie-syncing.pdf}
+    \caption{Cookie Syncing.}
+    \label{subfig:cookie-syncing}
+    % \vspace{-2mm}
+\end{figure}
+
+%%
+This mechanism relies on synchronizing user identifiers known to two different third parties that are typically stored in third-party cookies and most commonly shared via URL parameters. 
+%
+% Following from the previous example, let’s suppose there are 
+If amongst two trackers (\texttt{tracker1.com} and \texttt{tracker2.com}), only \texttt{tracker1.com} is present on \texttt{news.com} as shown in \autoref{subfig:cookie-syncing}, it can share its user identifier stored in a third-party cookie by initiating a request to \texttt{tracker2.com} and adding it in the URL parameter. 
+%
+This would allow \texttt{tracker2.com} to know the identifier the user has for \texttt{tracker1.com}, match it with the user identifier of \texttt{tracker2.com}, and communicate server-to-server to further merge the information collected about this user by \texttt{tracker1.com} and \texttt{tracker2.com}. 
+
+
+%%
+
+\para{Tracking Tags.}
+%%
+Traditionally, tracking pixels (or invisible pixels) used to be 1x1 image elements embedded on a webpage that pointed to some tracking endpoint~\cite{Narayanan2017WebtapSpringer,englehardtOnlineTracking1millionsite2016}.
+%
+When a user visits a webpage embedding a 1x1 pixel, user data is shared with the tracker, allowing user tracking on the same site as well as cross-site.
+%
+Image-based tracking pixels have been primarily used for analytics, ad (re)targeting, and conversion tracking. 
+%
+Researchers have conducted various large-scale measurements to study image-based tracking pixels \cite{lernerInternetJonesRaiders2016,agarwal2021under,vekaria2021differential}.
+
+\begin{figure}[htbp]
+    
+    \centering
+    \includegraphics[width=1\linewidth]{figures/tracking-mechanisms-tracking-tags.pdf}
+    \caption{Tracking Scripts.}
+    \label{subfig:tracking-scripts}
+    % \vspace{-2mm}
+\end{figure}
+
+%%
+Over the years, the capabilities of tracking pixels have significantly advanced.
+%
+Modern tracking pixels, also referred to as tracking tags, rely on JavaScript to collect finer-grained information in browsers~\cite{bekosHitchhikersGuideFacebook2023}. 
+%
+\autoref{subfig:tracking-scripts} represents a simple scenario where a tracking pixel from \texttt{tracker.com} is embedded on the homepage as well as on the \texttt{/signup} page of \texttt{news.com}, respectively collecting and sharing button clicks and form events with its own server, with the help of its tracking script.
+%
+Thus, tracking pixels have expanded in scope to support additional use cases, such as managing multiple pixels via a single tag, bot detection, and session replays~\cite{senolLeakyFormsStudy2022,acarNoBoundariesData2020,englehardtNoBoundariesCredentials2018}.
+
+
+
+
+%%
+\subsubsection{First-party Stateful Tracking}
+\label{sec:fp-stateful}
+
+
+%%
+Since most browsers either block \cite{TrackingPreventionWebKit2020} or partition third-party access (by origin) to stateful APIs \cite{mdnThirdpartyCookiesPrivacy2024}, trackers aren’t able to store and retrieve identifiers \textit{across} sites. 
+%
+At best, storage partitioning allows tracking user activity on a single site.
+%
+To circumvent these protections, trackers adopt first-party based mechanisms described in this section.
+
+%%
+
+\para{Cookies.}
+\label{subsubsec:stateful-tracking-cookies}
+%%
+When third-party tracking scripts are embedded into first-party execution contexts, the scripts execute with the same privileges as first-party scripts, allowing them to read and write JavaScript-accessible first-party storage as if they were a first-party script~\cite{bahramiCOOKIEGUARDCharacterizingIsolating2024}. 
+%
+First-party cookies often store unique user identifiers created with browser fingerprinting and those which are bounced through navigational tracking (see~\autoref{subfig:navigational-tracking}). 
+%
+Recent research \cite{munirCookieGraphUnderstandingDetecting2023,vekaria2024WebAlmanac2024} has shown that nearly 90\% of all websites use at least one tracking first-party cookie, 96\% of which are in fact set by third-party scripts running in a first-party context.
+%%
+% 
+Additionally, research has shown that it is difficult to get rid of these tracking cookies.
+%
+Once a user clears their cookies, the tracker can use information stored elsewhere on the web browser to ``respawn'' or reconstruct the user’s identifier, creating a so-called ``supercookie'' or ``evercookie''~\cite{ayensonFlashCookiesPrivacy2011,soltaniFlashCookiesPrivacy2009,fouadMyCookiePhoenix2022} as described in \autoref{sec:stateful-defenses-evercookie}.
+
+\para{Cookie Syncing.}
+%%
+One of the privacy issues with first-party cookies is syncing these identifiers with other third-parties. 
+%
+This sharing---first described by Fouad et al.~\cite{fouadMissedFilterLists2020}---allows third-parties to collude and benefit from information gathered across different websites in a first-party context. 
+%
+In some cases, first-party cookies set by Google and Facebook are shared with hundreds of other third-party domains~\cite{munirCookieGraphUnderstandingDetecting2023,bahramiCOOKIEGUARDCharacterizingIsolating2024}.
+%
+% In addition to syncing first-party cookies, trackers also combine personal information obtained from users across different websites to create extensive identity graphs of users as described in~\autoref{sec:id-providers} to track users in absence of third-party cookies.
+
+
+%%
+
+\para{Tracking Tags.}
+%%
+Blocking third-party cookies renders tracking pixels embedded as image elements ineffective. 
+%
+However, modern tracking tags that rely on JavaScript can still be used to track users in a first-party context~\cite{munirCookieGraphUnderstandingDetecting2023}. 
+%
+These tags are often included in the main frame context of a website by the developer, allowing pixel tracking companies to monitor different user activities using first-party execution privileges.
+
+
+%%
+
+\para{Navigational Tracking.}
+% \label{sec:navigational-tracking}
+%%
+A popular mechanism for sharing identifiers is via link decorations as depicted in \autoref{subfig:navigational-tracking}. 
+%
+Recent research has identified query parameters, resource paths, and URL fragments being used for sharing user data, such as first-party cookies and email addresses, on more than 70\% of websites~\cite{munirPURLSafeEffective2024}, in absence of third-party cookies or first-party partitioning. 
+%
+Besides link decorations, bounce tracking is another navigation-based mechanism that allows trackers to read/write their cookies across sites, rendering third-party cookie blocking ineffective~\cite{kellyBounceTrackingMitigations2022}. 
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{figures/tracking-mechanisms-navigational-tracking.pdf}
+    \caption{Navigational Tracking.}
+    \label{subfig:navigational-tracking}
+    % \vspace{-2mm}
+\end{figure}
+
+%%
+At a high level, a tracker’s goal is to momentarily surface or visit its own domain in the browser’s \emph{first-party} context, because this lets it read and write identifiers that persist in first-party storage. 
+%
+\autoref{subfig:bounce-tracking} shows a typical \textbf{bounce-tracking} sequence:
+%
+\ding{182} a third-party script on \texttt{news.com} reads first-party identifier(s) stored under \texttt{news.com} and
+%
+\ding{183} includes them in the request to \texttt{tracker.com}.
+%
+\ding{184} Browser redirects to \texttt{tracker.com}, either by a user click, automatically (\eg{}, \texttt{window.location.href="...";}, or a \texttt{<meta http-equiv="refresh">}).
+%
+\ding{185} Once loaded as a \emph{first party}, \texttt{tracker.com} reads the identifier from the URL or merges it with an existing cookie, rewriting the URL to its final destination (\eg{}, back to \texttt{news.com} or other domain), embedding the consolidated identifier.
+%
+\ding{186} The browser navigates to \texttt{news.com}; the tracker’s script there extracts the identifier from the decorated URL and 
+%
+\ding{187} stores it in \texttt{news.com}’s first-party storage, completing the cross-context or cross-site linkage if redirected to same first-party or a different domain.
+
+\begin{comment}
+% \begin{enumerate}[label=(\roman*)]
+\begin{dingautolist}{182}
+  \item A third-party script on \texttt{news.com} reads any first-party identifier already stored under \texttt{news.com}.
+  \item Identifier is included in the request to \texttt{tracker.com}.
+  \item Browser redirects—either by a user click or automatically (e.g., \texttt{window.location.href="...";} or a \texttt{<meta http-equiv="refresh">})—to \texttt{tracker.com}.
+  \item Once loaded as a \emph{first party}, \texttt{tracker.com} reads the identifier from the URL or merges it with an existing cookie, rewriting the URL to its final destination (e.g., \texttt{sports.com}), embedding the consolidated identifier.
+  \item Browser navigates on to \texttt{sports.com}; the tracker’s script there extracts identifier from the decorated URL and stores it in \texttt{sports.com}’s first-party storage, completing the cross-site linkage.
+\end{dingautolist}
+\end{comment}
+
+\begin{figure}[htbp]
+    
+    \centering
+    \includegraphics[width=1\linewidth]{figures/tracking-mechanisms-bounce-tracking.pdf}
+    \caption{Bounce Tracking.}
+    % \vspace{-3mm}
+    \label{subfig:bounce-tracking}
+    % \vspace{-2mm}
+\end{figure}
+
+Bounce chains can involve two sites (\texttt{news.com} → \texttt{tracker.com} → \texttt{news.com}) or longer, allowing the tracker to propagate a stable user identifier across multiple unrelated websites despite third-party cookie restrictions.
+%
+% As a result of this process, a tracker is able to use the same identifier across websites. 
+%
+Due to potential usability disruptions and the implementation of defensive measures, bounce tracking is not widely pervasive
+\cite{iqbalKhaleesiBreakerAdvertising2022}.
+%
+Measurements in 2020 found that 11.6\% of sites use one of the top 100 redirectors~\cite{koopInDepthEvaluationRedirect2020}, and in 2022 such identifiers were present in 8.1\% of crawled navigations~\cite{randallMeasuringUIDSmuggling2022}.
+
+\subsection{Challenges and Open Problems - Stateful Tracking}
+
+\para{Tracking Tags.}
+%%
+A tag from a given pixel tracking company can be configured in many ways depending on the distinct user behaviors websites want to track. As a result, detecting the mere presence of tracking pixels is not enough.
+%
+It is crucial to detect all JavaScript-based tracking tags embedded on a website and study their tracking configurations to truly understand the tracking capabilities of such tags.
+%%
+\begin{opbox}
+How are tracking tags configured differently on sites, and how does it impact tracking behavior?
+\end{opbox}
+
+
+% \para{Session Replays.}
+% Session replay (or recording) scripts capture detailed user interactions such as keystrokes, mouse, and scrolling movements, along with the full content of the visited pages.
+% %
+% This allows publishers to record and playback visits as if they are ``looking over [visitors’] shoulders’’, for purposes including marketing, analytics, and troubleshooting~\cite{AdvancedUsageInspectlet}.
+% %
+% However, these scripts can also capture sensitive personal data filled out by visitors~\cite{acarNoBoundariesData2020,senolLeakyFormsStudy2022,yuGotSickTracked2022}, while redaction measures offered by session replay vendors are often fragile and limited in effectiveness~\cite{englehardtNoBoundariesCredentials2018,acarNoBoundariesData2020}.
+
+
+
+
+\subsection{Stateless Tracking}
+\label{sec:stateless-tracking}
+
+\include{tables/stateless-tracking}
+
+Under stateless tracking (see \autoref{tab:appendix-stateless-tracking}), trackers do not rely on a stored state (\ie{}, ID) in the browser to track a user, and instead collect artifacts of the user's behavior, browser, or hardware to generate a fingerprint to correlate a user across sites and sessions.
+% 
+Analysis of real-world fingerprints and entropy computations have revealed that some attributes can contribute a lot more to the uniqueness of users than others, leading to the identification of a specific user with high certainty~\cite{eckersleyHowUniqueYour2010,laperdrixBeautyBeastDiverting2016,gomez-boixHidingCrowdAnalysis2018,bacis2024assessing}. 
+%
+% \autoref{tab:appendix-stateless-tracking} summarizes different mechanisms and defenses.
+
+
+%%
+\subsubsection{Fingerprinting and Types}
+
+Fingerprinting corresponds to the gathering of information on users’ behavior, browsers, and devices in real-time with the goal of identifying users. 
+%
+\autoref{fig:stateless-tracking} depicts how fingerprinting works; through HTTP headers and calls to specific JavaScript APIs, a website can collect a wide range of information on the user's behavior (\eg{} mouse movements, keystrokes, and clicking), browser (\eg{} browser version, screen size, installed fonts, GPU model, timezone and preferred languages), and configuration of the underlying OS and the hardware. 
+% 
+Its use for tracking purposes has been hard to detect and block, as fingerprinting can be used (1) constructively, to identify user-impersonating actors such as bots or fraudsters, and (2) destructively to identify and track users who wish to remain anonymous (see~\refappendix{sec:need-for-fingerprinting}). 
+%
+Additionally, it is difficult to prevent as users exhibit the same behavior and retain the same device over time, which can result in certain stable fingerprinting attributes.
+%
+Several types of fingerprinting techniques exist based on the nature of the collected attributes.
+% Among them, browser fingerprinting has been the most studied and widely used mechanism in context of the web. 
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\linewidth]{figures/tracking-mechanisms-fingerprinting.pdf}
+    \caption{Stateless Tracking via Fingerprinting.}
+    \label{fig:stateless-tracking}
+\end{figure}
+
+%%
+\para{Browser Fingerprinting.} 
+%
+Relying on browser-based APIs to collect information about configurations of the browser, device or the underlying OS to generate a fingerprint is referred to as browser fingerprinting.
+%
+Since the first academic work on browser fingerprinting in 2009~\cite{mayerAnyPersonPamphleteer2009}, researchers have studied: its impact on privacy~\cite{eckersleyHowUniqueYour2010}, its use with other tracking techniques~\cite{fouadMyCookiePhoenix2022} and in real world applications~\cite{aminazadWebRunner20492020, wuHimManyFaces2023}, its detection~\cite{iqbalFingerprintingFingerprintersLearning2021, boussahaFPtracerFinegrainedBrowser2024}, abusable browser APIs~\cite{bahramiFPRadarLongitudinalMeasurement2022, suAutomaticDiscoveryEmerging2023, senolDoubleEdgedSword2024}, and user protections~\cite{vastelFpScannerPrivacyImplications2018}. 
+%
+The Electronic Frontier Foundation’s Panopticlick project \cite{effpanopticlick} provided one of the earliest large-scale empirical demonstrations of browser fingerprintability and associated risks. 
+% and has been influential in characterizing real-world browser fingerprinting risks.
+%
+In 2013, fingerprinting was observed on $\sim$1\% of the top 10K websites~\cite{nikiforakisCookielessMonsterExploring2013} and $\sim$400 of the top 1M websites~\cite{acarFPDetectiveDustingWeb2013}. 
+%
+Over the years, a variety of techniques have been used to measure browser fingerprinting~\cite{acarWebNeverForgets2014,englehardtOnlineTracking1millionsite2016,olejnikBatteryStatusNot2017,dasWebsSixthSense2018}, with two general trends being: its higher adoption by third-parties and its expansion to a diverse set of browser APIs over the years. 
+%
+By 2021, fingerprinting scripts were found to be present on 10\% of the top 100K websites, with more popular ones having a higher incidence (\ie{}, 30\% of the top 1,000)~\cite{iqbalFingerprintingFingerprintersLearning2021}.
+%
+Importantly, browser fingerprints are not always stable enough to track users over time: 80\% of browser instances change fingerprints in less than 10 days~\cite{vastelFPSTALKERTrackingBrowser2018}. 
+%
+Trackers not only link fingerprints as they evolve, but also combine and persist them with \textit{stateful} techniques, rendering the technique effective even in browsers that partition third-party access to stateful APIs (\autoref{sec:stateful-defenses}). 
+%
+A 2022 study measured a lower bound on this approach by detecting cookie respawning due to browser fingerprinting on 1,150 of the top 30K sites~\cite{fouadMyCookiePhoenix2022}.
+%
+Prior works have explored various browser-supported JavaScript APIs for fingerprinting such as Canvas~\cite{moweryPixelPerfectFingerprinting2012}, WebGL~\cite{caoCrossBrowserFingerprintingOS2017}, Audio API~\cite{englehardtOnlineTracking1millionsite2016}, the Battery Status API~\cite{olejnikLeakingBatteryPrivacy2016}, as well as font and device-class characteristics exposed through rendering and system metrics~\cite{fifield2015fingerprinting,bursztein2016picasso}.
+%
+Other recent works indicate that fingerprinting risks differ across demographics~\cite{berkeHowUniqueWhose2025} and that certain information contained in fingerprints could be limited without breaking the user experience~\cite{intumwayaseUARadarExploringImpact2023}.\\
+
+
+
+%%
+\para{Side-channel Fingerprinting.} 
+% 
+% Trackers may also exploit available browser APIs and resources to find new side-channels to fingerprint the user's browser or device. 
+% %
+% Besides browser fingerprinting techniques, researchers have demonstrated numerous side-channel approaches to track users.
+%
+Side-channel fingerprinting research has evolved from early demonstrations of unintended browser state leakage—such as history sniffing~\cite{weinbergStillKnowWhat2011}, cache abuse~\cite{shusterman2021prime+}, and favicon-based persistence~\cite{solomosTalesFaviconsCaches2021}—to increasingly systematic and automated analyses of cross-site information flows in modern browsers~\cite{knittelXSinatorcomFormalModel2021}. 
+%
+As defenses have closed individual leaks, subsequent work has shifted towards identifying newer classes of tracking vectors, leveraging timing~\cite{jinTimingBasedBrowsingPrivacy2022}, resource contention~\cite{snyderPoolPartyExploitingBrowser2023}, and feature exposure~\cite{aliNavigatingMurkyWaters2023} as more subtle fingerprintable signals within the browser. 
+%
+More recently, side-channel techniques have expanded beyond the browser’s internal state to external observables such as network metadata~\cite{leeNettrackGenericWeb2023} and physical signals~\cite{jeonImListeningYour2018}, enabling coarse tracking even under strong isolation or encryption assumptions. 
+%
+Together, this line of work has suggested a trajectory away from brittle single-mechanism attacks and toward compositional and cross-layer side channels that exploit performance optimizations, shared infrastructure, and user interactions. 
+%
+Generally, side-channel attacks are challenging to detect and could be equally difficult to mitigate.
+
+%%
+\para{Extension Fingerprinting.} 
+%
+This other side-channel approach aims at inferring the presence of specific extensions in user's browser~\cite{karamiCarnusExploringPrivacy2020}. 
+%
+Early studies~\cite{sjostenDiscoveringBrowserExtensions2017, gulyasExtendNotExtend2018, karamiCarnusExploringPrivacy2020} demonstrated how extensions contain specific resources (\eg{},~images, scripts) that can be referenced by web pages, thereby revealing their presence. 
+%
+Researchers have also explored behavioral extension fingerprinting~\cite{starovXHOUNDQuantifyingFingerprintability2017, karamiCarnusExploringPrivacy2020, solomosDangersHumanTouch2022, solomosEscapingConfinesTime2022, laperdrixFingerprintingStyleDetecting2021, agarwalPeekingWindowFingerprinting2024}, where an extension can be implicitly inferred through executional side-effects, and corresponding mitigations~\cite{karamiUnleashSimulacrumShifting2022, sanchez-rolaExtensionBreakdownSecurity2017} such as randomizing WARs, IDs, or classes~\cite{trickelEveryoneDifferentClientside2019}, and access control based extension loading~\cite{sjostenLatexGlovesProtecting2019}. 
+
+
+%%
+\para{Behavioral Fingerprinting.} 
+%
+% Behavioral fingerprinting involves using browser APIs and setting-up event listeners to record user's behavior (\eg{} mouse movements, keystrokes, click behavior, and other interaction patterns) on a website, that are known to be unique for a given user~\cite{leivaMyMouseMy2021}.
+%
+Early work on behavioral fingerprinting has shown that fine-grained interaction signals such as mouse movements can reliably distinguish users and support continuous or implicit authentication~\cite{zhengEfficientUserVerification2011,jorgensenMouseDynamicsBehavioral2011}, even in realistic adversarial settings~\cite{fereidooniAuthentiSenseScalableBehavioral2023}. 
+%
+Similarly, keystroke patterns from user's typing behavior can be used to reliably link a user across their devices~\cite{yuanCrossdeviceTrackingIdentification2018}.
+%
+Such behavioral signals are commonly used in bot detection and inference of user attributes from interaction traces~\cite{leivaMyMouseMy2021}. 
+
+
+%%
+\para{Hardware Fingerprinting.} 
+%
+Sanchez-Rola et al. demonstrated how JavaScript APIs can be used to construct a hardware fingerprint by analyzing the execution timing of instruction sequences~\cite{sanchez-rolaClockClockTimeBased2018}, while others have demonstrated browser-based fingerprinting techniques that target the device's CPU~\cite{trampertBrowserBasedCPUFingerprinting2022,matyuninTrackingPrivateBrowsing2018} or GPU~\cite{laorDRAWNAPARTDevice2022}. 
+%
+Recent research also demonstrates DRAM-based device fingerprinting capabilities from the vantage point of browsers~\cite{venugopalanFPRowhammerDRAMBasedDevice2024}.
+%
+Hardware-related fingerprints have also been extensively explored within the mobile ecosystem~\cite{bojinovMobileDeviceIdentification2014,dasTrackingMobileWeb2016,marcantoniLargescaleStudyRisks2019,hupperichRobustnessMobileDevice2015,deyAccelPrintImperfectionsAccelerometers2014,zhang2019sensorid}, due to the availability of additional sensors (\eg{}, gyroscope, magnetometer) which can exhibit unique hardware ``imperfections'' that occur during the manufacturing process. 
+%
+%
+More broadly, any browser mechanism that extracts some form of data or affects client-side policies or behavior without storing a user-specific identifier, should be treated as a potential stateless tracking vector and analyzed accordingly~\cite{aliNavigatingMurkyWaters2023}. 
+
+
+
+\subsection{Challenges and Open Problems - Stateless Tracking}
+
+\para{Real World Impact of Browser Fingerprinting.}
+Prior studies on fingerprinting diversity have been carried out on datasets with a wide range of sizes; 470k~\cite{eckersleyHowUniqueYour2010}, 118k~\cite{laperdrixBeautyBeastDiverting2016}, 2.07M~\cite{gomez-boixHidingCrowdAnalysis2018}, 7.2M~\cite{liWhoTouchedMy2020}, and 1.5B~\cite{wuHimManyFaces2023} fingerprints. As a result, conclusions are varied with smaller datasets having more unique fingerprints globally, and larger ones presenting proportionally more unique values for specific collected attributes. Thus, it is still unclear if these findings about fingerprinting effectiveness hold across different audiences and device types~\cite{berkeHowUniqueWhose2025}. A recent work also suggests automated crawls do not accurately capture fingerprinting~\cite{muthu2025beyond}. Additionally, if existing work explains how fingerprinting can be leveraged for tracking and additional security, real purposes and integration within live systems are not well understood.
+
+\begin{opbox}
+What is the real impact of fingerprinting at scale, on vulnerable populations (\eg{}, minorities, children, marginalized), and paired with other techniques?
+\end{opbox}
+
+
+\para{``Good’’  vs. ``Bad’’ Fingerprinting.}
+%%
+A main challenge with fingerprinting is that the same techniques can be used for very different purposes by websites, from (re-)identifying users across the web, for cross-site tracking and targeted advertising, to differentiating between a bot and human visitor trying to authenticate into an account. This duality (see \refappendix{sec:need-for-fingerprinting}) has hindered attempts at only allowing fingerprinting for ``benign’’ purposes, \ie{}, to ensure security, while also preserving users' privacy. Liu et al.~\cite{liuFirstEarlyEvidence2025} took a first step towards this differentiation by looking at changes in ads as a heuristic of browser fingerprinting adjustments.
+
+%%
+\begin{opbox}
+Can we automatically assign the purposes of trackers to determine fingerprinting intent and block only tracking use cases while allowing benign ones?
+\end{opbox}
+
+
+
+
+
+
+
+\subsection{Cross-device Tracking}
+\label{sec:cross-device}
+
+\para{Types of Cross-device Tracking.} Cross-device tracking can be \textit{deterministic} or \textit{probabilistic}. Traditionally, user’s account information such as username or email addresses have been used to link or associate browsing activity across devices~\cite{kimProbabilisticVisitorStitching2017,cottaOffPolicyEvaluationProbabilistic2019,brookmanCrossDeviceTrackingMeasurement2017}. When these deterministic identifiers fail, for example, if the user is logged out, probabilistic signals are used such as (a) IP addresses shared by multiple devices belonging to the same user~\cite{diaz-moralesCrossDeviceTrackingMatching2015}, (b) URL browsing patterns~\cite{phanCrossDeviceMatching2017}, (c) OS and hardware characteristics~\cite{caoCrossBrowserFingerprintingOS2017}, or (d) user behavior such as typing~\cite{yuanCrossdeviceTrackingIdentification2018}. These features are combined by trackers into \textit{cross-device graphs}~\cite{zimmeckPrivacyAnalysisCrossdevice2017,wangGraphTrackGraphbasedCrossDevice2022}.
+
+\para{Limitations.} However, probabilistic techniques do not always provide a reliable identifier (\eg{} ISPs dynamically rotate and share public IP addresses across several households). As a result, trackers employ proprietary algorithms to eliminate noise, such as ignoring commercial, private, and proxied IP ranges from cross-device graph computations, or setting fine temporal thresholds for observed identifiers to be considered originating from the same user.
+
+
+
+
+

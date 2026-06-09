@@ -1,0 +1,66 @@
+% =========================================================
+% Appendix Table A1: Stateful / identifier-based tracking
+% =========================================================
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{p{2.8cm} Y Y}
+\toprule
+\textbf{Tracking Mechanism} & \textbf{How does it work? / What does it enable?} & \textbf{Mitigations / Defenses} \\
+\midrule
+
+\multicolumn{3}{l}{\textbf{Third-party stateful tracking}}\\
+\addlinespace[2pt]
+
+Third-party cookies &
+Cross-site identifiers set/read by embedded third parties enable recognition across unrelated sites and support profiling/retargeting at scale \cite{roesnerDetectingDefendingThirdparty2012,englehardtOnlineTracking1millionsite2016,gomerNetworkAnalysisThird2013,frankenWhoLeftOpen2018,beugin2024WebAlmanac2024}. &
+Block or partition third-party cookies and other state; use interaction-gated access (e.g., Storage Access API), enforce cookie attributes (e.g., SameSite), and deploy tracking protections/storage partitioning \cite{TrackingPreventionWebKit2020,privacycommunitygroupClientSideStoragePartitioning2022,mdnStorageAccessAPI2024,khodayariStateSameSiteStudying2022}. \\
+
+Cookie syncing (ID syncing) &
+Trackers/ad exchanges reconcile distinct user IDs by sharing identifiers via redirects, URL parameters, or back-channel coordination, expanding the effective tracking graph \cite{papadopoulosCookieSynchronizationEverything2019,bashirTracingInformationFlows2016}. &
+Partition/block third-party state; detect and block syncing endpoints and redirect patterns; use flow/graph-based approaches to identify identifier-sharing structures \cite{sibyWebGraphCapturingAdvertising2022,iqbalAdGraphGraphBasedApproach2020}. \\
+
+Tracking pixels &
+Tiny/invisible resources trigger requests that transmit identifiers and page context; widely used for measurement and ad attribution \cite{yuTrackingTrackers2016,fouadMissedFilterLists2020}. &
+Endpoint and content blocking (plus better filter maintenance); URL/parameter sanitization to reduce identifier leakage in requests and navigations \cite{fouadMissedFilterLists2020,munirPURLSafeEffective2024,bekosHitchhikersGuideFacebook2023}. \\
+
+Session replay &
+Third-party JS records DOM events and user interactions (including form inputs) for analytics/support; misconfiguration can capture sensitive data \cite{englehardtNoBoundariesCredentials2018}. &
+Block or constrain session-replay vendors and scripts; limit access to sensitive fields; auditing/runtime controls and policy enforcement to prevent over-collection \cite{englehardtNoBoundariesCredentials2018}. \\
+
+\addlinespace[3pt]
+\multicolumn{3}{l}{\textbf{First-party stateful tracking}}\\
+\addlinespace[2pt]
+
+% (respawning)
+Supercookies / evercookies &
+Identifiers are redundantly stored across multiple APIs (e.g., Flash/legacy storage, localStorage, caches/ETags, favicon/cache tricks, HSTS-like bits) to recreate IDs after deletion \cite{kamkarSamyKamkarEvercookie2010,ayensonFlashCookiesPrivacy2011,fouadMyCookiePhoenix2022,solomosTalesFaviconsCaches2021,mishraDejaVuAbusing2021,syversonHSTSSupportsTargeted2018}. &
+Comprehensive state clearing beyond cookies; deprecate legacy plugins; partition client-side storage/network state; use standards like storage partitioning and “clear site data” style policies \cite{privacycommunitygroupClientSideStoragePartitioning2022,TrackingPreventionWebKit2020}. \\
+
+First-party cookies &
+Embedded third-party scripts write IDs into the \emph{first-party} cookie jar (or use first-party endpoints), bypassing third-party cookie blocking and enabling site-scoped identifiers \cite{chenCookieSwapParty2021,demirUnderstandingFirstPartyCookie2022}. &
+Attribute cookies to responsible scripts and detect tracking-purpose cookies; isolate/partition or restrict first-party storage writes by third-party code \cite{munirCookieGraphUnderstandingDetecting2023,bahramiCOOKIEGUARDCharacterizingIsolating2024}. \\
+
+CNAME cloaking &
+A first-party subdomain is CNAMEd to a third-party tracker so requests/storage appear first-party, evading naive third-party heuristics \cite{daoCNAMECloakingBasedTracking2021,dimovaCNAMEGameLargescale2021}. &
+Resolve CNAME chains and treat cloaked services as third-party; apply list + behavior-based detection and partition/block accordingly \cite{daoCNAMECloakingBasedTracking2021,dimovaCNAMEGameLargescale2021}. \\
+
+Link decoration &
+Identifiers or join keys are appended to URLs and propagated across navigations/redirects, enabling linkage across sites and contexts \cite{munirPURLSafeEffective2024,bekosHitchhikersGuideFacebook2023}. &
+Sanitize tracking parameters; constrain identifier propagation through redirects and navigations; use allow/deny lists + heuristics for tracking params \cite{munirPURLSafeEffective2024}. \\
+
+Bounce tracking &
+Intermediate “bounce” domains perform redirects while reading/writing state, enabling cross-site linkage despite stricter cookie controls \cite{braveprivacyteamUnlinkableBouncingMore2022,kellyBounceTrackingMitigations2022}. &
+Navigation tracking mitigations that detect bounces and purge/partition storage for bounce domains; limit cross-site state access around bounce chains \cite{braveprivacyteamUnlinkableBouncingMore2022,kellyBounceTrackingMitigations2022}. \\
+
+Server-side tracking &
+Event reporting shifts from client-side pixels to server-to-server pipelines, reducing the visibility/effectiveness of browser-side blockers \cite{fouadDevilDetailsDetection2024,fraihiClientsideServersideTracking2024}. &
+Detect server-side endpoints and event pipelines via measurement; combine technical auditing with stronger governance/compliance controls \cite{fouadDevilDetailsDetection2024,fraihiClientsideServersideTracking2024}. \\
+
+\bottomrule
+\end{tabularx}
+\caption{\textbf{Stateful / identifier-based} tracking mechanisms and common mitigations.}
+\label{tab:appendix-stateful-tracking}
+\end{table*}

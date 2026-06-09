@@ -1,0 +1,59 @@
+% =========================================================
+% Appendix Table A2: Stateless tracking (fingerprinting, sensors, side-channels)
+% =========================================================
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{p{2.8cm} Y Y}
+\toprule
+\textbf{Tracking Mechanism} & \textbf{How does it work? / What does it enable?} & \textbf{Mitigations / Defenses} \\
+\midrule
+
+Browser fingerprinting &
+Derives stable identifiers from exposed attributes/APIs (UA, fonts, canvas, WebGL, audio, timing, etc.), often without any stored client state \cite{effpanopticlick,nikiforakisCookielessMonsterExploring2013,acarFPDetectiveDustingWeb2013,laperdrixBeautyBeastDiverting2016,vastelFPSTALKERTrackingBrowser2018}. &
+Reduce entropy (standardize outputs, clamp timers, permission-gate APIs); anti-fingerprinting (“lie/perturb”) and privacy-budget/noise approaches \cite{gomez-boixHidingCrowdAnalysis2018,dattaEvaluatingAntiFingerprintingPrivacy2019,dotyMitigatingBrowserFingerprinting2019,nikiforakisPriVaricatorDeceivingFingerprinters2015,snyderBraveFingerprintingPrivacy2019,torANTIFINGERPRINTINGTorProject,firefoxResistFingerprinting,rescorlaTechnicalCommentsPrivacy2021}. \\
+
+Canvas fingerprinting &
+Uses pixel readback from rendered canvases to infer device/software differences, frequently combined with other signals \cite{moweryPixelPerfectFingerprinting2012,acarFPDetectiveDustingWeb2013}. &
+Restrict readback, standardize rendering, or add noise; deploy anti-fingerprinting modes \cite{dattaEvaluatingAntiFingerprintingPrivacy2019,torANTIFINGERPRINTINGTorProject}. \\
+
+WebGL / GPU fingerprinting &
+Extracts high-entropy signals from GPU/driver rendering behavior (e.g., shader outputs), enabling robust identifiers \cite{wuRenderedPrivateMaking2019,laorDRAWNAPARTDevice2022}. &
+Uniform rendering pipelines, reduce surface area, clamp high-resolution timing, and apply privacy budgets/noise \cite{rescorlaTechnicalCommentsPrivacy2021,dotyMitigatingBrowserFingerprinting2019}. \\
+
+Audio fingerprinting &
+Captures distinctive characteristics from the audio stack/hardware pipeline to identify devices \cite{chaliseYourSpeakerMy2022}. &
+Permission-gate and standardize/noise audio outputs; limit high-entropy API exposure \cite{rescorlaTechnicalCommentsPrivacy2021}. \\
+
+% (motion/IMU)
+Sensor-based fingerprinting &
+Uses accelerometer/gyroscope access to infer device properties or behavioral signals that aid tracking \cite{dasTrackingMobileWeb2016,dasWebsSixthSense2018}. &
+Reduce precision and sampling rates; require permissions and add noise \cite{dasWebsSixthSense2018}. \\
+
+Battery status leakage &
+Battery APIs expose fine-grained state that can form short-term identifiers and facilitate linkage \cite{olejnikLeakingBatteryPrivacy2016,olejnikBatteryStatusNot2017}. &
+Coarsen/remove battery APIs; permission-gate and rate-limit access \cite{olejnikBatteryStatusNot2017}. \\
+
+Timing / cache side channels &
+Timing/cache effects can reveal cross-origin state or contribute to fingerprinting even under some restrictions \cite{sanchez-rolaClockClockTimeBased2018,weinbergStillKnowWhat2011,shusterman2021prime+,jinTimingBasedBrowsingPrivacy2022}. &
+Timer clamping/jitter, stronger isolation, and reducing shared resources to limit leakage \cite{sanchez-rolaClockClockTimeBased2018,rescorlaTechnicalCommentsPrivacy2021}. \\
+
+Extension fingerprinting &
+Detects installed extensions via web-accessible resources and behavioral probes, yielding high-entropy identifiers \cite{starovXHOUNDQuantifyingFingerprintability2017,trickelEveryoneDifferentClientside2019,karamiCarnusExploringPrivacy2020,karamiUnleashSimulacrumShifting2022,agarwalPeekingWindowFingerprinting2024}. &
+Harden extension resource policies; reduce observable surfaces and isolate extension contexts \cite{laperdrixFingerprintingStyleDetecting2021}. \\
+
+Behavioral fingerprinting &
+Builds identifiers from user interaction dynamics (mouse movements, typing patterns), often complementing other signals \cite{leivaMyMouseMy2021,yuanCrossdeviceTrackingIdentification2018}. &
+Limit granularity and frequency of event streams; detect/block behavioral scripts; minimize exposure of high-frequency events \cite{leivaMyMouseMy2021}. \\
+
+Cross-device tracking &
+Links identities across devices using deterministic identifiers (logins/emails) and/or probabilistic matching of signals and behaviors \cite{diaz-moralesCrossDeviceTrackingMatching2015,brookmanCrossDeviceTrackingMeasurement2017,zimmeckPrivacyAnalysisCrossdevice2017,wangGraphTrackGraphbasedCrossDevice2022}. &
+Reduce reuse of stable join keys; constrain identifier sharing; strengthen transparency/controls and governance \cite{brookmanCrossDeviceTrackingMeasurement2017,zimmeckPrivacyAnalysisCrossdevice2017}. \\
+
+\bottomrule
+\end{tabularx}
+\caption{\textbf{Stateless} tracking mechanisms (fingerprinting, sensors, side-channels) and common mitigations.}
+\label{tab:appendix-stateless-tracking}
+\end{table*}
