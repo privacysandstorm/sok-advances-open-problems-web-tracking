@@ -108,6 +108,7 @@ The adversary's primary goal is to persistently and uniquely label the user or t
 %
 Besides, a secondary goal of the tracker may be to avoid detection or prevention; \ie{}, achieving their goal despite anti-tracking measures.
 
+\input{tables/prior-work}
 
 %%
 \para{Adversary Capabilities.} 
@@ -148,47 +149,13 @@ A tracker present outside the browser (e.g., at a network vantage point) can als
 %%
 % We use this threat model to understand different web tracking mechanisms and their evolution over time.
 
-\begin{table*}[!ht]
-    \centering
-    \begin{tabular}{ccc}
-    \toprule
-    \textbf{Work} & \textbf{Year} & \textbf{Scope}\\
-    \midrule
-         Mayer and Mitchell~\cite{mayerThirdPartyWebTracking2012} & 2012 & \\
-         
-         Bujlow et al.~\cite{bujlowSurveyWebTracking2017} & 2017 & Techniques and defenses\\
-         
-         Sanchez-Rola et al.~\cite{sanchez-rolaWebWatchingYou2017} & 2017 & Techniques and countermeasures\\
-         
-         Laperdrix et al.~\cite{laperdrix2020browser} & 2020 & \\
-         
-         % Schnitzler et al.~\cite{schnitzlerSoKManagingLongitudinal2021} & 2021 & \\ %out-of-scope (online service/social media data sharing)
-         
-         Rokicki et al.~\cite{rokickiSoKSearchLost2021} & 2021 & JS timers-based attacks\\
-         
-         Sprecher et al.~\cite{sprecherSoKAllNothing2022} & 2022 & Script inclusion and permissions\\
-         
-         Subramani et al.~\cite{subramaniSoKWorkeroundsCategorizing2022} & 2022 & Service workers-based attacks and mitigations\\
-         
-         Stafeev and Pellegrino~\cite{stafeevSoKStateKrawlers2024} & 2024 & Measurement crawlers and methodology\\
-         
-         Birrell et al.~\cite{birrellSoKTechnicalImplementation2024} & 2024 & \\
-         
-         Rieder et al.~\cite{riederSoKDecadesWeb2026} & 2026 & Tracker detection (methodology measurements)\\
-         
-         \hline
-         Ours & 2026 & Techniques, mitigations, and regulations\\
-     \bottomrule
-    \end{tabular}
-    \caption{Comparison overview to prior SoK and survey papers related to web tracking.}
-    \label{tab:prior-sok-comparaisons}
-\end{table*}
+
+
 
 
 \subsection{Related Systematization Work}
 
 \todo{comparison w.r.t. to prior SoKs related to web tracking - see notes in GG doc}
 
-% for table:
-% Author et al. or Title [cite], year, scope, (audience?), technique, defense, regulations, future directions, nb papers/refs
+
 

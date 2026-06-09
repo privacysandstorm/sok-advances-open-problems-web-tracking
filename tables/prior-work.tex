@@ -1,0 +1,38 @@
+% for table:
+% Author et al. or Title [cite], year, scope, (audience?), technique, defense, regulations, future directions, nb papers/refs
+\begin{table*}[!ht]
+    \centering
+    \begin{tabular}{cccccccc}
+    \toprule
+    & & & \multicolumn{2}{c}{\textbf{Techniques}} & \multicolumn{2}{c}{\textbf{Defenses}}\\
+    \textbf{Work} & \textbf{Year} & \textbf{Scope}& \textbf{Stateful} & \textbf{Stateless} & \textbf{Academic} & \textbf{Industrial} & \textbf{Regulations}\\
+    \midrule
+         Mayer and Mitchell~\cite{mayerThirdPartyWebTracking2012} & 2012 & Third-party tracking techniques and policy\\
+         
+         Bujlow et al.~\cite{bujlowSurveyWebTracking2017} & 2017 & Techniques and defenses\\
+         
+         Sanchez-Rola et al.~\cite{sanchez-rolaWebWatchingYou2017} & 2017 & Techniques and countermeasures\\
+         
+         Laperdrix et al.~\cite{laperdrix2020browser} & 2020 & Browser fingerprinting techniques and defenses\\
+         
+         % Schnitzler et al.~\cite{schnitzlerSoKManagingLongitudinal2021} & 2021 & \\ %out-of-scope (online service/social media data sharing)
+         
+         Rokicki et al.~\cite{rokickiSoKSearchLost2021} & 2021 & JS timers-based attacks\\
+         
+         Sprecher et al.~\cite{sprecherSoKAllNothing2022} & 2022 & Script inclusion and permissions\\
+         
+         Subramani et al.~\cite{subramaniSoKWorkeroundsCategorizing2022} & 2022 & Service workers-based attacks and mitigations\\
+         
+         Stafeev and Pellegrino~\cite{stafeevSoKStateKrawlers2024} & 2024 & Measurement crawlers and methodology\\
+         
+         Birrell et al.~\cite{birrellSoKTechnicalImplementation2024} & 2024 & Internet Privacy Regulations \\
+         
+         Rieder et al.~\cite{riederSoKDecadesWeb2026} & 2026 & Tracker detection (methodology measurements)\\
+         
+         \hline
+         Ours & 2026 & Techniques, mitigations, and regulations & \pie{360} & \pie{360} & \pie{360} & \pie{360} &\\
+     \bottomrule
+    \end{tabular}
+    \caption{Comparison overview to prior SoK and survey papers related to web tracking.}
+    \label{tab:prior-sok-comparaisons}
+\end{table*}

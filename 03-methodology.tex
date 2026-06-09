@@ -71,39 +71,33 @@ We use our domain expertise to structure the SoK around this taxonomy to systema
 %%
 \begin{table*}[t]
 \centering
-\caption{Summary of systematization criteria and taxonomy.}
+\caption{Summary of systematization criteria and taxonomy for tracking techniques, defenses, and regulatory compliance.}
 \label{tab:systematization-criteria}
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{p{0.08cm} p{10.3cm} p{5.9cm}}
+\begin{tabular}{p{0.03cm} p{9.2cm} p{7.0cm}}
 \toprule
 & \textbf{Criteria and Description} & \textbf{Taxonomy} \\
 \midrule
 
 \multirow[c]{7}{*}{\rotatebox[origin=c]{90}{\parbox{2.5cm}{\centering\textbf{Techniques}}}}
- & \textbf{Tracked Artifacts}: What artifacts are used to track users using this tracking technique? & see Table~\ref{tab:} \\
+ & \textbf{Tracked Artifacts}: What artifacts are used to track users using this technique? & see Table~\ref{tab:} \\
  & \textbf{Tracked State}: What state does this tracking technique maintain to track users? & Stateful, Stateless, Both \\
  & \textbf{Tracking Context}: In what context does this tracking technique function? & Third-party, First-party, Both \\
- & \textbf{Tracker Goals}: What are achievable goals of the tracker employing this tracking? & Same-site, Cross-site, Cross-device \\
- & \textbf{Tracker Capabilities}: What capabilities are required to use this tracking technique? & Inclusion, Execution, Observation, Storage, Sharing \\
+ & \textbf{Tracker Goals}: What are goals of the tracker employing this tracking? & Same-site, Cross-site, Cross-device \\
+ & \textbf{Tracker Capabilities}: What capabilities are required to use this technique? & \symInclusion\ Inclusion, \symExecution\ Execution, \symObservation\ Observation, \symStorage\ Storage, \symSharing\ Sharing \\
  & \textbf{Gaps}: What are potential gap(s) in the evolution of this tracking techniques? & see Section~\ref{sec:} \\
  & \textbf{Open problems}: What are potential future research direction(s) related to this tracking? & see Section~\ref{sec:} \\
 
 \midrule
 
 \multirow[c]{6}{*}{\rotatebox[origin=c]{90}{\parbox{2.2cm}{\centering\textbf{Defenses}}}}
- & \textbf{Tracking technique}: What tracking technique does this tracking defense protect against? & see Table~\ref{tab:} \\
- & \textbf{Defense Artifact}: What tracking artifact(s) does this defense apply protection to? & see Table~\ref{tab:} \\
+ & \textbf{Tracking technique}: What tracking does this defense protect against? & see Table~\ref{tab:} \\
+ & \textbf{Defense Artifact}: What tracking artifact(s) does this defense apply protection to? & see Table~\ref{tab:} \\ 
  & \textbf{Defense Development}: Who developed this tracking defense? & Research-based, Community-based, Industrial \\
- & \textbf{Defense Deployment}: How can or is this defense deployed? & \dNative in-browser, \dExt extension, offline / list-augmentation or auditing tool (\dTool\ );  server-, network-, protocol-, or OS-level (\dServer\ ). \\
- & \textbf{Defense Support}: What is support for this and other related practically deployed defenses? & see Figure~\ref{fig:} for browser-specific support\\
+ & \textbf{Defense Deployment}: How can or is this defense deployed? & \dNative\ in-browser, \dExt\ extension, \dTool\ offline, \dServer\ infrastructural \\  % server-/network-/protocol-/OS-level
+ & \textbf{Defense Support}: What is support for this and related practically deployed defenses? & see Figure~\ref{fig:} for browser-specific support \\
  & \textbf{Gaps}: What are potential gap(s) in the evolution of these tracking defenses? & see Section~\ref{sec:} \\
  & \textbf{Open problems}: What are potential future research direction(s) for defenses? & see Section~\ref{sec:} \\
-
- \newcommand{\dNative}{\ding{108}} % in-browser
-\newcommand{\dExt}{\ding{117}} % extension
-\newcommand{\dTool}{\ding{109}} % offline/list tool
-\newcommand{\dServer}{\ding{115}} % server/network/protocol/OS
-\newcommand{\dNo}{\textemdash}
 
 \midrule
 
