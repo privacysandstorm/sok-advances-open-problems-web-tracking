@@ -147,6 +147,35 @@
 \newcommand{\dNo}{\textemdash} % no/unknown industrial defense
 
 
+% Tracker capabilities
+
+% Circle fills (light pastels)
+\definecolor{capIncBg}{HTML}{DBEAFE}
+\definecolor{capExeBg}{HTML}{FEE2E2}
+\definecolor{capObsBg}{HTML}{FEF3C7}
+\definecolor{capStoBg}{HTML}{CCFBF1}
+\definecolor{capShaBg}{HTML}{EDE9FE}
+
+% Circle borders
+\definecolor{capIncBd}{HTML}{93C5FD}
+\definecolor{capExeBd}{HTML}{FCA5A5}
+\definecolor{capObsBd}{HTML}{FCD34D}
+\definecolor{capStoBd}{HTML}{5EEAD4}
+\definecolor{capShaBd}{HTML}{C4B5FD}
+
+\newcommand{\capsym}[3]{%
+  \tikz[baseline=-0.55ex]{%
+    \node[circle, fill=#1, draw=#2, line width=0.4pt,
+          inner sep=0pt, minimum size=2.1ex,
+          font=\fontsize{8}{8}\selectfont\bfseries\sffamily,
+          text=black]{#3};}}
+
+\newcommand{\symInclusion}{\capsym{capIncBg}{capIncBd}{I}}
+\newcommand{\symExecution}{\capsym{capExeBg}{capExeBd}{E}}
+\newcommand{\symObservation}{\capsym{capObsBg}{capObsBd}{O}}
+\newcommand{\symStorage}{\capsym{capStoBg}{capStoBd}{T}}
+\newcommand{\symSharing}{\capsym{capShaBg}{capShaBd}{S}}
+
 
 % TBD to create a warning at compilation (i.e., to not forget to edit later)
 \newcommand{\TBD}[2]{\errmessage{#1}{[#2]}}
