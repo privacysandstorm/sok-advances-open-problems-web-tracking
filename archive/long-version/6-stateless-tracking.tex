@@ -9,7 +9,7 @@
 %%
 Browser (or device) fingerprinting is a technique used to collect information on users’ browsers and devices. 
 %
-By using HTTP headers and calling specific JavaScript APIs, a website can collect a wide range of information on the browser and its configuration (\eg{} browser version, screen size, installed list of fonts, GPU model, timezone and preferred languages) to the underlying operating system and the hardware. 
+By using HTTP headers and calling specific JavaScript APIs, a website can collect a wide range of information on the browser and its configuration (e.g., browser version, screen size, installed list of fonts, GPU model, timezone and preferred languages) to the underlying operating system and the hardware. 
 %
 Research has shown that the diversity of internet-connected devices is so vast that the combination of collected attributes can be unique, leading to the identification of a specific device~\cite{eckersleyHowUniqueYour2010, laperdrixBeautyBeastDiverting2016,gomez-boixHidingCrowdAnalysis2018}. 
 %
@@ -23,7 +23,7 @@ For example, if a device's screen size can have 8 distinct values, its entropy i
 %
 Unlike techniques described in~\autoref{sec:stateful-tracking}, fingerprinting: 
 %
-1) does not rely on a stored state (\ie{} ID) in the browser to track a user as the fingerprint collection is performed in real-time to identify a device; 
+1) does not rely on a stored state (i.e., ID) in the browser to track a user as the fingerprint collection is performed in real-time to identify a device; 
 %
 2) is hard to detect and block; 
 %
@@ -43,7 +43,7 @@ In 2013, fingerprinting was observed on just $\sim$1\% of the top 10K websites~\
 %
 Over the years, a variety of techniques have been used to measure browser fingerprinting~\cite{acarWebNeverForgets2014,englehardtOnlineTracking1millionsite2016,olejnikBatteryStatusNot2017,dasWebsSixthSense2018}, with two general trends being: its higher adoption by third-parties and its expansion to a diverse set of browser APIs over the years. 
 %
-By 2021, fingerprinting scripts were found to be present on 10\% of the top 100K websites, with more popular ones having a higher incidence (\ie{}, 30\% of the top 1,000)~\cite{iqbalFingerprintingFingerprintersLearning2021}.
+By 2021, fingerprinting scripts were found to be present on 10\% of the top 100K websites, with more popular ones having a higher incidence (i.e., 30\% of the top 1,000)~\cite{iqbalFingerprintingFingerprintersLearning2021}.
 %
 Importantly, browser fingerprints are not always stable enough to track users over time: 80\% of browser instances change fingerprints in less than 10 days~\cite{vastelFPSTALKERTrackingBrowser2018}. 
 %
@@ -77,7 +77,7 @@ Besides browser fingerprinting techniques, researchers have demonstrated numerou
 %
 One such approach is extension fingerprinting, aimed at inferring the presence of specific extensions in user's browser~\cite{karamiCarnusExploringPrivacy2020}. 
 %
-Early studies~\cite{sjostenDiscoveringBrowserExtensions2017, gulyasExtendNotExtend2018, karamiCarnusExploringPrivacy2020} demonstrated how extensions contain specific resources (\eg{}, images, scripts) that can be referenced by web pages, thereby revealing their presence in the user's browser. 
+Early studies~\cite{sjostenDiscoveringBrowserExtensions2017, gulyasExtendNotExtend2018, karamiCarnusExploringPrivacy2020} demonstrated how extensions contain specific resources (e.g., images, scripts) that can be referenced by web pages, thereby revealing their presence in the user's browser. 
 %
 Researchers have also explored behavioral extension fingerprinting~\cite{starovXHOUNDQuantifyingFingerprintability2017, karamiCarnusExploringPrivacy2020, solomosDangersHumanTouch2022, solomosEscapingConfinesTime2022, laperdrixFingerprintingStyleDetecting2021, agarwalPeekingWindowFingerprinting2024}---where an extension can be implicitly inferred through executional side-effects---and corresponding mitigations~\cite{karamiUnleashSimulacrumShifting2022, sanchez-rolaExtensionBreakdownSecurity2017} such as randomizing WARs, IDs, or classes~\cite{trickelEveryoneDifferentClientside2019} and access control based extension loading~\cite{sjostenLatexGlovesProtecting2019}. 
 
@@ -89,7 +89,7 @@ Sanchez-Rola et al. further demonstrated how JavaScript APIs can be used to cons
 %
 Recent research also demonstrates DRAM-based device fingerprinting capabilities from the vantage point of browsers~\cite{venugopalanFPRowhammerDRAMBasedDevice2024}.
 %
-Hardware-related fingerprints have also been extensively explored within the mobile ecosystem~\cite{bojinovMobileDeviceIdentification2014,dasTrackingMobileWeb2016,marcantoniLargescaleStudyRisks2019,hupperichRobustnessMobileDevice2015,deyAccelPrintImperfectionsAccelerometers2014,zhang2019sensorid}, due to the availability of additional sensors (\eg{}, gyroscope, magnetometer) which can exhibit unique hardware ``imperfections'' that occur during the manufacturing process. 
+Hardware-related fingerprints have also been extensively explored within the mobile ecosystem~\cite{bojinovMobileDeviceIdentification2014,dasTrackingMobileWeb2016,marcantoniLargescaleStudyRisks2019,hupperichRobustnessMobileDevice2015,deyAccelPrintImperfectionsAccelerometers2014,zhang2019sensorid}, due to the availability of additional sensors (e.g., gyroscope, magnetometer) which can exhibit unique hardware ``imperfections'' that occur during the manufacturing process. 
 %
 More broadly, any browser mechanism that extracts some form of data or affects client-side policies or behavior without storing a user-specific identifier, should be treated as a potential stateless tracking vector and analyzed accordingly~\cite{aliNavigatingMurkyWaters2023}. 
 %

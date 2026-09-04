@@ -57,7 +57,7 @@ For instance, \texttt{tracker1.com} embedded on \texttt{news.com} would like to 
 %
 In summary, the adversary's primary goal is to persistently and uniquely label the user or the user’s browser/device and to collect user data tied to that label, across navigations, sites, and over time, for purposes such as profiling, analytics, or ad targeting.
 %
-Besides, a secondary goal of the tracker may be to avoid detection or prevention---\ie{}, trackers aim to achieve their goal despite anti-tracking measures.
+Besides, a secondary goal of the tracker may be to avoid detection or prevention---i.e., trackers aim to achieve their goal despite anti-tracking measures.
 
 
 
@@ -74,15 +74,15 @@ The adversary is considered capable enough to track users either in presence of 
 %
 A first-party tracker is assumed to directly monitor user activities within the mainframe context.
 %
-A third-party tracker could be embedded as an inline resource (\eg{}, image/script tag) within the mainframe context by the first-party assuming trust delegation, an iframe with a separate context under its origin (\ie{}, with its own DOM, state, and resources), or as a resource within a third-party iframe, isolated from the mainframe context. 
+A third-party tracker could be embedded as an inline resource (e.g., image/script tag) within the mainframe context by the first-party assuming trust delegation, an iframe with a separate context under its origin (i.e., with its own DOM, state, and resources), or as a resource within a third-party iframe, isolated from the mainframe context. 
 %
 \textbf{\textit{Collection}.}
 %
 A tracker aims to collect user data through available browser features by either executing JavaScript code or reading browser storage.
 %
-By including an executable resource (\eg{}, script) on the webpage, tracker gains the ability to run code in the user’s browser, subject to script execution context requirements governed by browser's context model discussed in~\autoref{sec:background}.
+By including an executable resource (e.g., script) on the webpage, tracker gains the ability to run code in the user’s browser, subject to script execution context requirements governed by browser's context model discussed in~\autoref{sec:background}.
 %
-With an embedded non-executable resource (\eg{}, image), a tracker can still initiate resource loading requests to its server, sharing cookies along with the request.
+With an embedded non-executable resource (e.g., image), a tracker can still initiate resource loading requests to its server, sharing cookies along with the request.
 %
 We assume the tracker could use one or more inclusion methods described above depending on what the first-party allows.
 %
@@ -98,7 +98,7 @@ Next, the adversary's goal is to share the collected user data with its own serv
 %
 For this, trackers can initiate network requests including the user data in one of four ways: (1)~as request URL query parameter, (2) request payload, (3)~request header, or (4) through HTTP cookies.
 %
-Approaches 1-3 require tracking scripts to explicitly include user data, whereas HTTP cookies associated with the tracker's domain are automatically included in all requests to the tracker's server. % (\eg{}, setting a custom request header for tracking).
+Approaches 1-3 require tracking scripts to explicitly include user data, whereas HTTP cookies associated with the tracker's domain are automatically included in all requests to the tracker's server. % (e.g., setting a custom request header for tracking).
 %
 % In case of 4, browsers automatically attach the previously set tracker's cookies with the requests sent to the tracker’s domain as a request header, even if that request originates in a first-party context. 
 %%

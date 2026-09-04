@@ -1,0 +1,210 @@
+% Checkmarks
+
+\usepackage[landscape,margin=0.4in]{geometry}
+\usepackage{longtable}
+\usepackage{rotating}
+\usepackage{calc}
+\usepackage{xcolor}
+\usepackage{natbib}
+
+\newcommand{\yes}{\checkmark}
+
+\newcommand{\rot}[1]{\rotatebox{90}{\parbox{2.6cm}{\raggedright\scriptsize #1}}}
+
+\setlength{\tabcolsep}{1.8pt}
+\renewcommand{\arraystretch}{0.85}
+
+% \begin{scriptsize}
+\begin{longtable*}{l|cccc|c|ccc|cccc|c|c|c|c|c|c|c|ccc|cccc|c|cc}
+
+\caption{Overview of tracking mechanisms studied by each paper. A \yes{} indicates that the paper studies or addresses the corresponding tracking mechanism.}
+\label{tab:tracking-mechanisms} \\
+
+\toprule
+& \multicolumn{4}{c|}{\textbf{Cookies}}& & \multicolumn{3}{c|}{\textbf{Nav. Tracking}}& \multicolumn{4}{c|}{\textbf{Fingerprinting}}& & & & & & & & \multicolumn{3}{c|}{\textbf{Priv.\ Proposals}}& \multicolumn{4}{c|}{\textbf{Side-channel}}& & \multicolumn{2}{c}{\textbf{Ad-Block.}} \\
+\textbf{Paper} & \rot{Cookie Respawning} & \rot{Cookie Syncing} & \rot{1P Cookie Tracking} & \rot{3P Cookie Tracking} & \rot{Pixels/Tags} & \rot{Bounce Tracking} & \rot{Link Decorations} & \rot{Referrer Tracking} & \rot{Browser FP} & \rot{Extension FP} & \rot{Device FP} & \rot{Passive FP} & \rot{JS-based Tracking} & \rot{Auth.-based Tracking} & \rot{Cross-device} & \rot{Cross-context} & \rot{Behavioral} & \rot{CNAME} & \rot{Server-side} & \rot{FLoC} & \rot{Protected Audience} & \rot{Topics API} & \rot{Kernel-based} & \rot{Network-based} & \rot{Storage-based} & \rot{Timing-based} & \rot{User Studies} & \rot{Ad-Blocking} & \rot{Ad-Block Circumv.} \\
+\midrule
+\endfirsthead
+
+\multicolumn{30}{l}{\textit{(continued from previous page)}} \\
+\toprule
+& \multicolumn{4}{c|}{\textbf{Cookies}}& & \multicolumn{3}{c|}{\textbf{Nav.\ Tracking}}& \multicolumn{4}{c|}{\textbf{Fingerprinting}}& & & & & & & & \multicolumn{3}{c|}{\textbf{Priv.\ Proposals}}& \multicolumn{4}{c|}{\textbf{Side-channel}}& & \multicolumn{2}{c}{\textbf{Ad-Block.}} \\
+\textbf{Paper} & \rot{Cookie Respawning} & \rot{Cookie Syncing} & \rot{1P Cookie Tracking} & \rot{3P Cookie Tracking} & \rot{Pixels/Tags} & \rot{Bounce Tracking} & \rot{Link Decorations} & \rot{Referrer Tracking} & \rot{Browser FP} & \rot{Extension FP} & \rot{Device FP} & \rot{Passive FP} & \rot{JS-based Tracking} & \rot{Auth.-based Tracking} & \rot{Cross-device} & \rot{Cross-context} & \rot{Behavioral} & \rot{CNAME} & \rot{Server-side} & \rot{FLoC} & \rot{Protected Audience} & \rot{Topics API} & \rot{Kernel-based} & \rot{Network-based} & \rot{Storage-based} & \rot{Timing-based} & \rot{User Studies} & \rot{Ad-Blocking} & \rot{Ad-Block Circumv.} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{30}{r}{\textit{(continued on next page)}} \\
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+Kohno et al.~\cite{kohnoRemotePhysicalDevice2005} &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Chen et al.~\cite{chenSideChannelLeaksWeb2010} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  \\
+Jana et al.~\cite{janaMementoLearningSecrets2012} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  \\
+Mayer et al.~\cite{mayerThirdPartyWebTracking2012} &  &  & \yes & \yes &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Nikiforakis et al.~\cite{nikiforakisCookielessMonsterExploring2013} &  &  &  &  &  &  &  &  &  &  & \yes &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Laperdrix et al.~\cite{laperdrixBeautyBeastDiverting2016} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Starov et al.~\cite{starovXHOUNDQuantifyingFingerprintability2017} &  &  &  &  &  &  &  &  &  & \yes &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Vastel et al.~\cite{vastelFPSTALKERTrackingBrowser2018} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Hu et al.~\cite{huCharacterizingPixelTracking2019} &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Deu{\ss}er et al.~\cite{deuserBrowsingUnicityLimits2020} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  \\
+Klein~\cite{kleinCrossLayerAttacks2021} &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  \\
+S\'anchez-Rola et al.~\cite{sanchez-rolaJourneyCenterCookie2021} &  & \yes & \yes & \yes &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Lerner et al.~\cite{lernerInternetJonesRaiders2016} &  &  &  & \yes &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Bashir et al.~\cite{bashirTracingInformationFlows2016} &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Zimmeck et al.~\cite{zimmeckPrivacyAnalysisCrossdevice2017} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Coopamootoo et al.~\cite{coopamootooFeelInvadedAnnoyed2022} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  \\
+Dambra et al.~\cite{dambraWhenSallyMet2022} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  \\
+Kol et al.~\cite{kol2023device} &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  \\
+El Hajj Chehade et al.~\cite{chehade2025double} &  &  &  &  &  &  &  &  &  & \yes &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Wessels et al.~\cite{wessels2025hytrack} & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Felten et al.~\cite{feltenTimingAttacksWeb2000} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  \\
+Jang et al.~\cite{jangEmpiricalStudyPrivacyviolating2010} &  &  &  & \yes &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  \\
+Javed~\cite{javedPOSTERFootprintThirdparty2013} &  &  &  & \yes & \yes &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Zhou et al.~\cite{zhouAcousticFingerprintingRevisited2014} &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Acar et al.~\cite{acarWebNeverForgets2014} & \yes & \yes &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Oren et al.~\cite{orenSpySandboxPractical2015} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  \\
+Englehardt et al.~\cite{englehardtOnlineTracking1millionsite2016} & \yes & \yes &  & \yes & \yes &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Bielova~\cite{bielovaWebTrackingTechnologies2017} &  &  &  & \yes & \yes &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Matthews et al.~\cite{matthewsCanBrowserAddOns2018} &  &  &  & \yes & \yes &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Chen et al.~\cite{chenMystiqueUncoveringInformation2018} &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Das et al.~\cite{dasWebsSixthSense2018} &  &  &  &  &  &  &  &  &  &  & \yes &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Utz et al.~\cite{utzUninformedConsentStudying2019} &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Weinshel et al.~\cite{weinshelOhPlacesYouve2019} &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  \\
+Bui et al.~\cite{buiOptOutsReallyOpt2022} &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Berke et al.~\cite{berkePrivacyLimitationsInterestbased2022} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  \\
+Ukani et al.~\cite{ukaniLocalFramesExploiting2025} &  &  &  & \yes &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes \\
+Bekos et al.~\cite{bekosPIIxelLeaksPassive2025} &  &  &  &  & \yes &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Zafar et al.~\cite{zafarSameScriptDifferent2025} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Yen et al.~\cite{yenHostFingerprintingTracking2012} &  &  &  &  &  &  &  &  & \yes &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Das et al.~\cite{dasTrackingMobileWeb2016} &  &  &  &  &  &  &  &  &  &  & \yes &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Cao et al.~\cite{caoCrossBrowserFingerprintingOS2017} &  &  &  &  &  &  &  &  &  &  & \yes &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Klein et al.~\cite{klein2019dns} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  \\
+Karami et al.~\cite{karamiCarnusExploringPrivacy2020} &  &  &  &  &  &  &  &  &  & \yes &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Solomos et al.~\cite{solomosTalesFaviconsCaches2021} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  \\
+Laor et al.~\cite{laorDRAWNAPARTDevice2022} &  &  &  &  &  &  &  &  &  &  & \yes &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Nomoto et al.~\cite{nomoto2023browser} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Ali et al.~\cite{aliNavigatingMurkyWaters2023} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  \\
+Atterer et al.~\cite{attererKnowingUsersEvery2006} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  \\
+Krishnamurthy et al.~\cite{krishnamurthyPrivacyDiffusionWeb2009} &  &  &  & \yes &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Fomitchev~\cite{fomitchevHowGoogleAnalytics2010} &  &  &  & \yes &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Minkus et al.~\cite{minkusChildrenSeenNot2015} &  &  &  & \yes &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Englehardt et al.~\cite{englehardtCookiesThatGive2015} &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Cahn et al.~\cite{cahnEmpiricalStudyWeb2016} &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Yu et al.~\cite{yuTrackingTrackers2016} &  &  &  & \yes &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Starov et al.~\cite{starovExtendedTrackingPowers2017} &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Papadopoulos et al.~\cite{papadopoulosLongStandingPrivacyDebate2017} &  &  &  & \yes &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Wu et al.~\cite{wuYourSecretsAre2018} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  \\
+Papadopoulos et al.~\cite{papadopoulosCookieSynchronizationEverything2019} &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Mishra et al.~\cite{mishraDontCountMe2020} &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Agarwal et al.~\cite{agarwalStopTrackingMe2020} &  &  &  & \yes & \yes &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Zeber et al.~\cite{zeberRepresentativenessAutomatedWeb2020} &  &  &  & \yes & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Chen et al.~\cite{chenCookieSwapParty2021} &  &  & \yes &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Jueckstock et al.~\cite{jueckstockRealisticReproducibleWebCrawl2021} &  &  &  & \yes & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Papadogiannakis et al.~\cite{papadogiannakisUserTrackingPostcookie2021} &  & \yes & \yes &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Samarasinghe et al.~\cite{samarasingheTuBrutePrivacy2022} &  &  &  & \yes & \yes &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Lin et al.~\cite{linInvestigatingAdvertisersDomainchanging2022} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes \\
+Jueckstock et al.~\cite{jueckstockMeasuringPrivacyVs2022} &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Su et al.~\cite{suAutomaticDiscoveryEmerging2023} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Bekos et al.~\cite{bekosHitchhikersGuideFacebook2023} &  &  &  &  & \yes &  & \yes &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Smith et al.~\cite{smithStudyGDPRCompliance2024} &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Senol et al.~\cite{senolDoubleEdgedSword2024} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Huyghe et al.~\cite{huygheFPRainbowFingerprintBasedBrowser2025} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Liu et al.~\cite{liuFirstEarlyEvidence2025} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Chen et al.~\cite{chenWhenAdsBecome2026} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  \\
+Pujol et al.~\cite{pujolAnnoyedUsersAds2015} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes & \yes &  \\
+Malloy et al.~\cite{malloyAdBlockersGlobal2016} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  \\
+Gonzalez et al.~\cite{gonzalezUserProfilingTime2016} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  \\
+Iqbal et al.~\cite{iqbalAdWarsRetrospective2017} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes \\
+Bashir et al.~\cite{bashirHowTrackingCompanies2018} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes \\
+Iordanou et al.~\cite{iordanouTracingCrossBorder2018} &  &  &  & \yes & \yes &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Alrizah et al.~\cite{alrizahErrorsMisunderstandingsAttacks2019} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  \\
+Vallina et al.~\cite{vallinaTalesPornComprehensive2019} &  &  &  & \yes & \yes &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Rye et al.~\cite{ryeFollowScentDefeating2021} &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Randall et al.~\cite{randallMeasuringUIDSmuggling2022} &  &  &  &  &  & \yes &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+van der Toorn et al.~\cite{vandertoornSavingBriansPrivacy2022} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  \\
+Pegioudis et al.~\cite{pegioudisNotOnlyPhones2023} &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Rasaii et al.~\cite{rasaiiThouShaltNot2023} &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Chouaki et al.~\cite{chouakiUnderstandingPrivacyRisks2023} &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  \\
+Lin et al.~\cite{linBrowsingThirdPartyCookies2024} &  &  & \yes & \yes &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Figueira et al.~\cite{figueiraDiffAuditAuditingPrivacy2024} &  &  &  & \yes &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Singh et al.~\cite{singhWhereWorldAre2025} &  &  &  & \yes &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Melicher et al.~\cite{melicherNotTrackMe2016} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  \\
+Jain et al.~\cite{jainMiningLatentClient2016} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  \\
+Brookman et al.~\cite{brookmanCrossDeviceTrackingMeasurement2017} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Mughees et al.~\cite{mugheesDetectingAdblockersWild2017} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes \\
+Bashir et al.~\cite{bashirDiffusionUserTracking2018} &  & \yes &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Das et al.~\cite{dasEveryMoveYou2018} &  &  &  &  &  &  &  &  &  &  & \yes &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Foppe et al.~\cite{foppeExploitingTLSClient2018} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  \\
+Englehardt et al.~\cite{englehardtNeverSignedThis2018} &  &  &  &  & \yes &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Masood et al.~\cite{masoodTouchYoureTrappcked2018} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  \\
+Sy et al.~\cite{syQUICLookWeb2019} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes & \yes &  &  &  &  \\
+Martin et al.~\cite{martinHandoffAllYour2019} &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Yang et al.~\cite{yangComparativeMeasurementStudy2020} &  &  &  & \yes & \yes &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Koop et al.~\cite{koopInDepthEvaluationRedirect2020} &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Cook et al.~\cite{cookInferringTrackerAdvertiserRelationships2020} &  & \yes &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Pugliese et al.~\cite{puglieseLongTermObservationBrowser2020} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Fouad et al.~\cite{fouadMissedFilterLists2020} &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Di Tizio et al.~\cite{ditizioCalculusTrackingTheory2021} &  &  &  & \yes &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Mishra et al.~\cite{mishraDejaVuAbusing2021} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  \\
+Dimova et al.~\cite{dimovaCNAMEGameLargescale2021} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  \\
+Rizzo et al.~\cite{rizzoUnveilingWebFingerprinting2021} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Mehrnezhad et al.~\cite{mehrnezhadHowCanWould2022} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  \\
+Fouad et al.~\cite{fouadMyCookiePhoenix2022} & \yes &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Cassel et al.~\cite{casselOmniCrawlComprehensiveMeasurement2022} &  &  &  & \yes &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Toth et al.~\cite{tothDarkPatternsManipulation2022} &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Van Nortwick et al.~\cite{vannortwickSettingBarLow2022} &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Dimova et al.~\cite{dimovaEverybodysLookingSSOmething2023} &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Jha et al.~\cite{jhaRobustnessTopicsAPI2023} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  \\
+Zimmeck et al.~\cite{zimmeckUsabilityEnforceabilityGlobal2023} &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Demir et al.~\cite{demirLargeScaleStudyCookie2024} &  &  & \yes & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+El Fraihi et al.~\cite{elfraihiClientsideServersideTracking2024} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  \\
+Beugin et al.~\cite{beuginInterestdisclosingMechanismsAdvertising2024} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  \\
+Liu et al.~\cite{liuOptedOutTracked2024} &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Fouad et al.~\cite{fouadDevilDetailsDetection2024} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  \\
+Reitinger et al.~\cite{reitingerWhatDoesIt2024} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  \\
+Berke et al.~\cite{berkeHowUniqueWhose2025} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Rasaii et al.~\cite{rasaiiIntractableCookieCrumbs2025} &  &  & \yes & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Zagi et al.~\cite{zagiReferrerPolicyImplementation2025} &  &  &  &  &  &  &  & \yes &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Crichton et al.~\cite{crichtonRethinkingFingerprintingAssessment2025} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  \\
+Kieserman et al.~\cite{kiesermanTrackerInstallationsAre2025} &  &  &  &  & \yes &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Cui et al.~\cite{cuiUnderstandingPrivacyNorms2025} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  \\
+Bottger et al.~\cite{bottgerUnderstandingRegionalFilter2025} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  \\
+Sheaib et al.~\cite{sheaibUnmaskingShadowsCrossCountry2025} &  &  &  & \yes & \yes &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Lukic et al.~\cite{lukicPrivacyVsProfit2026} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  \\
+Li~\cite{liShimShimmenyEvaluating2020} &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Solomos et al.~\cite{solomosEscapingConfinesTime2022} &  &  &  &  &  &  &  &  &  & \yes &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Laperdrix et al.~\cite{laperdrixFingerprintingStyleDetecting2021} &  &  &  &  &  &  &  &  &  & \yes &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Lin et al.~\cite{linFashionFauxPas2023} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Olejnik et al.~\cite{olejnikLeakingBatteryPrivacy2016} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Khodayari et al.~\cite{khodayariStateSameSiteStudying2022} &  &  & \yes & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Jin et al.~\cite{jinTimingBasedBrowsingPrivacy2022} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  \\
+Snyder et al.~\cite{snyderPoolPartyExploitingBrowser2023} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  & \yes &  &  &  &  &  &  &  &  & \yes &  &  &  &  \\
+Karaj et al.~\cite{karajWhoTracksMeShedding2019} &  &  &  & \yes &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Snyder et al.~\cite{snyderBrowserFeatureUsage2016} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Smith et al.~\cite{smithBlockedBrokenAutomatically2022} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  \\
+Trickel et al.~\cite{trickelEveryoneDifferentClientside2019} &  &  &  &  &  &  &  &  &  & \yes &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Starov et al.~\cite{starovUnnecessarilyIdentifiableQuantifying2019} &  &  &  &  &  &  &  &  &  & \yes &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Solomos et al.~\cite{solomosDangersHumanTouch2022} &  &  &  &  &  &  &  &  &  & \yes &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Chalise et al.~\cite{chaliseYourSpeakerMy2022} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Li et al.~\cite{liWhoTouchedMy2020} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Vastel et al.~\cite{vastelFpScannerPrivacyImplications2018} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+G\'omez-Boix et al.~\cite{gomez-boixHidingCrowdAnalysis2018} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Eckersley~\cite{eckersleyHowUniqueYour2010} &  &  &  &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Sch\"oni et al.~\cite{schoniBlockCookiesNot2024} &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes & \yes &  \\
+Goga et al.~\cite{gogaExploitingInnocuousActivity2013} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  \\
+Rautenstrauch et al.~\cite{rautenstrauchLeakyWebAutomated2023} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  & \yes & \yes &  &  &  \\
+Lin et al.~\cite{linFillBlanksEmpirical2020} &  &  &  &  &  &  & \yes &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  \\
+Starov et al.~\cite{starovAreYouSure2016} &  &  &  &  &  &  & \yes &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  \\
+Xie et al.~\cite{xieArcanumDetectingEvaluating2024} &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Acar et al.~\cite{acarNoBoundariesData2020} &  &  &  &  & \yes &  & \yes &  &  &  &  &  & \yes &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  \\
+Aggarwal et al.~\cite{aggarwalAnalysisPrivateBrowsing2010} &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Pradeep et al.~\cite{pradeepNotYourAverage2023} &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Kaizer et al.~\cite{kaizerCharacterizingWebsiteBehaviors2016} &  &  & \yes &  &  &  &  &  &  &  &  &  & \yes & \yes &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  \\
+Kline et al.~\cite{klineStructureCharacteristicsUser2017} &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\
+Calderonio et al.~\cite{calderonioFledgingWillContinue2024} &  &  &  &  &  &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  & \yes &  &  &  &  &  &  &  &  \\
+
+\end{longtable*}
+% \end{scriptsize}

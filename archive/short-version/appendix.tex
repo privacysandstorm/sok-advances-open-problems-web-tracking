@@ -78,9 +78,9 @@ Web crawling with instrumented browsers is the most common approach to measure o
 Browser instrumentation can take two forms: \textit{out-of-band} or \textit{in-band}. Out-of-band, or deep instrumentation, modifies directly the browser or JavaScript engine. In contrast, in-band leverages instrumentation hooks, like prototype patching, at the JavaScript level to overwrite functionality of interest.
 
 \para{User Agent.} Most measurements require a browser supporting modern web features.
-Simplified user agents which do not execute JavaScript or have incomplete support for web APIs can be appropriate for targeted measurements (\eg{}, Apache Nutch\footnote{\url{https://nutch.apache.org/}}). 
+Simplified user agents which do not execute JavaScript or have incomplete support for web APIs can be appropriate for targeted measurements (e.g., Apache Nutch\footnote{\url{https://nutch.apache.org/}}). 
 
-\para{Automation Frameworks with Instrumentation Hooks.} To drive full consumer browsers, researchers rely on automation tooling built for website and browser testing: \eg{}, Chrome DevTools Protocol (CDP) for Blink-based browsers and Marionette for Gecko-based browsers. These internal interfaces are used by cross-browser automation libraries like Selenium or Puppeteer~\cite{
+\para{Automation Frameworks with Instrumentation Hooks.} To drive full consumer browsers, researchers rely on automation tooling built for website and browser testing: e.g., Chrome DevTools Protocol (CDP) for Blink-based browsers and Marionette for Gecko-based browsers. These internal interfaces are used by cross-browser automation libraries like Selenium or Puppeteer~\cite{
 cross-browser-testing-1-2020,puppeteer-support-firefox-2024}.
 Many researchers make direct use of these libraries, while several projects which bundle full browser automation with additional instrumentation and measurement tooling also exist~\cite{englehardtOnlineTracking1millionsite2016,openwpm4StudiesUsing,mayerFourthpartyFourthpartyFourthParty2011}.
 

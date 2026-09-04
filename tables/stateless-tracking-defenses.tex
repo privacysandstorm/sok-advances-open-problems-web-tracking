@@ -1,0 +1,123 @@
+\begin{table*}[t]
+  \scriptsize
+\centering
+\caption{\textbf{Industrial and community defenses against stateless tracking} across defense goals: \colorbox{cellred}{detection \& blocking} and \colorbox{cellyellow}{signal reduction \& obfuscation}. Protects against: \iconCookie: Cookie-based tracking, \iconURL: Navigational tracking, \iconFingerprint: Fingerprinting, \iconJS: JavaScript-based tracking, \iconSC: Side-channels. ``(D)'' is by-default, ``(P)'' is private-mode only, and ``(O)'' is opt-in based.}
+\label{tab:stateless-tracking-defenses}
+\footnotesize
+\renewcommand{\arraystretch}{1.1}
+\scalebox{0.74}{%
+\begin{tabular}{
+  m{3.15cm}
+  m{3.0cm}
+  m{3.0cm}
+  m{3.0cm}
+  m{3.0cm}
+  m{3.0cm}
+  m{3.0cm}
+}
+\toprule
+\textbf{Defense Technique}\newline (\textbf{Protects Against}) & \textbf{Brave} & \textbf{Chrome} & \textbf{Edge} & \textbf{Firefox} & \textbf{Safari} & \textbf{Community Defense} \\
+\toprule
+
+\cellcolor{cellyellow} Masking or hiding\newline IP address\newline\newline \iconFingerprint
+  & Private Window with Tor routes traffic through Tor network (O)
+  & IP Protection hides IP via two-hop proxy system (P) (discontinued)
+  & NA
+  & NA;\newline Mozilla VPN available
+  & iCloud's Private Relay routes Safari traffic via two relays to hide IP (O)
+  & Tor Browser routes all traffic via onion network \\
+\midrule
+
+\cellcolor{cellyellow} Reducing\newline User-Agent string\newline\newline \iconFingerprint
+  & Inherits Chromium UA reduction (D)
+  & UA reduction and UA Client Hints (D)
+  & Inherits Chromium UA reduction and Client Hints (D)
+  & Uses the reduced form of Gecko UA string; resist-fingerprinting feature reports generic UA (D)
+  & Freezes Safari version in UA string; limits exposed platform detail (D)
+  & AdGuard's Stealth Mode can override UA \\
+\midrule
+
+\cellcolor{cellred} Blocking\newline fingerprinting scripts\newline\newline \iconJS\,\iconFingerprint
+  & PageGraph records page execution for fingerprinting detection;\newline Shields blocks known fingerprinting scripts (D)
+  & NA
+  & Fingerprinting tracker blo- cking via Disconnect lists (D)
+  & Fingerprinting script blo- cking via Disconnect lists (D)
+  & ATFP blocks known fingerprinting scripts (P)
+  & NoScript blocks JS (D);\newline uBO, AdGuard block fingerprinting domains;\newline Privacy Badger detects fi- ngerprinting-like behavior\\
+\midrule
+
+\cellcolor{cellyellow} Normalizing\newline browser API outputs\newline\newline \iconFingerprint
+  & NA
+  & NA
+  & NA
+  & resist-fingerprinting standardizes API outputs to uniform values for system specs like hardware and screen metrics (O)
+  & ATFP normalizes fonts, plugins, UA (D);\newline ATFP standardizes some outputs such as screen, window, hardware metrics by default in private mode (O)
+  & Tor normalizes API outputs for a uniform fingerprint\newline Mullvad Browser applies same hardening for non-Tor use (D) \\
+\midrule
+
+\cellcolor{cellyellow} Randomizing\newline browser API outputs\newline\newline \iconFingerprint
+  & Farbling does site-specific randomization of API outputs via noise injection so that fingerprint changes per page load (D)
+  & NA
+  & NA
+  & Randomizes API outputs of Canvas, JS floating po- int math operations, and peripheral touch support (D)
+  & ATFP injects noise to au-\newline dio, canvas, WebGL by default in private mode (O)
+  & ---\\
+\midrule
+
+\cellcolor{cellyellow} Reducing precision\newline of browser API outputs\newline\newline \iconFingerprint\,\iconSC
+  & Reduces timer's precision (D)
+  & Reduces \texttt{performance.now} resolution (D)
+  & Inherits Chromium timer precision reductions (D)
+  & Reduces event time and \texttt{performance.now}  precision\newline resist-fingerprinting mode applies broader reductions by injecting noise into dynamic hardware hooks like Canvas and timer (D)
+  & Reduces timer's precision (D)
+  & ---\\
+\midrule
+
+\cellcolor{cellred} Removing or declining\newline fingerprintable APIs\newline\newline \iconFingerprint
+  & Restricts or disables the fingerprinting-prone APIs where feasible (D)
+  & Removed Battery Status API (D)
+  & Inherits Chromium API removals (D)
+  & Removed Battery Status API; declined Network Information API (D)
+  & Declined Network Information API, Web Bluetooth; WebKit policy considers fingerprinting impact for new APIs (D)
+  & ---\\
+\midrule
+
+\cellcolor{cellred} Blocking JavaScript\newline\newline \iconJS\,\iconFingerprint
+  & Brave Shields allows per-site script blocking; aggressive mode blocks all scripts (O)
+  & Available via site settings (O)
+  & Available via site settings (O)
+  & Available via about:config and site permissions (O)
+  & Available via site settings (O)
+  & NoScript blocks JS by default per-site; highly effective but significant usability burden \\
+\midrule
+
+\cellcolor{cellred} Neutralization of\newline mixed scripts\newline\newline \iconJS\,\iconFingerprint\,\iconCookie
+  & SugarCoat generates rep-\newline lacement scripts preserv- ing the functionality while neutralizing tracking (D)
+  & NA
+  & NA
+  & NA;\newline uBO scriptlets can override specific functions
+  & NA
+  & ---\\
+\midrule
+
+\cellcolor{cellyellow} Defending against\newline Extension fingerprinting\newline\newline \iconFingerprint
+  & Randomizes artifacts detectable by extensions (D)
+  & NA
+  & NA
+  & Extension APIs somewhat isolated but not fully hardened
+  & Extensions are run within sandboxed context with limited web-accessible resources (D)
+  & ---\\
+\midrule
+
+\cellcolor{cellyellow} Side-channel defenses\newline\newline \iconSC
+  & Inherits Chromium miti- gations;\newline Shields provides additio-\newline nal isolation (D)
+  & Site Isolation COOP/\newline COEP headers;\newline State partitioning (D)
+  & Inherits Chromium Site\newline Isolation \& COOP/COEP (D)
+  & Site Isolation (Fission);\newline Network partitioning;\newline Reduced timer precision (D)
+  & Process-per-tab isolation\newline ITP state partitioning (D)
+  & ---\\
+
+\bottomrule
+\end{tabular}%
+}% end scalebox
+\end{table*}

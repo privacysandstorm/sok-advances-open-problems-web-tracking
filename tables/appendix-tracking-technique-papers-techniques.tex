@@ -1,0 +1,89 @@
+\newlength{\artfirstcol}
+\newlength{\artdatacol}
+
+\setlength{\artfirstcol}{2.6cm} % <- change to widen/narrow first column
+\setlength{\artdatacol}{0.58cm}  % <- widen data columns so Navigation fits in 2-col span
+
+\newcolumntype{T}{>{\centering\arraybackslash}b{\artdatacol}}
+\newcolumntype{Z}{>{\centering\arraybackslash}b{\artdatacol}}
+
+
+\newcommand{\gtick}{\textcolor{green!50!black}{\checkmark}}
+
+\begin{table*}[ht] %[!t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{0.6pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{%
+>{\raggedright\arraybackslash}m{\artfirstcol}|%
+>{\centering\arraybackslash}m{1.4cm}|%    Venue Year
+*{24}{T}%
+}
+ 
+\toprule
+\multicolumn{1}{>{\centering\arraybackslash}b{\artfirstcol}|}{\shortstack[c]{\textbf{Tracking Technique}\\\textbf{Literature}}} & \multicolumn{1}{>{\centering\arraybackslash}b{1.4cm}|}{\shortstack[c]{\textbf{Venue}\\\textbf{Year}}} & \multicolumn{1}{Z}{\rot{Third-party Cookie Tracking}} & \multicolumn{1}{Z}{\rot{Cookie Respawning}} & \multicolumn{1}{Z}{\rot{Cookie Syncing}} & \multicolumn{1}{Z}{\rot{First-party Cookie Tracking}} & \multicolumn{1}{Z}{\rot{Tracking Pixels/Tags}} & \multicolumn{1}{Z}{\rot{CNAME Tracking}} & \multicolumn{1}{Z}{\rot{Server-side Tracking}} & \multicolumn{1}{Z}{\rot{Link Decorations}} & \multicolumn{1}{Z}{\rot{Bounce Tracking}} & \multicolumn{1}{Z}{\rot{Authentication-based Tracking}} & \multicolumn{1}{Z}{\rot{Javascript-based Tracking}} & \multicolumn{1}{Z}{\rot{Browser Fingerprinting}} & \multicolumn{1}{Z}{\rot{Browser Extension Fingerprinting}} & \multicolumn{1}{Z}{\rot{Device Fingerprinting}} & \multicolumn{1}{Z}{\rot{Passive Fingerprinting}} & \multicolumn{1}{Z}{\rot{Kernel-based Side-channels}} & \multicolumn{1}{Z}{\rot{Network-based Side-channels}} & \multicolumn{1}{Z}{\rot{Storage-based Side-channels}} & \multicolumn{1}{Z}{\rot{Timing-based Side-channels}} & \multicolumn{1}{Z}{\rot{Behavioral Tracking}} & \multicolumn{1}{Z}{\rot{Cross-context Tracking}} & \multicolumn{1}{Z}{\rot{FLoC / Topics API}} & \multicolumn{1}{Z}{\rot{Protected Audience}} & \multicolumn{1}{Z}{\rot{Ad-Blocking Circumvention}} \\
+\midrule
+Felten et al.~\cite{feltenTimingAttacksWeb2000} &  CCS'00 &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   \\
+Kohno et al.~\cite{kohnoRemotePhysicalDevice2005} &  S\&P'05 &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   \\
+Chen et al.~\cite{chenSideChannelLeaksWeb2010} &  S\&P'10 &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   \\
+Yen et al.~\cite{yenHostFingerprintingTracking2012} &  NDSS'12 &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   \\
+Jana et al.~\cite{janaMementoLearningSecrets2012} &  S\&P'12 &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   \\
+Nikiforakis et al.~\cite{nikiforakisCookielessMonsterExploring2013} &  S\&P'13 &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   \\
+Acar et al.~\cite{acarWebNeverForgets2014} &  CCS'14 &   &  \scalebox{1.15}{\textbf{\gtick}} &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   \\
+Zhou et al.~\cite{zhouAcousticFingerprintingRevisited2014} &  CCS'14 &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   \\
+Oren et al.~\cite{orenSpySandboxPractical2015} &  CCS'15 &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   \\
+Das et al.~\cite{dasWebsSixthSense2018, dasTrackingMobileWeb2016, dasEveryMoveYou2018} &  NDSS'16 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   \\
+Laperdrix et al.~\cite{laperdrixBeautyBeastDiverting2016} &  S\&P'16 &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   \\
+Jain et al.~\cite{jainMiningLatentClient2016} &  PETS'16 &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   \\
+Gonzalez et al.~\cite{gonzalezUserProfilingTime2016} &  IMC'16 &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   \\
+Kaizer et al.~\cite{kaizerCharacterizingWebsiteBehaviors2016} &  IMC'16 &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   \\
+Cao et al.~\cite{caoCrossBrowserFingerprintingOS2017} &  NDSS'17 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   \\
+Starov et al.~\cite{starovXHOUNDQuantifyingFingerprintability2017} &  S\&P'17 &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   \\
+Vastel et al.~\cite{vastelFPSTALKERTrackingBrowser2018} &  S\&P'18 &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   \\
+Foppe et al.~\cite{foppeExploitingTLSClient2018} &  PETS'18 &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   \\
+Masood et al.~\cite{masoodTouchYoureTrappcked2018} &  PETS'18 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   \\
+Olejnik et al.~\cite{olejnikLeakingBatteryPrivacy2016} &  USENIX'18 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   \\
+Bashir et al.~\cite{bashirHowTrackingCompanies2018} &  IMC'18 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} \\
+Klein et al.~\cite{klein2019dns} &  NDSS'19 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   \\
+Hu et al.~\cite{huCharacterizingPixelTracking2019} &  S\&P'19 &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   \\
+Martin et al.~\cite{martinHandoffAllYour2019} &  PETS'19 &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   \\
+Sy et al.~\cite{syQUICLookWeb2019} &  PETS'19 &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   \\
+Karami et al.~\cite{karamiCarnusExploringPrivacy2020} &  NDSS'20 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   \\
+Koop et al.~\cite{koopInDepthEvaluationRedirect2020} &  PETS'20 &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   \\
+Li et al.~\cite{liShimShimmenyEvaluating2020} &  USENIX'20 &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   \\
+Mishra et al.~\cite{mishraDontCountMe2020} &  WWW'20 &   &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   \\
+Solomos et al.~\cite{solomosTalesFaviconsCaches2021} &  NDSS'21 &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   \\
+Klein et al.~\cite{kleinCrossLayerAttacks2021} &  S\&P'21 &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   \\
+Dimova et al.~\cite{dimovaCNAMEGameLargescale2021} &  PETS'21 &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   &   \\
+Mishra et al.~\cite{mishraDejaVuAbusing2021} &  PETS'21 &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   \\
+Laperdrix et al.~\cite{laperdrixFingerprintingStyleDetecting2021} &  USENIX'21 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   \\
+Chen et al.~\cite{chenCookieSwapParty2021} &  WWW'21 &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   &   \\
+Rye et al.~\cite{ryeFollowScentDefeating2021} &  IMC'21 &   &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   \\
+Laor et al.~\cite{laorDRAWNAPARTDevice2022} &  NDSS'22 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   \\
+Jin et al.~\cite{jinTimingBasedBrowsingPrivacy2022} &  S\&P'22 &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   \\
+Khodayari et al.~\cite{khodayariStateSameSiteStudying2022} &  S\&P'22 &  \scalebox{1.15}{\textbf{\gtick}} &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   \\
+Randall et al.~\cite{randallMeasuringUIDSmuggling2022} &  IMC'22 &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   &   \\
+Berke et al.~\cite{berkePrivacyLimitationsInterestbased2022} &  CCS'22 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   \\
+Solomos et al.~\cite{solomosEscapingConfinesTime2022} &  CCS'22 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   \\
+Ali et al.~\cite{aliNavigatingMurkyWaters2023} &  NDSS'23 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   \\
+Nomoto et al.~\cite{nomoto2023browser} &  NDSS'23 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   \\
+Lin et al.~\cite{linFashionFauxPas2023} &  S\&P'23 &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   \\
+Jha et al.~\cite{jhaRobustnessTopicsAPI2023} &  PETS'23 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   \\
+Kol et al.~\cite{kol2023device} &  USENIX'23 &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   \\
+Snyder et al.~\cite{snyderPoolPartyExploitingBrowser2023} &  USENIX'23 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   \\
+Su et al.~\cite{suAutomaticDiscoveryEmerging2023} &  WWW'23 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   \\
+Beugin et al.~\cite{beuginInterestdisclosingMechanismsAdvertising2024} &  PETS'24 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   \\
+Fouad et al.~\cite{fouadDevilDetailsDetection2024} &  PETS'24 &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   \\
+Chehade et al.~\cite{chehade2025double} &  USENIX'25 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   \\
+Wessels et al.~\cite{wessels2025hytrack} &  USENIX'25 &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   \\
+Huyghe et al.~\cite{huygheFPRainbowFingerprintBasedBrowser2025} &  WWW'25 &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   \\
+Bekos et al.~\cite{bekosPIIxelLeaksPassive2025} &  CCS'25 &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &   &   \\
+Ukani et al.~\cite{ukaniLocalFramesExploiting2025} &  CCS'25 &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} &  \scalebox{1.15}{\textbf{\gtick}} &   &   &   &   &   &   &   &   &   &   &   &  \scalebox{1.15}{\textbf{\gtick}} \\
+ 
+\bottomrule
+\end{tabular}%
+}% end resizebox
+\caption{Literature on papers studying web tracking techniques over the years.}
+\label{tab:technique-papers}
+\end{table*}

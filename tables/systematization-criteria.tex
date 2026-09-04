@@ -1,0 +1,46 @@
+%%
+\begin{table*}[ht]
+  \small
+\centering
+\caption{Summary of systematization criteria and taxonomy for tracking techniques, defenses, and regulatory compliance.}
+\label{tab:systematization-criteria}
+\renewcommand{\arraystretch}{1}
+\begin{tabular}{p{0.004cm} p{7.8cm} p{8.66cm}}
+\toprule
+& \textbf{Criteria and Description} & \textbf{Taxonomy} \\
+\midrule
+
+\multirow[c]{6}{*}{\rotatebox[origin=c]{90}{\textbf{Techniques}}}
+ & \textbf{Technique}: What tracking is studied in this research? & See 24 techniques in~\autoref{tab:artifact-capability-matrix}.\\
+ & \textbf{Artifact(s)}: What artifact(s) is used by this technique? & See 8 artifact types listed in~\autoref{tab:artifact-taxonomy}. \\
+ & \textbf{Capabilities}: What capabilities are required by this technique? & \symInclusion\ Inclusion, \symExecution\ Execution, \symObservation\ Observation, \symStorage\ Storage, \symSharing\ Sharing. \\
+ & \textbf{State}: What state does this technique maintain? & Stateful, Stateless, Mixed. \\
+ & \textbf{Context}: In what context does it function? & Third-party, First-party, Both. \\
+ & \textbf{Goals}: What are the goals of the tracker using this technique? & Same-site, Cross-site, Cross-context. \\
+\midrule
+
+\multirow[c]{7}{*}{\rotatebox[origin=c]{90}{\textbf{Defenses}}}
+ & \textbf{Technique}: What tracking does this defense protect against? & See 24 techniques in~\autoref{tab:artifact-capability-matrix}.\\
+ & \textbf{Artifact(s)}: What artifact(s) does it apply protection to? & See 8 artifact types listed in~\autoref{tab:artifact-taxonomy}. \\
+ & \textbf{Development}: Who developed this tracking defense? & Research-based, Industry-based, Community-based. \\
+ & \textbf{Deployment}: How is this defense deployed? & \dNative\ In-browser, \dExt\ Extension, \dServer\ Infrastructural, \dTool\ Offline. \\  % server-/network-/protocol-/OS-level
+ & \textbf{Support}: What is the support for this defense? & See~\autoref{tab:stateful-tracking-defenses}, \autoref{tab:stateless-tracking-defenses}, and~\autoref{fig:evolution-defenses}. \\
+ & \textbf{Goals}: What are the goals of this defense mechanism? & \colorbox{cellred}{Detection \& Blocking} and \colorbox{cellyellow}{Signal Reduction \& Obfuscation}. \\
+ & \textbf{Type}: How can the defense mechanism be classified? & See 8 research (\autoref{tab:defense-goal-mechanism-taxonomy}), 23 industry\&community (\autoref{tab:stateful-tracking-defenses}, \autoref{tab:stateless-tracking-defenses}).\\
+\midrule
+
+\multirow[c]{3}{*}{\rotatebox[origin=c]{90}{\small\textbf{Policies}}}
+& \textbf{Policies}: What regulations and standards are studied? & See EU and US regulations, and standards in ~\autoref{tab:regulations-paper-distribution}. \\
+% & \textbf{Policies}: What regulations are studied? & GDPR, CCPA, ePD, CPRA, DSA, DMA, FTC, other (see ~\autoref{fig:evolution-defenses}). \\
+% & \textbf{Policies (cont.)}: Which standards and guidelines are studied? & \textit{Standards}: P3P, DNT, GPC. \textit{Guidelines}: CNIL, EDPB, IAB TCF. \\
+& \textbf{Aspects}: Which aspects of these policies are covered? & See mapping of 9 policy aspects onto 6 user rights in~\autoref{tab:regulations-aspects}.\\
+& \textbf{Compliance}: What are the enforcement challenges?  & Reconciling \colorbox{cellpink}{Incentives}, \colorbox{cellblue}{Expectations}, and \colorbox{cellgreen}{Responsibilities}.\\
+% \todo{Abuse, interpretation notices, penalties, trials, precedents.} \todo{gray areas, lack/speed of enforcement}.\\
+\midrule
+\multirow[c]{2}{*}{\rotatebox[origin=c]{90}{\textbf{Gaps}}}
+& \textbf{Open Problems}: What are potential gaps and future directions in the evolution of these techniques, defenses, and regulations? & See the 24 open problems throughout the paper as well as 4 open problems in appendix.\\
+
+\bottomrule
+\end{tabular}
+% \vspace{-1mm}
+\end{table*}

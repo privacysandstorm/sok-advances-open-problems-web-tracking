@@ -1,0 +1,100 @@
+\newcommand{\cmark}{\scalebox{1.15}{\textbf{\gtick}}}
+
+\begin{table}[!t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{0.5pt}
+\renewcommand{\arraystretch}{0.94}
+\begin{tabular}{%
+>{\raggedright\arraybackslash}m{3.4cm}|%
+>{\centering\arraybackslash}m{1.5cm}|%
+>{\centering\arraybackslash}m{0.7cm}|%
+*{8}{>{\centering\arraybackslash}m{0.3cm}}%
+}
+
+\toprule
+\multicolumn{1}{>{\centering\arraybackslash}b{3.4cm}|}{\shortstack[c]{\textbf{Tracking Defense}\\\textbf{Literature}\\\textbf{(Defense System Name)}}} &
+\multicolumn{1}{>{\centering\arraybackslash}b{1.5cm}|}{\shortstack[c]{\textbf{Venue}\\\textbf{Year}}} &
+\multicolumn{1}{>{\centering\arraybackslash}b{0.7cm}|}{\rot{Deployment Type}} &
+\multicolumn{1}{>{\cellcolor{cellred}\centering\arraybackslash}b{0.32cm}}{\rot{ML-based}} &
+\multicolumn{1}{>{\cellcolor{cellred}\centering\arraybackslash}b{0.32cm}}{\rot{Program Instrum.}} &
+\multicolumn{1}{>{\cellcolor{cellred}\centering\arraybackslash}b{0.32cm}}{\rot{Circumvention-based}} &
+\multicolumn{1}{>{\cellcolor{cellred}\centering\arraybackslash}b{0.32cm}}{\rot{LLM-based}} &
+\multicolumn{1}{>{\cellcolor{cellyellow}\centering\arraybackslash}b{0.32cm}}{\rot{API Perturbation}} &
+\multicolumn{1}{>{\cellcolor{cellyellow}\centering\arraybackslash}b{0.32cm}}{\rot{State Partitioning}} &
+\multicolumn{1}{>{\cellcolor{cellyellow}\centering\arraybackslash}b{0.32cm}}{\rot{Network Modif.}} &
+\multicolumn{1}{>{\cellcolor{cellyellow}\centering\arraybackslash}b{0.32cm}}{\rot{Cryptographic}} \\
+\midrule
+
+Anti-aliasing~\cite{novakAntialiasingWeb2004} & WWW'04 & \dNative &  &  &  &  & \cmark &  &  &  \\
+Browser state protection~\cite{jacksonProtectingBrowserState2006} & WWW'06 & \dNative &  &  &  &  & \cmark & \cmark &  &  \\
+XSS Prevention with Taint~\cite{vogtCrossSiteScripting2007} & NDSS'07 & \dNative &  & \cmark &  &  &  &  &  &  \\
+Nymble~\cite{johnsonNymbleAnonymousIPAddress2007} & PETS'07 & \dNative\,\dServer &  &  &  &  &  &  &  & \cmark \\
+De-identification~\cite{zhengWebUserDeidentification2008} & WWW'08 & \dServer &  &  &  &  & \cmark &  &  &  \\
+IP Address Mixing~\cite{raghavanEnlistingISPsImprove2009} & PETS'09 & \dServer &  &  &  &  &  &  & \cmark &  \\
+UPS anonymization~\cite{zhuAnonymizingUserProfiles2010} & WWW'10 & \dExt\,\dServer &  &  &  &  & \cmark &  &  &  \\
+FPDetective~\cite{acarFPDetectiveDustingWeb2013} & CCS'13 & \dTool &  & \cmark &  &  &  &  &  &  \\
+Privee~\cite{zimmeckPriveeArchitectureAutomatically2014} & USENIX'14 & \dTool & \cmark &  &  &  &  &  &  &  \\
+SPRESSO~\cite{fettSPRESSOSecurePrivacyRespecting2015} & CCS'15 & \dNative\,\dServer &  &  &  &  &  &  &  & \cmark \\
+UCognito~\cite{xuUCognitoPrivateBrowsing2015} & CCS'15 & \dNative &  &  &  &  &  & \cmark &  &  \\
+Bloom Cookies~\cite{morBloomCookiesWeb2015} & NDSS'15 & \dExt\,\dServer &  &  &  &  &  &  &  & \cmark \\
+TrackingFree Browser~\cite{panNotKnowWhat2015} & NDSS'15 & \dNative &  &  &  &  &  & \cmark &  &  \\
+Auto-blacklist~\cite{gugelmannAutomatedApproachComplementing2015} & PETS'15 & \dExt\,\dTool & \cmark &  &  &  &  &  &  &  \\
+Identity System Reform~\cite{brandaoMendingTwoNationScale2015} & PETS'15 & \dServer &  &  &  &  &  &  &  & \cmark \\
+PriVaricator~\cite{nikiforakisPriVaricatorDeceivingFingerprinters2015} & WWW'15 & \dNative &  &  &  &  & \cmark &  &  &  \\
+TrackMeOrNot~\cite{mengTrackMeOrNotEnablingFlexible2016} & WWW'16 & \dExt &  &  &  &  &  & \cmark &  &  \\
+
+One-class tracker classifier~\cite{ikramSeamlessTrackingFreeWeb2017} & PETS'17 & \dTool & \cmark &  &  &  &  &  &  &  \\
+Anti-adblock diff. exec.~\cite{zhuMeasuringDisruptingAntiAdblockers2018} & NDSS'18 & \dNative\,\dTool &  & \cmark & \cmark &  &  &  &  &  \\
+NoMoAds~\cite{shubaNoMoAdsEffectiveEfficient2018} & PETS'18 & \dServer & \cmark &  &  &  &  &  & \cmark &  \\
+AdVersarial~\cite{tramerAdVersarialPerceptualAd2019} & CCS'19 & \dServer & \cmark &  &  &  &  &  &  &  \\
+UNIGL~\cite{wuRenderedPrivateMaking2019} & USENIX'19 & \dNative &  & \cmark &  &  & \cmark &  &  &  \\
+ShadowBlock~\cite{zhuShadowBlockLightweightStealthy2019} & WWW'19 & \dNative &  &  & \cmark &  &  &  &  &  \\
+AdGraph~\cite{iqbalAdGraphGraphBasedApproach2020} & S\&P'20 & \dNative\,\dTool & \cmark &  &  &  &  &  &  &  \\
+NoMoATS~\cite{shubaNoMoATSAutomaticDetection2020} & PETS'20 & \dServer & \cmark &  &  &  &  &  &  &  \\
+TFO-TLS Enhancement~\cite{syEnhancedPerformancePrivacy2020} & PETS'20 & \dServer &  &  &  &  &  &  & \cmark &  \\
+XSinator~\cite{knittelXSinatorcomFormalModel2021} & CCS'21 & \dTool &  &  &  &  &  & \cmark &  &  \\
+FP-Inspector~\cite{iqbalFingerprintingFingerprintersLearning2021} & S\&P'21 & \dNative\,\dTool & \cmark &  &  &  &  &  &  &  \\
+SugarCoat/PageGraph-based~\cite{chenDetectingFilterList2021} & S\&P'21 & \dNative\,\dTool &  & \cmark & \cmark &  &  &  &  &  \\
+TrackerSift~\cite{amjadTrackerSiftUntanglingMixed2021} & IMC'21 & \dTool &  & \cmark &  &  &  &  &  &  \\
+CV-Inspector~\cite{leCVInspectorAutomatingDetection2021} & NDSS'21 & \dTool & \cmark &  & \cmark &  &  &  &  &  \\
+MAC Randomization~\cite{fenskeThreeYearsLater2021} & PETS'21 & \dServer &  &  &  &  &  &  & \cmark &  \\
+ML-CB~\cite{reitingerMLCBMachineLearning2021} & PETS'21 & \dExt & \cmark &  &  &  &  &  &  &  \\
+Ibex~\cite{zhongIbexPrivacypreservingAd2022} & CCS'22 & \dNative\,\dServer &  &  &  &  &  &  &  & \cmark \\
+WTAGRAPH~\cite{yangWTAGRAPHWebTracking2022} & S\&P'22 & \dNative\,\dExt & \cmark &  &  &  &  &  &  &  \\
+HARPO~\cite{zhangHARPOLearningSubvert2022} & NDSS'22 & \dExt & \cmark &  &  &  &  &  &  &  \\
+FP-Radar~\cite{bahramiFPRadarLongitudinalMeasurement2022} & PETS'22 & \dTool & \cmark &  &  &  &  &  &  &  \\
+Khaleesi~\cite{iqbalKhaleesiBreakerAdvertising2022} & USENIX'22 & \dExt & \cmark &  &  &  &  &  &  &  \\
+Simulacrum~\cite{karamiUnleashSimulacrumShifting2022} & USENIX'22 & \dNative &  &  &  &  & \cmark &  &  &  \\
+WebGraph~\cite{sibyWebGraphCapturingAdvertising2022} & USENIX'22 & \dNative\,\dTool & \cmark &  &  &  &  &  &  &  \\
+CGC~\cite{parkCGCContrastiveGraph2022} & WWW'22 & \dTool & \cmark &  &  &  &  &  &  &  \\
+AdCPG~\cite{leeAdCPGClassifyingJavaScript2023} & CCS'23 & \dTool & \cmark & \cmark &  &  &  &  &  &  \\
+CookieGraph~\cite{munirCookieGraphUnderstandingDetecting2023} & CCS'23 & \dNative\,\dTool & \cmark &  &  &  &  &  &  &  \\
+GDPR Runtime~\cite{kleinGeneralDataProtection2023} & CCS'23 & \dServer &  & \cmark &  &  &  &  &  &  \\
+JS-ByteCode~\cite{ghasemisharifReadLinesDetecting2023} & CCS'23 & \dTool & \cmark & \cmark &  &  &  &  &  &  \\
+FP-Sandbox~\cite{torokOnlyPayWhat2023} & S\&P'23 & \dNative &  &  &  &  & \cmark &  &  &  \\
+Tracking JS blocking~\cite{amjadBlockingJavaScriptBreaking2023} & PETS'23 & \dNative &  & \cmark &  &  &  &  &  &  \\
+AutoFR~\cite{leAutoFRAutomatedFilter2023} & USENIX'23 & \dExt\,\dTool & \cmark &  &  &  &  &  &  &  \\
+Net-track~\cite{leeNettrackGenericWeb2023} & WWW'23 & \dServer & \cmark &  &  &  &  &  &  &  \\
+Cobweb~\cite{amjadBlockingTrackingJavaScript2024} & CCS'24 & \dNative\,\dExt &  & \cmark &  &  &  &  &  &  \\
+Unbundle-Rewrite-Rebundle~\cite{aliUnbundleRewriteRebundleRuntimeDetection2024} & CCS'24 & \dExt &  & \cmark &  &  &  &  &  &  \\
+SINBAD~\cite{hajjchehadeSINBADSaliencyinformedDetection2024} & S\&P'24 & \dTool & \cmark &  &  &  &  &  &  &  \\
+Browser Polygraph~\cite{kalantariBrowserPolygraphEfficient2024} & IMC'24 & \dServer & \cmark &  &  &  &  &  &  &  \\
+FP-tracer~\cite{boussahaFPtracerFinegrainedBrowser2024} & PETS'24 & \dNative &  & \cmark &  &  &  &  &  &  \\
+User-Controlled Privacy~\cite{hubletUserControlledPrivacyTaint2024} & PETS'24 & \dNative &  & \cmark &  &  &  &  &  &  \\
+PURL~\cite{munirPURLSafeEffective2024} & USENIX'24 & \dNative\,\dTool & \cmark &  &  &  &  &  &  &  \\
+AdFlush~\cite{leeAdFlushRealWorldDeployable2024} & WWW'24 & \dExt & \cmark &  &  &  &  &  &  &  \\
+PanoptiChrome~\cite{kanyalPanoptiChromeModernInbrowser2024} & WWW'24 & \dNative &  & \cmark &  &  &  &  &  &  \\
+Byte-level FP Detection~\cite{bahramiByteByteUnmasking2025} & CCS'25 & \dTool & \cmark & \cmark &  &  &  &  &  &  \\
+CookieGuard~\cite{nikkhahbahramiCookieGuardCharacterizingIsolating2025} & IMC'25 & \dNative\,\dExt &  &  &  &  &  & \cmark &  &  \\
+Duumviri~\cite{shuangDuumviriDetectingTrackers2025} & NDSS'25 & \dExt\,\dTool & \cmark & \cmark &  &  &  &  &  &  \\
+CSAL~\cite{ortegaperezEncryptedAccessLogging2025} & USENIX'25 & \dNative\,\dServer &  &  &  &  &  &  &  & \cmark \\
+Semantics-aware Cookies~\cite{chenSemanticsAwareCookiePurpose2025} & WWW'25 & \dTool &  &  &  & \cmark &  &  &  &  \\
+AdVersa~\cite{limAdVersaAdversariallyRobustPractical2026} & WWW'26 & \dExt & \cmark &  &  &  &  &  &  &  \\
+TGNN~\cite{xiongTGNNEnhancingPixel2026} & WWW'26 & \dTool &  &  &  & \cmark &  &  &  &  \\
+
+\bottomrule
+\end{tabular}
+\caption{Defense deployment and mechanism types for tracking defense literature. Deployment: \dNative\ in-browser; \dExt\ browser extension; \dServer\ infrastructure-level; \dTool\ offline.}
+\label{tab:defense-mechanisms}
+\end{table}

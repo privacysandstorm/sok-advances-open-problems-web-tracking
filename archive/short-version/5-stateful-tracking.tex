@@ -4,7 +4,7 @@
 %%
 The most straightforward approach to tracking a user involves storing a unique identifier in their browser and retrieving it or modifying it as they browse different websites, which is a process known as ``stateful tracking''. 
 %
-Browsers provide a number of interfaces (\eg{}, cookies, see \autoref{tab:appendix-stateful-tracking}) that are designed to associate \textit{state} to the user's visit, and others that store information as a side effect of some other functionality provided to the website (\eg{}, E-Tags, HSTS upgrades), which trackers can sometimes abuse to encode a unique identifier~\cite{englehardtAutomatedDiscoveryPrivacy2018,ashkansoltaniFlashCookiesPrivacy2011,solomosTalesFaviconsCaches2021}.
+Browsers provide a number of interfaces (e.g., cookies, see \autoref{tab:appendix-stateful-tracking}) that are designed to associate \textit{state} to the user's visit, and others that store information as a side effect of some other functionality provided to the website (e.g., E-Tags, HSTS upgrades), which trackers can sometimes abuse to encode a unique identifier~\cite{englehardtAutomatedDiscoveryPrivacy2018,ashkansoltaniFlashCookiesPrivacy2011,solomosTalesFaviconsCaches2021}.
 %
 % \noindent The capabilities of a tracker %depends on the restrictions 
 % are governed by browsers security model defined in \autoref{sec:background}: (1) script execution privileges (2) context of inclusion (3) storage access policies.
@@ -25,10 +25,8 @@ Browsers mediate which resources and domains are able to access specific cookies
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1\linewidth]{figures/tracking-mechanisms-cookie.pdf}
-    % \vspace{-6mm}
     \caption{Cookie-based Tracking.}
     \label{subfig:cookie-tracking}
-    % \vspace{-5mm}
 \end{figure}
 
 %%
@@ -67,7 +65,6 @@ Earlier works formalized cookie syncing detection approach~\cite{acarWebNeverFor
     \includegraphics[width=1\linewidth]{figures/tracking-mechanisms-cookie-syncing.pdf}
     \caption{Cookie Syncing.}
     \label{subfig:cookie-syncing}
-    % \vspace{-2mm}
 \end{figure}
 
 %%
@@ -92,12 +89,10 @@ Image-based tracking pixels have been primarily used for analytics, ad (re)targe
 Researchers have conducted various large-scale measurements to study image-based tracking pixels \cite{lernerInternetJonesRaiders2016,agarwal2021under,vekaria2021differential}.
 
 \begin{figure}[htbp]
-    
     \centering
     \includegraphics[width=1\linewidth]{figures/tracking-mechanisms-tracking-tags.pdf}
     \caption{Tracking Scripts.}
     \label{subfig:tracking-scripts}
-    % \vspace{-2mm}
 \end{figure}
 
 %%
@@ -113,7 +108,6 @@ Thus, tracking pixels have expanded in scope to support additional use cases, su
 
 
 %%
-% \vspace{-2mm}
 \subsection{First-party Stateful Tracking}
 \label{sec:fp-stateful}
 
@@ -180,7 +174,6 @@ Besides link decorations, bounce tracking is another navigation-based mechanism 
     \includegraphics[width=1\linewidth]{figures/tracking-mechanisms-navigational-tracking.pdf}
     \caption{Navigational Tracking.}
     \label{subfig:navigational-tracking}
-    % \vspace{-2mm}
 \end{figure}
 
 %%
@@ -192,9 +185,9 @@ At a high level, a tracker’s goal is to momentarily surface or visit its own d
 %
 \ding{183} includes them in the request to \texttt{tracker.com}.
 %
-\ding{184} Browser redirects to \texttt{tracker.com}, either by a user click, automatically (\eg{}, \texttt{window.location.href="...";}, or a \texttt{<meta http-equiv="refresh">}).
+\ding{184} Browser redirects to \texttt{tracker.com}, either by a user click, automatically (e.g., \texttt{window.location.href="...";}, or a \texttt{<meta http-equiv="refresh">}).
 %
-\ding{185} Once loaded as a \emph{first party}, \texttt{tracker.com} reads the identifier from the URL or merges it with an existing cookie, rewriting the URL to its final destination (\eg{}, back to \texttt{news.com} or other domain), embedding the consolidated identifier.
+\ding{185} Once loaded as a \emph{first party}, \texttt{tracker.com} reads the identifier from the URL or merges it with an existing cookie, rewriting the URL to its final destination (e.g., back to \texttt{news.com} or other domain), embedding the consolidated identifier.
 %
 \ding{186} The browser navigates to \texttt{news.com}; the tracker’s script there extracts the identifier from the decorated URL and 
 %
@@ -216,9 +209,7 @@ At a high level, a tracker’s goal is to momentarily surface or visit its own d
     \centering
     \includegraphics[width=1\linewidth]{figures/tracking-mechanisms-bounce-tracking.pdf}
     \caption{Bounce Tracking.}
-    % \vspace{-3mm}
     \label{subfig:bounce-tracking}
-    % \vspace{-2mm}
 \end{figure}
 
 Bounce chains can involve two sites (\texttt{news.com} → \texttt{tracker.com} → \texttt{news.com}) or longer, allowing the tracker to propagate a stable user identifier across multiple unrelated websites despite third-party cookie restrictions.
@@ -232,7 +223,6 @@ Measurements in 2020 found that 11.6\% of sites use one of the top 100 redirecto
 
 
 %%
-% \vspace{-2mm}
 \subsection{Defenses Against Stateful Tracking}
 \label{sec:stateful-defenses}
 
@@ -243,7 +233,6 @@ Given the broad adoption of stateful tracking and its perceived intrusive nature
 
 \subsubsection{Third-party Stateful Tracking Protections}
 \label{sec:stateful-defenses-evercookie}
-% \vspace{-2mm}
 %%
 \para{Clearing Cookies.}
 Logically, a user could clear the cookies in their browser at the end of each session to protect themselves from being tracked. 
@@ -274,7 +263,7 @@ As of 2025, most browsers have blocked/partitioned third-party access to statefu
 Browsers attempt to block most third-party cookies~\cite{mdnThirdpartyCookiesPrivacy2024} but exceptions exist to support non-tracking use cases such as enabling single sign-on (SSO), whose removal may lead to website breakage \cite{crouchImprovingPrivacyBreaking2018}. 
 %
 Privacy-focused browsers, such as Brave, apply the most aggressive restrictions by blocking all third-party cookies by default and allowing third-parties to share a partitioned ephemeral storage for the lifetime of the session \cite{braveprivacyteamEphemeralThirdpartySite2021}. 
-% (\ie{}, until the browser is closed or the last instance of first-party website (eTLD+1) closes)~\cite{braveprivacyteamEphemeralThirdpartySite2021}.
+% (i.e., until the browser is closed or the last instance of first-party website (eTLD+1) closes)~\cite{braveprivacyteamEphemeralThirdpartySite2021}.
 %
 Among the mainstream browsers, Safari and Firefox have the most effective restrictions. 
 %
@@ -298,13 +287,13 @@ Hence, researchers~\cite{panNotKnowWhat2015} have also proposed a tracking-free 
 
 \para{Blocking Trackers.}
 %%
-Filter lists are widely used by browsers (\eg{}, Brave) and browser extensions (\eg{}, uBlock Origin) to block third-party tracking requests.
+Filter lists are widely used by browsers (e.g., Brave) and browser extensions (e.g., uBlock Origin) to block third-party tracking requests.
 %
 However, filter list based ad or tracker blocking faces significant limitations: 
 %
 (1) manually curated lists are maintained by small community individuals and do not capture nuanced techniques, 
 %
-(2) as lists grow in size, they contain outdated or too narrow entries (\eg{} 90\% of EasyList rules are practically never triggered~\cite{snyderWhoFiltersFilters2020}),
+(2) as lists grow in size, they contain outdated or too narrow entries (e.g., 90\% of EasyList rules are practically never triggered~\cite{snyderWhoFiltersFilters2020}),
 %
 (3) being static, trackers keep evading them.
 %
@@ -319,7 +308,7 @@ These approaches can generalize sufficiently to discover previously unknown trac
 Brave implements an AdGraph-based ML solution (PageGraph) to detect and block trackers.
 %
 Beyond network requests and CNAME-based blocking~\cite{daoCNAMECloakingBasedTracking2021}, another popular anti-tracking method is to detect and block tracking scripts or JavaScript code at different granularities~\cite{ikramSeamlessTrackingFreeWeb2017,smithSugarCoatProgrammaticallyGenerating2021} such as domain-based and path-based script blocking~\cite{leCVInspectorAutomatingDetection2021,alrizahErrorsMisunderstandingsAttacks2019,snyderWhoFiltersFilters2020}, function-level blocking~\cite{amjadBlockingJavaScriptBreaking2023,amjadBlockingTrackingJavaScript2024} or event loop based blocking~\cite{chenDetectingFilterList2021} within an otherwise benign script \cite{amjadTrackerSiftUntanglingMixed2021}. %
-Adversarial trackers are incentivized to evade such blocking (\eg{} by changing script location or causing site breakage), thus posing challenges.
+Adversarial trackers are incentivized to evade such blocking (e.g., by changing script location or causing site breakage), thus posing challenges.
 
 
 %%

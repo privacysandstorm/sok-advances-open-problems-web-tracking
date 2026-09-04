@@ -4,9 +4,9 @@
 %%
 The most straightforward approach to tracking a user involves storing a unique identifier in their browser and retrieving it or modifying it as they browse different websites, which is a process known as ``stateful tracking''. 
 %
-Browsers provide a number of interfaces (\eg{}, cookies) that are designed to associate \textit{state} to the user's visit. 
+Browsers provide a number of interfaces (e.g., cookies) that are designed to associate \textit{state} to the user's visit. 
 %
-Browsers also provide many interfaces that store information as a side effect of some other functionality provided to the website (\eg{}, E-Tags, HSTS upgrades), which trackers can sometimes abuse to encode a unique identifier~\cite{englehardtAutomatedDiscoveryPrivacy2018,ashkansoltaniFlashCookiesPrivacy2011,solomosTalesFaviconsCaches2021}.
+Browsers also provide many interfaces that store information as a side effect of some other functionality provided to the website (e.g., E-Tags, HSTS upgrades), which trackers can sometimes abuse to encode a unique identifier~\cite{englehardtAutomatedDiscoveryPrivacy2018,ashkansoltaniFlashCookiesPrivacy2011,solomosTalesFaviconsCaches2021}.
 %
 In this section, we first describe third-party stateful tracking (\autoref{sec:tp-stateful}) and next its evolution towards first-party stateful tracking (\autoref{sec:fp-stateful}).
 %
@@ -22,7 +22,7 @@ In 2006, they found third-party resources present on more than half of the sites
 %
 In 2009, they documented the rapid growth of trackers, and showed how acquisitions allowed the largest trackers to have visibility on 10-60\% of sites~\cite{krishnamurthyPrivacyDiffusionWeb2009}. 
 %
-In the following years, researchers have shown a continual growth in the presence and diversity of third-party stateful tracking~\cite{soltaniFlashCookiesPrivacy2009,roesnerDetectingDefendingThirdparty2012,mayerThirdPartyWebTracking2012,acarFPDetectiveDustingWeb2013,eubankShiningFloodlightsMobile2013, altaweelWebPrivacyCensus2015,englehardtOnlineTracking1millionsite2016,lernerInternetJonesRaiders2016,schelterUbiquityWebTracking2018} and documented the rise and fall of different players in the ecosystem and behaviors (\eg{}, popup-based trackers declining after browsers blocked popups by default)~\cite{lernerInternetJonesRaiders2016}.
+In the following years, researchers have shown a continual growth in the presence and diversity of third-party stateful tracking~\cite{soltaniFlashCookiesPrivacy2009,roesnerDetectingDefendingThirdparty2012,mayerThirdPartyWebTracking2012,acarFPDetectiveDustingWeb2013,eubankShiningFloodlightsMobile2013, altaweelWebPrivacyCensus2015,englehardtOnlineTracking1millionsite2016,lernerInternetJonesRaiders2016,schelterUbiquityWebTracking2018} and documented the rise and fall of different players in the ecosystem and behaviors (e.g., popup-based trackers declining after browsers blocked popups by default)~\cite{lernerInternetJonesRaiders2016}.
 %
 As of 2025, stateful tracking is ubiquitous: third parties are present on nearly every site and large-scale tracking networks are common---with top 35 trackers present on 10\% or more of the web~\cite{duckduckgoTrackerRadarWiki2024}.
 
@@ -316,7 +316,7 @@ As of 2025, most browsers have blocked or partitioned third-party access to stat
 Browser vendors attempt to block most third-party cookies~\cite{mdnThirdpartyCookiesPrivacy2024} but leave some exceptions to support non-tracking use cases such as cookies that enable single sign-on (SSO), whose removal may lead to website breakage \cite{crouchImprovingPrivacyBreaking2018}. 
 %
 Privacy-focused browsers, such as Brave, apply the most aggressive restrictions by blocking all third-party cookies by default and allowing third-parties to share a partitioned ephemeral storage for the lifetime of the browsing session \cite{braveprivacyteamEphemeralThirdpartySite2021}. 
-% (\ie{}, until the browser is closed or the last instance of first-party website (eTLD+1) closes)~\cite{braveprivacyteamEphemeralThirdpartySite2021}.
+% (i.e., until the browser is closed or the last instance of first-party website (eTLD+1) closes)~\cite{braveprivacyteamEphemeralThirdpartySite2021}.
 %
 Among the mainstream browsers, Safari and Firefox have the most effective restrictions. 
 %
@@ -338,13 +338,13 @@ Moreover, they have migrated to alternative tracking techniques by circumventing
 
 \paragraph{Blocking Trackers.}
 %%
-Filter lists are widely used by browsers (\eg{}, Brave) and browser extensions (\eg{}, uBlock Origin) to block third-party tracking requests.
+Filter lists are widely used by browsers (e.g., Brave) and browser extensions (e.g., uBlock Origin) to block third-party tracking requests.
 %
 However, filter list based ad or tracker blocking faces significant limitations: 
 %
 (1) manually curated lists are maintained by small community individuals and do not capture nuanced techniques. 
 %
-(2) as lists grow in size, they contain outdated or too narrow entries (\eg{} 90\% of EasyList rules are practically never triggered \cite{snyderWhoFiltersFilters2020}).
+(2) as lists grow in size, they contain outdated or too narrow entries (e.g., 90\% of EasyList rules are practically never triggered \cite{snyderWhoFiltersFilters2020}).
 %
 (3) being static, trackers keep evading them.
 %
@@ -359,7 +359,7 @@ These approaches can generalize well to discover previously unknown trackers and
 Brave implements an AdGraph-based ML solution (PageGraph) to detect and block trackers.
 %
 Beyond network requests, another popular anti-tracking method is to detect and block tracking scripts or JavaScript code at different granularities such as domain or path-based script blocking or function blocking within an otherwise benign script \cite{ikramSeamlessTrackingFreeWeb2017,alrizahErrorsMisunderstandingsAttacks2019,snyderWhoFiltersFilters2020,smithSugarCoatProgrammaticallyGenerating2021,chenDetectingFilterList2021,daoCNAMECloakingBasedTracking2021,leCVInspectorAutomatingDetection2021,amjadTrackerSiftUntanglingMixed2021,amjadBlockingJavaScriptBreaking2023,amjadBlockingTrackingJavaScript2024}.%
-Adversarial trackers are incentivized to evade such blocking (\eg{} by changing script location or causing site breakage), posing challenges.
+Adversarial trackers are incentivized to evade such blocking (e.g., by changing script location or causing site breakage), posing challenges.
 
 
 %%

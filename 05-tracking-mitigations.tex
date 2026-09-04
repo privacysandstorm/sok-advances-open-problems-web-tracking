@@ -1,388 +1,375 @@
 \section{Tracking Defenses}
+\label{sec:tracking-mitigations}
 
-\input{tables/defenses}
-
-\begin{figure*}[tp]
-    \centering
-    \includegraphics[width=\textwidth]{figures/evolution-timeline.pdf}
-    \caption{Evolution of web-tracking protections, wrapped across two stacked time bands (2001--2015 and 2015--2027). Above each axis: browser (\emph{industrial}) milestones; below: \emph{research} and \emph{community} defenses. The ``Edge\,/\,IE'' lane covers the Internet Explorer~$\rightarrow$~Edge lineage (IE's Tracking Protection Lists, InPrivate Filtering, and DNT predate Chromium Edge).}
-    \label{fig:evolution}
-\end{figure*}
-
-\autoref{tab:systematization} systematizes the defenses discussed in this section, mapping each tracking mechanism and its targeted artifacts to the research-based defenses proposed in the literature (annotated by how each can be deployed) and to the industrial defenses shipped by the five major browsers.
+%%
+We systematize defenses against tracking techniques described in~\autoref{sec:tracking-techniques} across three dimensions in accordance with the criteria defined in~\autoref{tab:systematization-criteria}: \textit{industry-based}, \textit{research-based}, and \textit{community-based}.
 %
-\autoref{fig:evolution} complements the table with a chronological view, charting how these protections evolved across browsers, research, and the community from the early list-based era to today's browser-default protections.
+Following the methodology described in \autoref{sec:methodology} and \refappendix{sec:thematic-analysis}, we first curate industry-based (see \autoref{tab:defenses-industrial}) and community-based (see \autoref{tab:defenses-community}) defenses and research literature comprising 65 papers on tracking defenses (see \autoref{tab:defense-mechanisms}).
 %
-We follow the stateful/stateless and third-/first-party split of \autoref{sec:stateful-defenses} onwards, and for each mechanism we discuss research-based defenses alongside the community tools and browser features that target the same artifacts, surfacing the gaps and open problems that recur across all three.
+Each defense technique is grouped by its goal either as \colorbox{cellred}{detection and blocking} or \colorbox{cellyellow}{signal reduction and obfuscation}. 
+%
+For industry-based and community-based defenses, we identify 12 techniques against stateful tracking (see \autoref{tab:stateful-tracking-defenses}) and 11 techniques against stateless tracking (see \autoref{tab:stateful-tracking-defenses}). 
+%
+We also systematize support of defense techniques across each browser (Edge, Firefox, Brave, Chrome, and Safari). 
+%
+For research-based defenses, we identify 8 defense techniques described in \autoref{tab:defense-goal-mechanism-taxonomy}, grouped by the two defense goals. 
+%
+\autoref{tab:defense-mechanisms} maps each paper to these defense techniques.
+%
+% Each defense technique across the three dimensions is also systematized based on artifact the defense is applied to and its deployment. 
+%%
+% We organize this section similar to \autoref{sec:tracking-techniques}, by tracked state: defenses against \textit{stateful} tracking (\autoref{sec:stateful-defenses}), \textit{stateless} tracking (\autoref{sec:stateless-defenses}), and \textit{mixed} tracking (\autoref{sec:mixed-defenses}).
+% %
+% Within each, based on who develops the defense, we systematize them under industry-, research-, and community-based defenses. 
+% %
+\autoref{fig:evolution-defenses} depicts the evolution of tracking defenses under a single timeline from 2000 to 2026. 
 
+
+%%
 \subsection{Defenses Against Stateful Tracking}
 \label{sec:stateful-defenses}
 
-Given the broad adoption of stateful tracking and its perceived intrusive nature, numerous tracking countermeasures have been proposed by the research community; some have been adopted by browsers, others are available through extensions.
+
+%% moved to appendix
+% \input{tables/stateful-tracking-defenses}
+
 
 %%
+\subsubsection{Industry-based Defenses (\autoref{tab:stateful-tracking-defenses})}
+\label{sec:stateful-defenses-industry}
 
-\subsubsection{Third-party Stateful Tracking Protections}
+
+
+%%
+\para{Clearing State.}
 \label{sec:stateful-defenses-evercookie}
+%
+A user could clear their browser's cookies at the end of session, however, ordinary cookie clearing does not remove identifiers stored in \texttt{localStorage}, \texttt{IndexedDB}, E-Tags, or the browser cache, letting trackers respawn deleted cookies from such copies~\cite{ayensonFlashCookiesPrivacy2011,acarFPDetectiveDustingWeb2013,sorensenZombiecookiesCaseStudies2013}---any API that persists even a single bit of state is a potential supercookie vector~\cite{soltaniFlashCookiesPrivacy2009,aliNavigatingMurkyWaters2023,kamkarSamyKamkarEvercookie2010,klink1334485TrackingUsing2017}.
+%
+This motivated the cache-, network-, and storage-partitioning efforts that Firefox, Chrome, and Safari each shipped between 2020 and 2021, isolating TLS sessions, DNS caches, connection pools, and the HTTP cache by top-level site~\cite{menkeStorageIsolationProject2020,privacycommunitygroupClientSideStoragePartitioning2022,mdnStatePartitioningPrivacy2024}, closing off cross-site respawning even where same-site respawning may still be possible.
+
 
 %%
-\para{Clearing State and Supercookies.}
-Logically, a user could clear the cookies in their browser at the end of each session to protect themselves from being tracked.
+\para{Restricting or Partitioning Third-party State.}
 %
-However, browser cookie clearing features do not typically clear \textit{all} stateful mechanisms provided to sites \cite{acarWebNeverForgets2014, englehardtOnlineTracking1millionsite2016}.
+Initially, browser vendors attempted to restrict third-party cookies themselves, leaving exceptions for non-tracking uses such as single sign-on~\cite{crouchImprovingPrivacyBreaking2018}, before blocking or partitioning them outright.
 %
-For example, clearing cookies often does not remove identifiers stored in browser storage APIs \texttt{localStorage}~\cite{ayensonFlashCookiesPrivacy2011,roesnerDetectingDefendingThirdparty2012}, \texttt{IndexedDB}~\cite{acarFPDetectiveDustingWeb2013}, E-Tags~\cite{ayensonFlashCookiesPrivacy2011}, and browser cache~\cite{sorensenZombiecookiesCaseStudies2013}.
+Safari's ITP, introduced in 2017, used an on-device ML classifier to identify likely trackers and eventually blocked all third-party cookies by default in 2020 unless a site was explicitly visited as first-party or used the Storage Access API~\cite{TrackingPreventionWebKit2020}.
 %
-A malicious tracker can take advantage of this limitation by storing copies of their tracking identifiers in locations that aren’t cleared by the browser.
+Firefox's ETP shipped off by default in 2018, on by default a year later, and added Total Cookie Protection in 2021, which partitions cookies per top-level site rather than blocking them outright~\cite{mdnThirdpartyCookiesPrivacy2024}.
 %
-The most publicized example of such cookies (or "supercookies") was Adobe's Flash browser plugin, which provided no mechanism for browsers to clear its storage \cite{soltaniFlashCookiesPrivacy2009,solomosTalesFaviconsCaches2021}.
+Brave has blocked all third-party cookies and storage through Shields since its earliest developer preview, granting only ephemeral, per-session partitioned storage to third parties that need it~\cite{braveprivacyteamEphemeralThirdpartySite2021}.
 %
-Any API that allows a tracker to persist state to the user’s device is a potential supercookie vector~\cite{aliNavigatingMurkyWaters2023}.
+Chrome has moved far more cautiously: it initially blocked third-party cookies only in Incognito by default, introduced CHIPS as an opt-in partitioned-cookie attribute in 2023, and after repeated delays abandoned its plan to deprecate third-party cookies altogether in 2024~\cite{chavezNewPathPrivacy2024}, leaving \texttt{SameSite} and the Storage Access API~\cite{mdnStorageAccessAPI2024} as its main developer-facing tools; Edge inherits Chromium's defaults.
 %
-Kamkar first demonstrated how widespread this risk is by encoding identifiers in APIs like HTTP Strict Transport Security (HSTS), Web Cache, \texttt{window.name}, and Web History~\cite{kamkarSamyKamkarEvercookie2010}.
-%
-Variants of the same attack were also demonstrated later on with other browser APIs~\cite{klink1334485TrackingUsing2017,goodinUnpatchedBrowserWeaknesses2015,evansPublicKeyPinning2015}.
-%
-Research prototypes responded by isolating or generalizing this state rather than relying on the user to clear it: TrackingFree assigns a separate browser principal per first-party so identifiers exist but are not unique across sites~\cite{panNotKnowWhat2015}, UCognito generalizes private browsing into configurable isolation levels that persist chosen state while compartmentalizing the rest~\cite{xuUCognitoPrivateBrowsing2015}, and earlier work proposed partitioning visited-link styles, cache timing, and per-origin history to close the same leaks~\cite{jacksonProtectingBrowserState2006}.
-%
-Ultimately supercookie risk was the prime motivation behind the network and storage partitioning efforts of Firefox, Chrome, and Safari~\cite{menkeStorageIsolationProject2020,privacycommunitygroupClientSideStoragePartitioning2022,mdnStatePartitioningPrivacy2024}.
-%
-As of 2025, most browsers have blocked/partitioned third-party access to stateful APIs, preventing their use for cross-site tracking (\autoref{tab:systematization}).
+% Trackers may not always adhere to or use these mechanisms, however, and 
+Systematic testing of these cookie-blocking implementations has repeatedly uncovered bypass vectors via redirects, popups, and nested iframes~\cite{frankenWhoLeftOpen2018}.
+
 
 %%
-\para{Restrictions on Third-party Cookies.}
+\para{Restricting or Limiting First-party State.}
 %
-Browsers attempt to block most third-party cookies~\cite{mdnThirdpartyCookiesPrivacy2024} but exceptions exist to support non-tracking use cases such as enabling single sign-on (SSO), whose removal may lead to website breakage \cite{crouchImprovingPrivacyBreaking2018}.
+First-party cookies cannot be blocked without breaking site functionality, so browsers instead limit their lifetime.
 %
-Privacy-focused browsers, such as Brave, apply the most aggressive restrictions by blocking all third-party cookies by default and allowing third-parties to share a partitioned ephemeral storage for the lifetime of the session \cite{braveprivacyteamEphemeralThirdpartySite2021}.
+Safari's ITP expires script-set first-party cookies after seven days (24 hours with link decoration) and applies CNAME and IP heuristics to unmask disguised third-party hosts~\cite{TrackingPreventionWebKit2020}; Brave applies equivalent caps and adds Forgetful Browsing to clear storage for sites the user stops visiting~\cite{bravePrivacyProtectionSecurity}; Chrome, Firefox, and Edge apply no equivalent first-party lifetime cap by default.
 %
-Among the mainstream browsers, Safari and Firefox have the most effective restrictions.
-%
-Safari currently blocks all third-party cookies unless the domain (eTLD+1) has been visited by the user as a first-party or if the third-party explicitly requests to use the cookies through the Storage Access API~\cite{TrackingPreventionWebKit2020}.
-%
-It further relies on an ML model to detect whether the domains with third-party access engage in tracking and restrict their cookies if the user has not interacted with them as a first-party in the last 30 days.
-%
-Firefox blocks third-party cookies from known trackers (as determined by the Disconnect tracking protection list~\footnote{\url{https://disconnect.me/trackerprotection}}) and also partitions third-party cookies, such that each first-party and third-party origin combination has a separate cookie jar~\cite{mdnThirdpartyCookiesPrivacy2024}.
-%
-Initially, following in the footsteps of Safari and Firefox, Google Chrome announced plans to block all third-party cookies~\cite{chromeBuildingMorePrivate2020}, which after several delays, it decided not to proceed with~\cite{chavezNewPathPrivacy2024}.
-%
-Chrome currently offers various tools for developers to manage third-party cookies, including JavaScript APIs like the Storage Access API~\cite{mdnStorageAccessAPI2024} and cookie directives like the ``SameSite' attribute~\cite{mdnSetCookieHTTPMDN2024}.
-%
-However, trackers may not adhere to or use these mechanisms, and have migrated to alternative tracking techniques by circumventing existing protections; systematic testing of browser cookie-blocking implementations has also uncovered bypass vectors through redirects, popups, and nested iframes~\cite{frankenWhoLeftOpen2018}.
-%
-On the research side, beyond the isolation approach of TrackingFree~\cite{panNotKnowWhat2015}, TrackMeOrNot lets users set fine-grained, contextual per-site tracking preferences rather than a single global policy~\cite{mengTrackMeOrNotEnablingFlexible2016}.
-%
-Such per-site control, however, places a configuration burden on users that does not scale to the thousands of sites a typical user visits, and most users lack the expertise to make these decisions~\cite{mengTrackMeOrNotEnablingFlexible2016,nisenoffDefiningBrokenUser2023}.
+As third-party cookies are restricted, websites increasingly rely on a handful of \emph{identity providers} that combine first-party data with offline data (e.g., loyalty cards, point-of-sale) to construct proprietary \emph{identity graphs}, concentrating behavioral insights and eroding users' ability to maintain separate or pseudonymous personas~\cite{TargetedAdvertisingAutorite2025,munirGooglesChromeAntitrust2024}.
 
-\begin{gapbox}
-Default third-party cookie restrictions now vary widely across browsers, and the most usable user-facing controls (per-site preferences) do not scale, leaving the bulk of protection to vendor defaults whose strength is set by economic incentives rather than user choice.
-\end{gapbox}
+\begin{opbox}
+How can defenses detect, audit, or constrain opaque first-party data flows within the identity provider ecosystem, which enables persistent user tracking and identity continuity across contexts and devices?
+% and what metrics would meaningfully quantify the privacy risk they pose? 
+% Moreover, a user can still be linked through an email shared at checkout or a device ID leaked by a mobile app. What defense architectures could protect identity continuity across these contexts?
+\end{opbox}
 
 
+%%
+\para{Removing or Limiting Navigational Parameters.}
+%
+Browsers remove URL parameters used by trackers.
+%
+Firefox (ETP Strict), Brave, and DuckDuckGo strip known tracking query parameters from URLs, while Safari does so in Private Browsing~\cite{TrackingPreventionWebKit2020}.
+%
+All five major browsers also default to \texttt{strict-origin-when-cross-origin} Referrer-Policy, stripping parameters from cross-origin \texttt{Referer} headers.
+
+
+%%
+\para{Protecting Against Bounce Tracking.}
+%
+Bounce tracking grants a tracker temporarily unrestricted first-party storage access. 
+%
+Moreover, resemblance of authentication flows to a bounce complicates the defense~\cite{kellyBounceTrackingMitigations2022}.
+%
+Firefox and Chrome mitigate it by deleting storage for domains visited only in redirects without recent user interaction~\cite{snyderNavigationalTrackingMitigations2024}, while Brave combines \textit{debouncing} (skipping known bounce-tracker redirects) with \textit{unlinkable bouncing} (routing suspected bounces through temporary, unlinkable storage)~\cite{braveprivacyteamUnlinkableBouncingMore2022}.
+%
+What counts as ``legitimate'' interaction to spare a domain varies by browser.
+
+
+%%
 \para{Blocking Trackers.}
-%%
-Filter lists are widely used by browsers (\eg{}, Brave) and browser extensions (\eg{}, uBlock Origin~\cite{ublockResourcesLibrary}) to block third-party tracking requests; a broad community ecosystem---EasyList, EasyPrivacy, AdGuard, Ghostery, Privacy Badger, NoScript, Pi-hole, NextDNS, and others (\autoref{fig:evolution})---maintains these lists and tools.
 %
-However, filter list based ad or tracker blocking faces significant limitations:
+Firefox and Edge block trackers from the Disconnect list; Brave's Shields blocks via its own curated list and uses PageGraph, a page-execution graph recorder, to make decisions based on a script's runtime behavior instead of URL alone; Safari pairs its blocklist with its ML classifier.
 %
-(1) manually curated lists are maintained by small community individuals and do not capture nuanced techniques,
+Chrome ships no native filter-list blocking, and the Manifest V3 shift has curtailed the dynamic request-blocking APIs that extensions previously relied on.
 %
-(2) as lists grow in size, they contain outdated or too narrow entries (\eg{} 90\% of EasyList rules are practically never triggered~\cite{snyderWhoFiltersFilters2020}),
-%
-(3) being static, trackers keep evading them.
-%
-To overcome these challenges, researchers have built ML-driven advertising or tracking request blockers that treat a webpage as a graph of HTML structure, network requests, and JavaScript behavior~\cite{iqbalAdGraphGraphBasedApproach2020, sibyWebGraphCapturingAdvertising2022, yangWTAGRAPHWebTracking2022, leeAdFlushRealWorldDeployable2024, leeAdCPGClassifyingJavaScript2023}, and that generalize to previously unknown trackers.
-%
-AutoFR automates the creation and evaluation of filter rules end-to-end~\cite{leAutoFRAutomatedFilter2023}, while complementary classifiers extend existing lists by labeling unlisted tracker domains from request features~\cite{gugelmannAutomatedApproachComplementing2015,ikramSeamlessTrackingFreeWeb2017} or from HTTP response headers alone for browser-agnostic detection~\cite{riederRequestHarnessingHTTP2025}.
-%
-Brave implements an AdGraph-based ML solution (PageGraph) to detect and block trackers, paired with SugarCoat to neutralize tracking inside scripts that sites depend on~\cite{smithSugarCoatProgrammaticallyGenerating2021}.
-%
-Beyond network requests and CNAME-based blocking~\cite{daoCNAMECloakingBasedTracking2021}, a popular anti-tracking method is to detect and block tracking scripts at different granularities~\cite{ikramSeamlessTrackingFreeWeb2017,smithSugarCoatProgrammaticallyGenerating2021}: domain- and path-based script blocking~\cite{leCVInspectorAutomatingDetection2021,alrizahErrorsMisunderstandingsAttacks2019,snyderWhoFiltersFilters2020}, function-level blocking~\cite{amjadBlockingJavaScriptBreaking2023,amjadBlockingTrackingJavaScript2024}, bytecode- and graph-level script classification~\cite{ghasemisharifReadLinesDetecting2023,parkCGCContrastiveGraph2022}, and event-loop based blocking~\cite{chenDetectingFilterList2021} within an otherwise benign script~\cite{amjadTrackerSiftUntanglingMixed2021}.
-%
-Several systems target mixed resources, where tracking and functionality share a script: TrackerSift and Duumviri separate tracking from functional code~\cite{amjadTrackerSiftUntanglingMixed2021,shuangDuumviriDetectingTrackers2025}, while Unbundle-Rewrite-Rebundle neutralizes tracking modules inside JavaScript bundles and rebundles the rest~\cite{aliUnbundleRewriteRebundleRuntimeDetection2024}.
-%
-Because over-blocking causes site breakage, parallel work models the trade-off directly, detecting blocking-induced breakage from page screenshots~\cite{hajjchehadeSINBADSaliencyinformedDetection2024} and from how users perceive and remediate it~\cite{nisenoffDefiningBrokenUser2023}.
-%
-On mobile, where requests are not exposed to extensions, NoMoAds and NoMoATS intercept app traffic through a local VPN and classify ad/tracking requests from traffic features~\cite{shubaNoMoAdsEffectiveEfficient2018,shubaNoMoATSAutomaticDetection2020}, and tracking-pixel detection has been extended to LLM-annotated graph classifiers~\cite{xiongTGNNEnhancingPixel2026}.
-%
-Network- and server-side proposals act where the client cannot observe the flow, classifying trackers from encrypted packet metadata~\cite{leeNettrackGenericWeb2023} or enforcing data-protection policies on personal-data flows at runtime~\cite{kleinGeneralDataProtection2023}.
-%
-Trackers, in turn, are incentivized to evade blocking, producing an arms race the research community measures and counters: anti-adblock circumvention has been characterized and neutralized through differential execution analysis~\cite{zhuMeasuringDisruptingAntiAdblockers2018} and circumvention detection~\cite{leCVInspectorAutomatingDetection2021}, stealthy element hiding evades anti-adblock fingerprinting~\cite{zhuShadowBlockLightweightStealthy2019}, and perceptual ad blockers have been shown vulnerable to adversarial perturbations~\cite{tramerAdVersarialPerceptualAd2019}, motivating adversarially robust classifiers~\cite{limAdVersaAdversariallyRobustPractical2026}.
+Against CNAME-cloaked trackers, Brave resolves CNAME for every sub-resource request and checks both requested and canonical domains against its filter lists~\cite{bravePrivacyProtectionSecurity}; Safari caps cookie lifetime to seven days when it detects a differing canonical domain~\cite{TrackingPreventionWebKit2020}, extended into Advanced Tracking and Fingerprinting Protection (ATFP) in 2023; Chrome, Edge, and Firefox ship no CNAME defense.
 
-\begin{gapbox}
-ML-based blockers reduce filter-list staleness but inherit their own costs: models need periodic retraining as the web evolves, several require browser instrumentation, adversaries can restructure graphs or obfuscate scripts to evade detection, and none observe server-side request chains, leaving a blind spot as tracking logic shifts off the client.
-\end{gapbox}
-
-%%
-
-\subsubsection{Protections Against First-party Circumventions}
-
-\para{Restrictions on First-party Cookies.}
-Unlike third-party cookies, first-party cookies cannot be as easily blocked completely because it would break critical website functionality such as maintaining login state.
-%
-Therefore, they require more targeted countermeasures as listed below.
-
-%%
-\para{Limiting Lifetime of First-party Storage Written by Tracking Scripts.}
-%
-Safari’s Intelligent Tracking Protection (ITP) expires all first-party cookies or storage set by scripts after no user interaction for 7 days \cite{TrackingPreventionWebKit2020}.
-%
-To mitigate workarounds that automatically overwrite cookies written by scripts with HTTP cookies, Safari detects third-party hosts cloaked under first-party subdomains using heuristics applied to the first-party host’s CNAME and IP address~\cite{TrackingPreventionWebKit2020}.
-%
-Brave implements a limited version of this, which caps the lifetime of cookies set by scripts to 7 days~\cite{bravePrivacyProtectionSecurity}.
-%
-To target this first-party circumvention more precisely, research has moved from blanket lifetime caps to classifying individual first-party cookies by purpose: CookieGraph builds a graph of cookie-creation flows to separate tracking from functional cookies~\cite{munirCookieGraphUnderstandingDetecting2023}, CookieGuard characterizes the first-party cookie jar and isolates cookies set by third-party-origin scripts, including those cloaked via CNAME~\cite{bahramiCOOKIEGUARDCharacterizingIsolating2024}, and semantics-aware checkers compare a cookie's inferred purpose against its declared consent~\cite{chenSemanticsAwareCookiePurpose2025,zimmeckPriveeArchitectureAutomatically2014}.
-
-%%
-\para{Removing or Limiting the Persistence of Identifiers Passed in URL Parameters.}
-%
-Several browsers remove URL parameters known to be used by trackers.
-%
-Firefox~\cite{mozillaQueryParameterStripping} implements removal in a non-default mode, while Brave~\cite{braveprivacyteamGrabBagQuery2020} and DuckDuckGo~\cite{duckduckgoDuckDuckGoWebTracking} ship it by default; community extensions such as ClearURLs (\autoref{fig:evolution}) do the same.
-%
-When URL parameters are removed on navigation, embedded tracking scripts are prevented from accessing tracking IDs across sites.
-%
-Safari takes a different approach: instead of removing tracking parameters, it limits the lifetime of script-accessible storage from 7 days to 24 hours when ITP detects link decoration~\cite{TrackingPreventionWebKit2020}.
-%
-Because blocklists cannot tell which parameters carry tracking IDs versus functional state, PURL classifies parameters from the graph of how each is created (which script, from what storage or API) and sanitizes only the tracking ones~\cite{munirPURLSafeEffective2024}.
-
-
-
-%%
-\para{Limiting First-party Storage Set During a Bounce.}
-%
-Bounce tracking not only circumvents third-party storage protections but also allows unrestricted access to tracker’s first-party storage.
-%
-Browsers mitigate it by differentiating between a \textit{legitimate visit} to a site and a brief \textit{bounce} for tracking purposes.
-%
-The fact that some authentication flows appear similar to bounce tracking complicates this issue~\cite{kellyBounceTrackingMitigations2022}.
-%
-Brave and Firefox use blocklists to detect potential bounce trackers, whereas Safari and Chrome use heuristics based on site behavior as mitigations~\cite{snyderNavigationalTrackingMitigations2024}.
-%
-Firefox, Chrome, and Safari delete all site storage for these domains unless there's evidence of legitimate and recent user interaction with the site; the definition of \textit{legitimate} and \textit{recent} varies by browser~\cite{snyderNavigationalTrackingMitigations2024,TrackingPreventionWebKit2020}.
-%
-While Brave provides suspected bounce trackers with access to ephemeral storage that is cleared once all tabs opened from that tracker are closed, so long as the tracker does not already have persistent storage set~\cite{braveprivacyteamUnlinkableBouncingMore2022}.
-%
-Khaleesi targets the request chains that carry these identifiers, classifying each request from the sequential context of the redirect chain to catch cookie syncing and bounce tracking that static lists miss~\cite{iqbalKhaleesiBreakerAdvertising2022}.
-
-
-%%\
-\para{Blocking First-party Cookies.}
-Privacy-enhancing extensions support targeted deletion of known tracking cookies, including first-party cookies, through a filter list \cite{ublockResourcesLibrary,adguardrteamScriptletsWikiAboutscriptletsmd,schininaSourceBehavioralCookieremoverjs2024}.
-%
-While filter lists face the aforementioned challenges, they can also be automatically curated using an ML-based approach \cite{munirCookieGraphUnderstandingDetecting2023,bollingerAutomatingCookieConsent2022,schoniBlockCookiesNot2024a}.
-
-\begin{gapbox}
-First-party cookie classifiers must separate tracking from legitimate analytics and personalization without a third-party signal to key on; they share the ML blockers' retraining burden, cannot see server-set cookies, and extension-based CNAME defenses lack the DNS visibility to fully resolve cloaked hosts.
-\end{gapbox}
-
-
-
-\para{Shift to First-party Cookies \& Cookie Partitioning.}
-Nearly half of the top most visited websites already use first-party tracking cookies. We expect this trend to continue with further adoption of third-party tracking restrictions, content-blocking tools, and partitioning.
-%
-Cookie partitioning is a method by which cookies are siloed or ``partitioned’’ according to the context in which they are set, effectively restricting browser-based storage to remain strictly tied to each visited site, making it more difficult to link user identities and behaviors across different sites.
-%
-Moreover, third-parties embedded in first-party context are able to set, access, and modify first-party data stored by other origins in absence of any origin-based partitioning~\cite{bahramiCOOKIEGUARDCharacterizingIsolating2024}.
-%
-Thus, partitioning is simply one aspect of a broader set of needed privacy measures: trackers can still use fingerprinting and first-party scripts in first-party context.
 
 %%
 \begin{opbox}
-In a world without cookies, what alternative forms of user tracking are emerging that could increase privacy risks, and how might these risks manifest---for example, in light of Chrome’s recent decision not to deprecate third-party cookies anymore?
-\end{opbox}
-
-
-\para{More Reliance on First-party Data \& Identity Graphs.}
-\label{sec:id-providers}
-As restrictions are being put in place for third-party cookies, websites now lean on a handful of major \emph{identity providers} (\eg{}, Google and Meta) who, through their position as gatekeepers, can authenticate users while quietly attaching persistent, service-specific identifiers.
-%
-Many platforms further fuse this stream with in-house ``first-party’’, and offline data such as loyalty-card and point-of-sale data, constructing proprietary \emph{identity graphs} that map a single user (or household) to multiple browsers, apps, and physical transactions.
-%
-While these integrations help publishers measure conversions and personalize content under tighter browser policies, they also concentrate behavioral insights to a few dominant actors and erode users’ ability to maintain separate or pseudonymous personas, raising fresh antitrust and privacy challenges~\cite{TargetedAdvertisingAutorite2025,khanAmazonsAntitrustParadox2017,munirGooglesChromeAntitrust2024}.
-%
-
-\begin{opbox}
-How can we detect or infer opaque first-party data flows within the identity provider ecosystem, which enables persistent user tracking across devices, and quantify its privacy risks?
+CNAME cloaking, server-side implementations, and edge-compute proxies erase the first-/third-party origin boundary that every major browser defense relies on. What architectural primitive could replace it without requiring visibility into server-side data flows?
 \end{opbox}
 
 
 
+%%
+% \vspace{-1mm}
+\subsubsection{Research-based Defenses (\autoref{tab:defense-goal-mechanism-taxonomy})}
+\label{sec:stateful-defenses-research}
 
 
+%%
+% We identify eight defense techniques listed in ~\autoref{tab:defense-goal-mechanism-taxonomy} from systematization of defense literature, grouped by its goal.
+
+
+%%
+\para{Detecting and Blocking Stateful Trackers.}
+%
+Most research on tracker detection represents a webpage as a graph of its HTML structure, network requests, and JS execution, and trains a classifier to separate tracking from functional resources.
+%
+AdGraph~\cite{iqbalAdGraphGraphBasedApproach2020} pioneered this approach (inspiring Brave's PageGraph), with subsequent work refining features~\cite{sibyWebGraphCapturingAdvertising2022,yangWTAGRAPHWebTracking2022}, extending to code-property graphs and real-world deployment~\cite{leeAdCPGClassifyingJavaScript2023,leeAdFlushRealWorldDeployable2024}, and fully automating filter-rule generation~\cite{leAutoFRAutomatedFilter2023}.
+%
+Complementary classifiers extended existing lists by labeling unlisted tracker domains from request features~\cite{gugelmannAutomatedApproachComplementing2015,ikramSeamlessTrackingFreeWeb2017,reitingerMLCBMachineLearning2021}, while Khaleesi classified requests from their sequential redirect context to catch cookie syncing and bounce tracking missed by per-request classifiers~\cite{iqbalKhaleesiBreakerAdvertising2022}.
+%%
+A subsequent line of work moved from blocking third-party requests to classifying first-party cookies by purpose.
+%
+CookieGraph separated tracking cookies from functional ones via cookie-creation flow graphs~\cite{munirCookieGraphUnderstandingDetecting2023}, semantics-aware checkers used LLMs to compare a cookie's inferred purpose against its declared consent category~\cite{chenSemanticsAwareCookiePurpose2025}, PURL applied purpose inference to link-decoration parameters~\cite{munirPURLSafeEffective2024}, and TGNN extended LLM-based classification to tracking pixels via graph neural networks~\cite{xiongTGNNEnhancingPixel2026}.
+%
+On mobile, NoMoAds~\cite{shubaNoMoAdsEffectiveEfficient2018} and NoMoATS~\cite{shubaNoMoATSAutomaticDetection2020} intercepted app traffic through a local VPN and classified it from traffic features alone.
+
+
+%%
+\begin{opbox}
+% Current defenses make binary block-or-allow decisions, but the boundary between tracking and legitimate functionality is increasingly blurred, e.g., analytics improve accessibility, personalization enhances user experience, and fraud detection requires fingerprinting. 
+Can current defenses move from binary block/allow to enforcing purpose limitations---allowing data collection for a declared purpose while preventing its repurposing for cross-site tracking---and can such enforcement be made verifiable without trusting the data collector?
+\end{opbox}
+
+
+%%
+\input{tables/defense-goal-mechanism-taxonomy}
+
+
+%%
+\para{Reducing or Obfuscating Signals for Stateful Trackers.}
+%
+This line of research sidesteps detection by changing what state a tracker can accumulate.
+%
+Early work proposed per-origin partitioning of visited-link styling and caches~\cite{jacksonProtectingBrowserState2006}, over a decade before any browser shipped it as a default.
+%
+Subsequent systems assigned each first-party a separate non-unique browser principal~\cite{panNotKnowWhat2015}, generalized private browsing into configurable isolation levels~\cite{xuUCognitoPrivateBrowsing2015}, systematically tested cross-site leak defenses~\cite{knittelXSinatorcomFormalModel2021}, and isolated cookies set by third-party-origin scripts with first-party privileges including CNAME-cloaked ones~\cite{nikkhahbahramiCookieGuardCharacterizingIsolating2025}.
+%
+TrackMeOrNot offered per-site tracking preferences, though this does not scale to thousands of sites~\cite{mengTrackMeOrNotEnablingFlexible2016,nisenoffDefiningBrokenUser2023}.
+%
+Server-side approaches have anonymized user profiles before they reach trackers through de-identification~\cite{zhengWebUserDeidentification2008}, formal anonymization guarantees~\cite{zhuAnonymizingUserProfiles2010}, and adversarial browsing patterns via reinforcement learning~\cite{zhangHARPOLearningSubvert2022}.
+%
+Cryptographic defenses have replaced identifiers with privacy-preserving protocols, from probabilistic cookie structures that limit cross-site linkability~\cite{morBloomCookiesWeb2015} to private ad auctions~\cite{zhongIbexPrivacypreservingAd2022} and encrypted access logging~\cite{ortegaperezEncryptedAccessLogging2025}.
+
+
+
+%%
+% \vspace{-1mm}
+\subsubsection{Community-based Defenses (\autoref{tab:stateful-tracking-defenses})}
+\label{sec:stateful-defenses-community}
+
+
+%%
+\para{Filter Lists.}
+%
+Community-maintained blocklists predate almost every industrial defense, with Peter Lowe's list maintained since 1997, EasyList since 2005, and EasyPrivacy since 2006.
+%
+Disconnect's tracker list (2011) was later adopted as the default blocklist in Firefox, Safari, and Edge, making it the closest thing to a shared industry standard.
+%
+Despite their ubiquity, these lists face structural limitations: they are maintained by small groups of volunteers, do not capture nuanced or newly emerging techniques, accumulate stale entries---roughly 90\% of EasyList's rules are never triggered~\cite{snyderWhoFiltersFilters2020}---and being static, trackers continually evade them.
+
+
+%%
+\para{Extensions and Tools.}
+%
+Adblock Plus, the earliest mainstream filter-list extension (2006), popularized browser-level ad blocking but drew criticism for its Acceptable Ads program, which whitelists certain ads in exchange for payment from advertisers.
+%
+uBlock Origin, the community's most widely deployed blocker, ships with EasyList, EasyPrivacy, and its own curated filters, and also added CNAME uncloaking on Firefox in 2019 to unmask cloaked trackers that no mainstream browser could detect natively---though Chrome's Manifest V3 transition removed it from the Chrome Web Store in 2025 by disabling the dynamic request-rule APIs it depended on.
+%
+Other extensions occupy complementary niches: AdGuard maintains its own filter lists alongside EasyList compatibility and ships as both extension and standalone network-level application, Privacy Badger learns tracker behavior from cross-site request patterns rather than static lists, Ghostery's open-sourced engine powers the public WhoTracks.me dataset, and NoScript blocks all JS by default unless explicitly permitted.
+%
+At the network layer, Pi-hole and NextDNS block tracking domains via DNS, and ClearURLs strips known tracking parameters before requests are made.
+
+
+%%
+\begin{opbox}
+Every defense---browser defaults, research prototypes, or extension---is evaluated in isolation, %against its own threat model and dataset, 
+yet users run them in combination. 
+% No framework measures the aggregate tracking resistance a layered defense stack actually provides or identifies the gaps between them. 
+Can we develop a reproducible framework that measures aggregate tracking resistance under realistic defense compositions?
+\end{opbox}
+
+
+%%
 \subsection{Defenses Against Stateless Tracking}
 \label{sec:stateless-defenses}
 
+
 %%
-Browser vendors consider fingerprinting as a form of covert tracking harmful to the web~\cite{nottinghamUnsanctionedWebTracking2015}.
-%
-Major browsers have deployed some fingerprinting mitigation and the W3C encourages specification authors to consider how their APIs contribute to the browser fingerprinting surface~\cite{dotyMitigatingBrowserFingerprinting2019}.
-%
-Despite this, browsers continue to expose a significant amount of fingerprintable information.
-%
-No optimal strategy exists as it often comes at the cost of user's utility.
-%
-There is rather a disagreement on the feasibility of entirely mitigating fingerprinting and the value of deploying incremental improvements without a clear path to complete mitigation~\cite{snyderBraveFingerprintingPrivacy2019,rescorlaTechnicalCommentsPrivacy2021}.
+\subsubsection{Industry-based Defenses (\autoref{tab:stateless-tracking-defenses})}
+\label{sec:stateless-defenses-industry}
 
-\para{Detecting Fingerprinting.}
-%
-Any of these defenses first needs to know which scripts fingerprint.
-%
-Detection ranges from heuristic crawls that flag font, canvas, and plugin probing~\cite{acarFPDetectiveDustingWeb2013} to ML classifiers over static and dynamic script behavior~\cite{iqbalFingerprintingFingerprintersLearning2021}, longitudinal prediction of emerging fingerprinting APIs~\cite{bahramiFPRadarLongitudinalMeasurement2022}, and detection at the level of individual JavaScript functions via bytecode and transformer models~\cite{ghasemisharifReadLinesDetecting2023,bahramiByteByteUnmasking2025}.
-%
-Dynamic taint tracking, first explored to block untrusted data flows into sensitive sinks~\cite{vogtCrossSiteScripting2007}, now follows fingerprinting-relevant values from API to network sink in instrumented Chromium builds~\cite{boussahaFPtracerFinegrainedBrowser2024,kanyalPanoptiChromeModernInbrowser2024} and under user-specified policies~\cite{hubletUserControlledPrivacyTaint2024}, while coarse server-side fingerprints have also been used defensively to flag fraudulent configurations~\cite{kalantariBrowserPolygraphEfficient2024}.
 
-\para{Normalization.}
+
 %%
-Normalization of device information exposed by browsers is the most common approach to reduce the utility of fingerprints.
+Browser vendors treat fingerprinting as a form of covert tracking harmful to the web, and the W3C encourages specification authors to consider how a new API expands the browser's fingerprinting surface~\cite{nottinghamUnsanctionedWebTracking2015,dotyMitigatingBrowserFingerprinting2019}.
 %
-Liu et al.~\cite{liuGummyBrowsersTargeted2022} proposed spoofing of a wide variety of attributes to mimic other browsers to defend against fingerprinting.
-%
-This is similar to browsers such as Tor that make fingerprints consistent across users, thereby making it hard to differentiate between them~\cite{perryDesignImplementationTor2013}.
-%
-Uniformity has also been pushed below the browser: UNIGL rewrites WebGL shaders so rendering is identical across GPUs, removing a device-fingerprinting vector at its source, since GPU-specific rendering differences (rooted in OS and browser anti-aliasing~\cite{novakAntialiasingWeb2004}) no longer vary across machines~\cite{wuRenderedPrivateMaking2019}.
-%
-Browsers have reduced identifying information exposed by APIs already shipped to the web (freezing the minor browser version from the User-Agent string~\cite{weissIntentDeprecateFreeze2020} and deploying User-Agent reduction~\cite{davisReleaseNotesSafari2017,kimura1609304ReduceGeckos2020,googleWhatUserAgentReduction2024}), removed web APIs known to be abused for fingerprinting (unshipping the Battery Status API~\cite{olejnikBatteryStatusNot2017}), and declined to implement new APIs that expose additional fingerprinting surfaces (WebKit and Firefox’s refusal to adopt the Network Information API~\cite{TrackingPreventionWebKit2020,thomsonNetworkInformationAPI2018}).
+Yet, no browser found a way to close this surface without a utility cost, and vendors disagree on whether incremental mitigation is worth pursuing without a credible path to eliminating fingerprinting entirely~\cite{snyderBraveFingerprintingPrivacy2019,rescorlaTechnicalCommentsPrivacy2021}.
 
-\para{Randomization.}
-%
-Web API normalization sometimes breaks websites that expect to have access to device information.
-%
-For these web APIs, browsers have added site-specific randomized noise to the outputs of the APIs, for example, noise added to the rasterized outputs of the 2D Canvas, to WebGL renderings, and \texttt{AudioBuffer} samples from the WebAudio API.
-%
-Randomization was first deployed by Brave under the name ``farbling’’~\cite{braveprivacyteamFingerprintingDefenses202020}, and was later adopted by Firefox~\cite{huang1816056FprandomizationMeta2023} and Safari~\cite{wilanderPrivateBrowsing202024}. It causes a single user's fingerprint to keep changing from page load to page load, complicating user tracking.
-%
-These latter countermeasures are easier to deploy across user populations and hence more popular than the ones which aim to make all environments appear identical~\cite{nikiforakisPriVaricatorDeceivingFingerprinters2015}.
-%
-Research has refined where and how much to perturb: PriVaricator injects policy-controlled ``white lies'' into fingerprintable APIs~\cite{nikiforakisPriVaricatorDeceivingFingerprinters2015}, ML-CB decides per-call whether a Canvas access is fingerprinting before blocking it~\cite{reitingerMLCBMachineLearning2021}, and FP-Sandbox degrades API outputs only once leakage exceeds a privacy budget, minimizing breakage for legitimate use~\cite{torokOnlyPayWhat2023}.
-%
-Crucially though, alternative fingerprinting techniques can still be employed~\cite{linFashionFauxPas2023} and trackers can adapt their collection strategies in response to deployed defenses~\cite{vastel2020fp}.
 
-\begin{gapbox}
-Every fingerprinting defense trades privacy against breakage: normalization and shader rewriting can break sites that need accurate device information, randomization is detectable through variance analysis and leaves alternative vectors open, and taint-based approaches add runtime overhead and miss implicit flows---no single tool removes fingerprintability, and comparative evaluations find each leaves a detectable residual~\cite{dattaEvaluatingAntiFingerprintingPrivacy2019}.
-\end{gapbox}
-
-\para{Anti-fingerprinting Policies.}
 %%
-Besides changes to individual API outputs, browsers have also explored approaches grounded in policy to discourage fingerprinting.
+\para{Reducing IPUA Exposure.}
 %
-Mozilla released an anti-tracking policy which forbids fingerprinting~\cite{mozillaSecurityTrackingPolicy2019} and subsequently blocked scripts from loading in Firefox when they were detected to include code doing so~\cite{englehardtFirefox72Blocks2020}.
+Safari's iCloud Private Relay, Chrome's IP Protection (now discontinued), and Brave's Tor-routed private windows each route traffic through independent relays so that neither the destination nor the relay operator can link a request to a user's real IP address.
 %
-Such runtime blocking of fingerprinting scripts using static and dynamic analysis based automated detection often fail under obfuscation tactics~\cite{faizkhademi2015fpguard}.
+On the User-Agent side, vendors have frozen the minor version out of the string and shipped User-Agent reduction across Chrome, Edge, and Firefox.
 %
-Google Chrome engineers proposed the \textit{Privacy Budget} scheme, where websites would be allowed to access device information up to a browser-defined budget~\cite{lasseyMikewestPrivacybudget2019}.
-%
-Once that budget is exceeded, the browser would limit further exposure of identifying information.
-%
-This approach was met with skepticism due to a likelihood of website breakage and risk of exposing additional tracking surface~\cite{snyderBraveFingerprintingPrivacy2019, rescorlaTechnicalCommentsPrivacy2021}, resulting in its discontinuation~\cite{leflerWhatHappenedPrivacy2024}.
-%
-Overall, a lack of unified effort in the last decade suggests how challenging it can be to tackle fingerprinting.
-
-\para{Other Stateless Vectors.}
-%
-Fingerprinting is not the only stateless mechanism, and defenses extend to adjacent vectors that the systematization table treats separately.
-%
-\textit{Extension fingerprinting} is countered by Simulacrum, which virtualizes the DOM so page scripts see a consistent view regardless of installed extensions~\cite{karamiUnleashSimulacrumShifting2022}.
-%
-\textit{Behavioral} tracking is addressed by obfuscating or generalizing interest profiles: Bloom Cookies encode a profile with controlled false positives for plausible deniability~\cite{morBloomCookiesWeb2015}, HARPO poisons ad-interest profiles with reinforcement-learned actions~\cite{zhangHARPOLearningSubvert2022}, and profile generalization provides $k$-anonymity for personalized search~\cite{zhuAnonymizingUserProfiles2010,zhengWebUserDeidentification2008}.
-%
-\textit{Passive} IP/UA fingerprinting is harder to defend at the browser, so proposals act at the network: unlinkable pseudonymous tokens let servers block misbehaving users without de-anonymizing the rest~\cite{johnsonNymbleAnonymousIPAddress2007}, ISP-level address mixing makes IP-to-user mapping ambiguous~\cite{raghavanEnlistingISPsImprove2009}, and connection-establishment changes remove session linkability~\cite{syEnhancedPerformancePrivacy2020}, while studies of mobile MAC randomization show information-element leakage still defeats it in practice~\cite{fenskeThreeYearsLater2021}.
-%
-\textit{Side-channels} such as XS-Leaks are systematized and tested across browsers~\cite{knittelXSinatorcomFormalModel2021}, with defenses rooted in the same partitioning and state-isolation work used against supercookies~\cite{jacksonProtectingBrowserState2006} and in network-level detection of tracking from packet metadata~\cite{leeNettrackGenericWeb2023}.
+MAC address randomization, now standard on mobile, closes off a comparable network-layer identifier.
 
 
-\para{Paywalls to Force Users to Remain Recognizable.}
-To avoid limitations imposed by ad blockers~\cite{koreacopyrightcommissionNumberAdblockUsers2024}, some websites use paywalls or registration walls that require user authentication (and often payment information) before granting content access.
+%%
+\para{Normalizing and Randomizing API Outputs.}
 %
-This tactic may reduce users' motivation to block cookies or browse privately, and it also requires users to remain ``recognizable’’, giving website operators a reliable identifier that persists across sessions and is more robust than third-party cookies.
+The most direct defense is to make browser-exposed information less identifying.
 %
-While paywalls may support legitimate revenue models---especially for publishers facing declining ad revenues---they also create an environment where anonymity is traded for access.
+Normalization approaches include Firefox's resist-fingerprinting mode (screen, hardware, and timing values), Safari's ATFP (fonts, plugins, and User-Agent in Private Browsing), and outright API removal where fingerprintability is disproportionate (e.g., Battery Status API) or declining to implement new ones (e.g., Network Information API in WebKit and Firefox)~\cite{TrackingPreventionWebKit2020}.
 %
-Consequently, if paywalls become more pervasive, it may be hard for privacy-conscious users to avoid sharing their personal data online.
+Where normalization would break legitimate site functionality, browsers instead add randomized, site-specific noise so a device's fingerprint changes across page loads---Brave introduced this as ``farbling'' in 2020~\cite{braveprivacyteamFingerprintingDefenses202020}, with Firefox~\cite{huang1816056FprandomizationMeta2023} and Safari's ATFP~\cite{wilanderPrivateBrowsing202024} later adopting it for Canvas, WebGL, and \texttt{AudioBuffer} outputs.
+%
+All five browsers additionally reduce high-resolution timer precision, closing off APIs that side-channel research (\autoref{sec:stateless-techniques-side-channel-fingperinting}) relies on.
+%
+Because normalization makes all users look alike while randomization only makes one user's fingerprint noisy over time, the two trade off differently against a patient tracker, and browsers have generally converged on randomization as the more deployable default.
+%
+Chrome's Privacy Budget proposal~\cite{lasseyMikewestPrivacybudget2019}, meant to bound per-tracker API exposure, was discontinued due to concerns about website breakage and risk of exposing additional tracking surface~\cite{snyderBraveFingerprintingPrivacy2019,rescorlaTechnicalCommentsPrivacy2021,leflerWhatHappenedPrivacy2024}.
+
 
 %%
 \begin{opbox}
-How do publishers leverage paywalls to build first-party profiles, and how do they associate authenticated users with online behaviors (\eg{}, shopping) to enable targeted advertising within their own networks?
+Can a perturbation scheme be designed with an output distribution provably indistinguishable from the natural device population?
+%
+% Randomization assumes a tracker cannot distinguish injected noise from a genuine signal on any single visit, yet a tracker observing across visits can average out the noise.
+%
+Could a browser bound the cumulative information any page extracts about a user across its entire interaction and enforce this bound natively?
 \end{opbox}
 
 
-\para{Server to Server Data Sharing}
+%%
+\para{Blocking JS, Tracking Scripts, or Mixed Scripts.}
 %
-To circumvent ad blocking techniques, IAB's Trusted Server Initiative~\cite{iabtechlabTechLabTrusted2025} has recommended trackers to shift their tracking logic from client to server-side~\cite{fisherImprovePerformanceSecurity2020}.
+Mozilla's anti-tracking policy forbids fingerprinting~\cite{mozillaSecurityTrackingPolicy2019}; Firefox blocks scripts detected to include fingerprinting code~\cite{englehardtFirefox72Blocks2020}. 
 %
-Companies like Google, Meta, \& TikTok have already deployed so-called \textit{conversion APIs} that, along with \textit{data clean rooms}, allow marketers to perform joint analysis of their own data with the one held inside these walled gardens in a privacy-preserving way.
+Firefox and Edge use Disconnect's fingerprinting list to block scripts, Brave's Shields uses its PageGraph execution recorder, and Safari's ATFP blocks known fingerprinting scripts in Private Browsing.
 %
-But, \textit{server-side tracking} is hard to audit as APIs and signals become undetectable by client-side mechanisms~\cite{fouadDevilDetailsDetection2024}, yet, an analysis of Meta's conversion API found it comparable to client-side tracking, albeit with more false matches when minimal data is shared~\cite{fraihiClientsideServersideTracking2024}.
+Browsers also allow disabling JS per site.
+%, though only NoScript, described below, defaults to blocking it, at the cost of breaking any site whose functional and tracking code are bundled together.
+
+
+
+%%
+\para{Side-channel Mitigations.}
+%
+Chrome, Edge, and Firefox further isolate cross-origin content into separate OS processes (Site Isolation and Firefox's Fission) but this introduces new timing side-channels, on top of the timer-precision reductions.
+
+
 %%
 \begin{opbox}
-How does server-side tracking work and how can it be effectively detected and mitigated?
-\end{opbox}
-
-
-\para{Stronger Hardware Fingerprinting Signals.}
-With the growing restrictions on client-side identifiers, trackers increasingly turn to hardware-level attributes to (re-)identify users without relying on persistent cookies or local storage.
-%
-Unlike conventional browser attributes (\eg{}, User-Agent, set language, or installed fonts), hardware-oriented fingerprints (\eg{}, signals arising from CPU and RAM imperfections during manufacturing) are more difficult for users to spoof or reset, as they tap into the intrinsic properties of a device’s components~\cite{venugopalanFPRowhammerDRAMBasedDevice2024}.
-%
-Hardware fingerprinting allows trackers to maintain cross-session and cross-site tracking capabilities---potentially circumventing existing browsers' privacy measures and users' evasion strategies to block or partition stateful identifiers.
-
-\begin{opbox}
-How can we effectively detect and prevent low-level hardware-based fingerprinting?
+How can browsers defend against emerging side channels, including XS-Leaks and cross-site signals exposed by CDNs, that persist even when traditional fingerprinting is mitigated? 
+% Can the fingerprinting risk of an API be quantified during standardization, so that mitigations are designed into specifications rather than retrofitted?
 \end{opbox}
 
 
 
-\para{Side-channels.}
-%
-Side-channel tracking continues to evolve as older vectors are mitigated and newer ones are discovered.
-%
-Vectors such as XS-Leaks can allow attackers to infer sensitive information---such as login state or cross-site resource access---through timing and visibility differences, even when cookies and browser APIs are restricted.
-%
-Similarly, CDNs and shared infrastructure can inadvertently expose identifiers or usage patterns across sites, letting trackers bypass browser-level protections and link users across domains.
 
-\begin{opbox}
-How can browsers defend against emerging side channels, including XS-Leaks and cross-site signals exposed by CDNs, that persist even when traditional fingerprinting vectors are mitigated?
-\end{opbox}
-
-
-\subsection{Defenses Against Cross-device Tracking}
-
-Users logged in on the same account on different devices inherently limit the effectiveness of deterministic cross-device protections. On the other hand, probabilistic cross-device protections are, principally, the same as against traditional tracking, \eg{}, limiting the disclosure of user data that could be used to correlate users.
-%
-On mobile devices, techniques have been introduced to intercept, inspect, and block outgoing packets from apps~\cite{shubaNoMoAdsEffectiveEfficient2018}. With respect to the use of inaudible ultrasound signals, efforts have pushed for the standardization of beacons and OS-level APIs to better control access to the functionality and selectively suppress certain frequencies~\cite{mavroudisPrivacySecurityUltrasound2017}.
-%
-Because cross-device linkage so often runs through authentication, a parallel line of work hardens the identity layer itself: SPRESSO inserts a forwarder so identity providers cannot learn which relying party a user logs into~\cite{fettSPRESSOSecurePrivacyRespecting2015}, encrypted access logging lets services attribute device access without retaining a persistent device identifier~\cite{ortegaperezEncryptedAccessLogging2025}, and identity-system reform proposals re-architect national ID infrastructure to prevent cross-service linkage~\cite{brandaoMendingTwoNationScale2015}.
-%
-Browsers complement these with purpose-built authentication APIs---the Storage Access API and Federated Credential Management (FedCM)---that preserve SSO while denying the ambient cross-site state it traditionally relied on (\autoref{tab:systematization}).
+%%
+\subsubsection{Research-based Defenses (\autoref{tab:defense-goal-mechanism-taxonomy})}
+\label{sec:stateless-defenses-research}
 
 
 
+%%
+\para{Detecting and Blocking Stateless Trackers.}
+%
+Detection has moved from heuristic-based approaches flagging known probing patterns~\cite{acarFPDetectiveDustingWeb2013} to ML classifiers over static and dynamic script behavior~\cite{iqbalFingerprintingFingerprintersLearning2021} and longitudinal models predicting which newly shipped APIs are likely to become fingerprinting vectors~\cite{bahramiFPRadarLongitudinalMeasurement2022}.
+%
+Dynamic taint tracking has been applied to follow fingerprinting-relevant values from API call to network request inside instrumented Chromium builds~\cite{boussahaFPtracerFinegrainedBrowser2024,kanyalPanoptiChromeModernInbrowser2024,hubletUserControlledPrivacyTaint2024}, while coarse server-side fingerprints have also been used defensively to flag fraudulent device configurations~\cite{kalantariBrowserPolygraphEfficient2024}.
+% 
+%%
+Beyond request-level, several systems have blocked tracking at the script level.
+%
+TrackerSift~\cite{amjadTrackerSiftUntanglingMixed2021} and Duumviri~\cite{shuangDuumviriDetectingTrackers2025} separated tracking from functional code within mixed scripts, SugarCoat~\cite{smithSugarCoatProgrammaticallyGenerating2021} generated replacement scripts preserving page functionality, and finer-grained approaches have blocked at function~\cite{amjadBlockingJavaScriptBreaking2023,amjadBlockingTrackingJavaScript2024}, bytecode~\cite{ghasemisharifReadLinesDetecting2023,bahramiByteByteUnmasking2025}, graph~\cite{parkCGCContrastiveGraph2022}, or event-loop~\cite{chenDetectingFilterList2021} levels.
+%
+As blocking may cause site breakage, complementary work has also detected it from screenshots~\cite{hajjchehadeSINBADSaliencyinformedDetection2024} and studied user perception~\cite{nisenoffDefiningBrokenUser2023}.
+%
+Trackers often evade blocking: anti-adblock circumvention has been characterized through differential execution~\cite{zhuMeasuringDisruptingAntiAdblockers2018} and automated detection~\cite{leCVInspectorAutomatingDetection2021}. 
+%
+Adversarial perturbations against perceptual blockers~\cite{tramerAdVersarialPerceptualAd2019} have motivated adversarially robust classifiers~\cite{limAdVersaAdversariallyRobustPractical2026}.
 
-\subsubsection{Evolving Role of Browsers}
 
-\para{In Preventing Tracking.}
+%%
+\para{Reducing or Obfuscating Signals for Stateless Trackers.}
 %
-While most modern browsers ship tracking countermeasures, default protections vary widely across vendors, mainly due to different economic incentives and views. Sometimes, privacy features even ship years after other browsers have already implemented them, \eg{}, Chrome adding support for GPC only in 2026~\cite{googleGlobalPrivacyControl2025}.
+Gummy Browsers showed that a script's own fingerprint-collection routine can be turned against it, replaying a target's attribute values to impersonate a different device~\cite{liuGummyBrowsersTargeted2022}, while UNIGL rewrites WebGL shaders so GPU rendering output is identical across hardware, removing device-level variation at its source~\cite{wuRenderedPrivateMaking2019}.
 %
-As a result, browsers are often regarded as powerful gatekeepers that could play a more important role in preventing tracking.
+On the randomization side, PriVaricator injects policy-controlled noise into fingerprintable APIs~\cite{nikiforakisPriVaricatorDeceivingFingerprinters2015}, ML-CB decides per call whether a Canvas access looks like fingerprinting before blocking~\cite{reitingerMLCBMachineLearning2021}, and FP-Sandbox degrades API output past a privacy budget~\cite{torokOnlyPayWhat2023}.
+%
+Comparative evaluations have consistently found that such defenses leave a residual detectable signature~\cite{dattaEvaluatingAntiFingerprintingPrivacy2019}.
+% 
+%%
+Extension fingerprinting has been countered by Simulacrum's DOM virtualization, giving every page a consistent view regardless of installed extensions~\cite{karamiUnleashSimulacrumShifting2022}.
+%%
+Behavioral tracking has been addressed by obfuscating interest profiles: Bloom Cookies encode profiles with controlled false positives~\cite{morBloomCookiesWeb2015}, HARPO poisons ad-interest profiles with reinforcement-learned decoy actions~\cite{zhangHARPOLearningSubvert2022}, and profile generalization provides $k$-anonymity for browsing history~\cite{zhuAnonymizingUserProfiles2010,zhengWebUserDeidentification2008}.
+%
+Passive IPUA fingerprinting is harder to counter in the browser alone, so proposals have acted at the network layer: unlinkable pseudonymous tokens~\cite{johnsonNymbleAnonymousIPAddress2007}, ISP-level address mixing~\cite{raghavanEnlistingISPsImprove2009}, TLS handshake metadata reduction~\cite{syEnhancedPerformancePrivacy2020}, and MAC-address randomization, whose real-world effectiveness has been found incomplete~\cite{fenskeThreeYearsLater2021}.
+%
+Side-channel defenses draw on the same partitioning techniques used against stateful supercookies~\cite{jacksonProtectingBrowserState2006}, alongside systematic cross-browser XS-Leak testing~\cite{knittelXSinatorcomFormalModel2021} and network-level tracking detection from encrypted packet metadata~\cite{leeNettrackGenericWeb2023}.
 
-\begin{opbox}
-Can adaptive measurement, monitoring, and disclosure methods be developed to stay ahead of, and ultimately neutralize, next-generation tracking tactics?
-\end{opbox}
+
+%%
+% \begin{opbox}
+% % Instead of trying to make one user's fingerprint indistinguishable from noise, could a browser make it indistinguishable from thousands of other real, currently active devices, by drawing a plausible fingerprint from a live pool of population-wide values rather than generating synthetic noise? Such approach would trade the fragility of per-attribute spoofing for a $k$-anonymity guarantee grounded in an actual population, but would require browsers to cooperate on sharing or attesting to that population. % in the first place.
+% Instead of trying to make one user's fingerprint indistinguishable from noise, could a browser draw a plausible fingerprint from a live pool of population-wide values and provide $k$-anonymity guarantee?
+% \end{opbox}
 
 
-%
-\para{In Privacy-preserving Advertising.}
-%
-The inherent tension between advertising and user privacy has motivated various academic proposals aimed at balancing these competing interests~\cite{toubianaAdnosticPrivacyPreserving2010,guhaPrivadPracticalPrivacy2011,backesObliviAdProvablySecure2012}. Similarly, browsers have frequently struggled to reconcile tracking protections with advertisers' interests. Mozilla’s 2013 attempt to block third-party cookies by default was strongly opposed by advertisers~\cite{ribeiroMozillaPostponesDefault2013}, a reaction that was echoed when Apple implemented Safari's Intelligent Tracking Prevention (ITP) in 2017~\cite{stattAdvertisersAreFurious2017}. Google's subsequent launch in 2019 of the Privacy Sandbox initiative explicitly acknowledged the need to maintain advertiser support~\cite{schuhBuildingMorePrivate2019,chromeBuildingMorePrivate2020} while restricting the use of cross-site identifiers.
-%
-As a result, browsers have increasingly adopted privacy-preserving advertising technologies. Mozilla demonstrated viability of on-device personalization~\cite{mozillaProvidingValuablePlatform2015}, Google and Apple similarly complemented their tracking protections with new APIs supporting advertisers, and cryptographic proposals such as Ibex show conversion attribution and bid optimization are achievable without either party learning individual user data~\cite{zhongIbexPrivacypreservingAd2022}. Today, all major browser vendors contribute to advertising API development within the W3C’s Private Ad Technology Community Group (PATCG), chartered in 2021~\cite{hercherW3CAdPrivacy2022}.
-%
-However, achieving private ad targeting and measurement is challenging, as illustrated by a series of evaluations revealing significant privacy limitations with recent proposals
-such as insufficient anonymity guarantees~\cite{rescorlaTechnicalCommentsFLoC2021,berkePrivacyLimitationsInterestbased2022,thomsonPrivacyAnalysisGoogles2023,jhaRobustnessTopicsAPI2023,beuginInterestdisclosingMechanismsAdvertising2024,beuginPublicReproducibleAssessment2024,thomsonAnalysisApplesPrivate2022,thomsonProtectedAudiencePrivacy2024,longEvaluatingGooglesProtected2024,zohaibInvestigatingTrafficAnalysis2023}, flawed implementations~\cite{turatiLocalitySensitiveHashingDoes2023,calderonioFledgingWillContinue2024,nisenoffExploitingSharedStorage2025}, abuse~\cite{senolUnveilingImpactUserAgent2023,wieflingPrivacyMeasureTurned2024}, and fragmentation due to inconsistent browser support~\cite{munirGooglesChromeAntitrust2024}.
-%
-Ultimately in 2025, Google announced the deprecation of all Privacy Sandbox proposals, except for a few specific APIs, and the continuing support for third-party cookies in Chrome~\cite{chavezUpdatePlansPrivacy2025,beuginTechnicalReportNeed2025}
+%%
+\subsubsection{Community-based Defenses (\autoref{tab:stateless-tracking-defenses})}
+\label{sec:stateless-defenses-community}
 
-\begin{opbox}
-What new privacy-preserving advertising technologies can be built by learning from issues in prior proposals? How can we reliably and at scale automate evaluation of novel risks and opportunities of such mechanisms with respect to security, privacy, and usability?
-\end{opbox}
+
+
+%%
+\para{Filter Lists.}
+%
+Stateless tracking has no dedicated filter-list ecosystem of its own; instead, the same Disconnect, EasyList, and EasyPrivacy lists that community maintainers curate for cookie- and script-based blocking (\autoref{sec:stateful-defenses-community}) carry the fingerprinting script and known-tracker entries that Firefox, Edge, and Brave draw on for the blocking described above.
+
+
+%%
+\para{Extensions and Tools.}
+%
+Tor Browser, launched in 2008, remains the reference implementation for fingerprinting resistance, providing first-party isolation and a uniform, one-fingerprint-for-all browser configuration by reporting the same values for a wide range of APIs~\cite{perryDesignImplementationTor2013}, and Mullvad Browser extended the same hardening to users who want it without routing through the Tor network itself.
+%
+NoScript blocks JavaScript per site by default, eliminating essentially every stateless technique that depends on script execution at the cost of breaking sites that need it, and AdGuard's Stealth Mode layers User-Agent overriding and referrer stripping on top of its filter-list blocking.
+%
+The EFF's Panopticlick project, and later the Markup's Blacklight and DuckDuckGo's Tracker Radar, have shifted the community's role from blocking alone to auditing, letting any user or researcher scan a site and see exactly which fingerprinting and tracking techniques it uses.
+
+
+%%
+% \begin{opbox}
+% TLS fingerprinting (JA3/JA4), HTTP/2 SETTINGS frames, and TCP/IP stack behavior fingerprint a device before any JavaScript executes and outside the reach of any browser extension or script-level defense. Mitigating these signals requires standardizing low-level protocol behavior across browsers and operating systems. What mechanism could drive this cross-vendor convergence without sacrificing the protocol-level optimizations each implementation depends on?
+% \end{opbox}
+
+
+
+

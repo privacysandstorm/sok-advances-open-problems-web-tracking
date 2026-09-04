@@ -1,0 +1,60 @@
+% ── Column widths (community-defense table) ──
+\newlength{\colCYear}    \setlength{\colCYear}{0.5cm}
+\newlength{\colCName}    \setlength{\colCName}{3.8cm}
+\newlength{\colCType}    \setlength{\colCType}{0.6cm}
+\newlength{\colCDesc}    \setlength{\colCDesc}{15.5cm}
+
+
+\begin{table*}[t]
+  \scriptsize
+\centering
+\caption{\textbf{Timeline of community-driven tracking defenses.} \iconBlocklist: Filter/block list, \iconExtension: Browser extension, \iconTool: represents tools, standards, dataset, or browser.}
+\label{tab:defenses-community}
+\footnotesize
+\renewcommand{\arraystretch}{\rowheight}
+\scalebox{\tablescale}{%
+\begin{tabular}{
+  >{\centering\arraybackslash}m{\colCYear}
+  m{\colCName}
+  >{\centering\arraybackslash}m{\colCType}
+  m{\colCDesc}
+}
+\toprule
+\textbf{Year} & \textbf{Community Defense} & \textbf{Type} & \textbf{Description} \\
+\toprule
+
+1997 & Peter Lowe's list (pgl.yoyo.org) & \iconBlocklist & Initially created for personal local DNS use, this crowdsourced adblock list is widely consumed by hosts files, Pi-hole, AdGuard, uBO \\
+2002 & Adblock & \iconExtension & Ad blocking extension created for Firefox; later replaced by its successors \\
+2005 & EasyList & \iconBlocklist & Created as a maintainable ad-blocking subscription for the Adblock extension; has become the de-facto core ad filter list \\
+2005 & NoScript & \iconExtension & Blocks JavaScript content by default per-site, cutting JS-based tracking and fingerprinting \\
+2006 & Adblock Plus (Eyeo) & \iconExtension & Adblock extension re-written as Adblock Plus with subscribable filter lists (e.g.\ EasyList) \\
+2006 & EasyPrivacy & \iconBlocklist & Companion list to EasyList targeting trackers, analytics, tracking pixels/beacons, and web bugs (not just ads) \\
+2008 & Tor Browser (Tor Project) & \iconTool & Reference anti-fingerprinting and onion-routing browser; provides first-party isolation and uniform fingerprint (one-fingerprint-for-all) \\
+2009 & Ghostery & \iconExtension & Detects and (optionally) blocks 3P trackers; also exposes who is tracking on each page \\
+2009 & Do Not Track (DNT) & \iconTool & Proposed by researchers as a browser header to opt out of cross-site tracking \\
+2010 & Fanboy's Annoyance List & \iconBlocklist & List targeting cookie-consent notices, social-media widgets, and in-page annoyances (basis for EasyList Cookie List) \\
+2010 & EFF Panopticlick & \iconTool & EFF tool demonstrating browser fingerprint uniqueness and tracker exposure \\
+2011 & Disconnect & \iconBlocklist & List blocks 3P trackers; its open tracker list got later on adopted by Firefox, Safari, and Edge \\
+2011 & Do Not Track (DNT) & \iconTool & Implemented by Firefox, IE, Safari, Opera, then Chrome; W3C Tracking Protection WG chartered to standardize it \\
+2013 & Fanboy $\rightarrow$ EasyList & \iconBlocklist & Fanboy's List merged into EasyList, consolidating the dominant English ad-filter lists \\
+2014 & Privacy Badger (EFF) & \iconExtension & Heuristic tracker blocker that learns about trackers from observed cross-site behavior rather than a static list \\
+2014 & uBlock Origin & \iconExtension & uBlock released for Chrome/Opera \\
+2014 & AdGuard & \iconBlocklist\,\iconExtension & Extension blocks ad/tracker domains based on various lists; Stealth Mode strips referrers, 3P cookies, and reduces fingerprinting surface \\
+2014 & Pi-hole & \iconTool & Open-source network-wide DNS sinkhole (Raspberry Pi); blocks ad/tracker domains for an entire network via DNS \\
+2017 & WhoTracks.me & \iconTool & Open dataset and reporting of trackers' prevalence and behavior across the web \\
+2018 & Ghostery powers WhoTracks.Me & \iconTool & Ghostery goes open source; powers the WhoTracks.me tracker dataset \\
+2019 & Do Not Track (DNT) & \iconTool & W3C Tracking Protection Working Group closed without DNT adoption; DNT effectively abandoned by industry \\
+2019 & ClearURLs & \iconExtension & Strips known tracking parameters (e.g.\ utm\_*, gclid, fbclid) from URLs before requests and on copy \\
+2019 & NextDNS & \iconTool & Cloud DNS resolver with configurable ad/tracker blocklists, applied across devices/browsers \\
+2019 & uBO protects against CNAME & \iconExtension & uBO (Firefox) adds CNAME-uncloaking to defeat first-party-disguised (CNAME-cloaked) trackers; advanced dynamic filtering/scriptlets \\
+2020 & Global Privacy Control (GPC) & \iconTool & EFF-led universal opt-out signal; legally enforceable under CCPA/CPRA; adopted by DuckDuckGo, Brave, Abine, Firefox \\
+2020 & DuckDuckGo Tracker Radar & \iconTool & Open, auto-generated tracker dataset (domains $\rightarrow$ owners $\rightarrow$ behaviors); powers DDG protections, Vivaldi, and Blacklight \\
+2020 & Blacklight & \iconTool & Markup's web tool that scans any site and reports trackers, cookies, session recorders, pixels, and fingerprinting \\
+2022 & GPC Adoption & \iconTool & California Sephora settlement establishes that ignoring GPC violates CCPA, driving site adoption \\
+2023 & Mullvad Browser & \iconTool & Tor Project + Mullvad: Tor Browser's anti-fingerprinting hardening for everyday (non-Tor-network) use \\
+2025 & uBO removed from Chrome & \iconExtension & uBO removed from the Chrome Web Store as Chrome disables MV2 extensions by July 2025; remains full-featured on Firefox/Brave \\
+
+\bottomrule
+\end{tabular}%
+}% end scalebox
+\end{table*}

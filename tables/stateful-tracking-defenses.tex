@@ -1,0 +1,132 @@
+\begin{table*}[t]
+  \scriptsize
+\centering
+\caption{\textbf{Industrial and community defenses against stateful tracking} across two defense goals: \colorbox{cellred}{detection \& blocking} and \colorbox{cellyellow}{signal reduction \& obfuscation}. Protects against: \iconCookie: Cookie-based tracking, \iconURL: Navigational tracking, \iconFingerprint: Fingerprinting, \iconJS: JavaScript-based tracking, \iconSC: Side-channels. ``(D)'' is by-default, ``(P)'' is private-mode only, and ``(O)'' is opt-in based.}
+\label{tab:stateful-tracking-defenses}
+\footnotesize
+\renewcommand{\arraystretch}{1.1}
+\scalebox{0.74}{%
+\begin{tabular}{
+  m{3.15cm}
+  m{3.0cm}
+  m{3.0cm}
+  m{3.0cm}
+  m{3.0cm}
+  m{3.0cm}
+  m{3.0cm}
+}
+\toprule
+\textbf{Defense Technique}\newline (\textbf{Protects Against}) & \textbf{Brave} & \textbf{Chrome} & \textbf{Edge} & \textbf{Firefox} & \textbf{Safari} & \textbf{Community Defense} \\
+\toprule
+
+\cellcolor{cellred} Blocking\newline3P cookies/storage\newline\newline \iconCookie
+  & all 3P cookies and storage blocked via Shields (D)
+  & 3P cookies and storage blocked in Incognito (P)
+  & known tracker 3P cookies blocked (D)
+  & known tracker 3P cookies blocked in ETP stnd. (D);\newline all 3P cookies blocked in ETP Strict (D)
+  & all 3P cookies and storage blocked (D)
+  & Tor blocks 3P cookies and storage\newline uBO, Privacy Badger, AdGuard, Ghostery blocks known tracker cookies via filter lists \\
+\midrule
+
+\cellcolor{cellyellow} Partitioning\newline3P cookies/storage\newline\newline \iconCookie\,\iconSC
+  & uses Chromium's storage partitioning;\newline ephemeral 3P cookies/storage cleared on tab close (D)
+  & opt-in partitioned cookies via \texttt{Partitioned} attribute: CHIPS;\newline storage partitioned by top-level site (D)
+  & uses Chromium's CHIPS and its storage partitioning (D)
+  & Total Cookie Protection: separate cookie jar per top-level site for all embedded 3P origins;\newline all storage APIs isolated per top-level site (D)
+  & \texttt{Partitioned} cookie attribute supported;\newline Access to the 3P storage restricted under ITP;\newline Storage API provides a controlled opt-in (D)
+  & ---\\
+\midrule
+
+\cellcolor{cellred} Blocking\newline1P tracking cookies/storage\newline\newline \iconCookie
+  & Brave Shields blocks 1P-disguised trackers via filter lists (D)
+  & NA
+  & NA
+  & NA
+  & ITP purges 1P cookies from classified trackers after inactivity (D)
+  & uBO and AdGuard supports targeted deletion of known 1P tracking cookies via filter rules and scriptlets \\
+\midrule
+
+\cellcolor{cellyellow} Limiting\newline1P cookie/storage lifetime\newline\newline \iconCookie
+  & Caps lifetime of script-set cookies to 7 days;\newline Forgetful Browsing auto-clears 1P storage per-site (O)
+  & NA
+  & NA
+  & NA
+  & all script-set 1P cookies/storage expire after 7 days without interaction;\newline Expiry reduced to 24h when link decoration is detected (D)
+  & ---\\
+\midrule
+
+\cellcolor{cellyellow} HTTP cache partitioning\newline\newline \iconCookie\,\iconSC
+  & Inherits Chromium cache partitioning (D)
+  & Cache keyed by top-level site (D)
+  & Inherits Chromium cache partitioning (D)
+  & Network partitioning includes cache isolation per top-level site (D)
+  & ITP's isolation addresses cache-based tracking vectors (D)
+  & ---\\
+\midrule
+
+\cellcolor{cellyellow} Network state partitioning\newline\newline \iconCookie\,\iconURL\,\iconJS\,\iconFingerprint
+  & Network state partitioned (D)
+  & Included with broader partitioning effort (D)
+  & Inherits Chromium network partitioning (D)
+  & TLS sessions, DNS cache, HSTS, OCSP, connections all isolated per top-level site (D)
+  & Isolation at network-level under ITP's tracking prevention framework (D)
+  & ---\\
+\midrule
+
+\cellcolor{cellred} URL parameter stripping\newline\newline \iconURL
+  & Strips the known tracking query parameters (D)
+  & NA
+  & NA
+  & Query-parameter stripping for known tracking parameters in ETP Strict and Private Browsing (O)
+  & ITP detects link decora- tion and reduces script-writable storage lifetime from 7 to 24 hours (D);\newline ATFP's link tracking pro- tection strips params (P)
+  & ClearURLs strips utm\_*, gclid, fbclid\newline DuckDuckGo strips by default \\
+\midrule
+
+\cellcolor{cellyellow} Referrer policy restrictions\newline\newline \iconURL
+  & Strict referrer policy strips cross-origin referrer detail (D)
+  & Defaults to strict-origin-when-cross-origin (D)
+  & Inherits Chromium referrer policy (D)
+  & Defaults to strict-origin-when-cross-origin (D)
+  & Defaults to strict-origin-when-cross-origin (D)
+  & AdGuard stealth strips referrers;\newline uBO can modify referrer headers via dynamic filtering \\
+\midrule
+
+\cellcolor{cellred} Blocking\newline CNAME-cloaked trackers\newline\newline \iconURL\,\iconCookie
+  & Blocks CNAME-cloaked trackers (D)
+  & NA
+  & NA
+  & NA;\newline uBO performs CNAME uncloaking through the \texttt{browser.dns} API
+  & ITP applies CNAME/IP heuristics for detecting cloaked 3P hosts;\newline ATFP blocks CNAME-cloaked trackers (D)
+  & uBO performs CNAME uncloaking (only Firefox);\newline AdGuard does CNAME resolution;\newline Extension-based defenses lack full DNS visibility \\
+\midrule
+
+\cellcolor{cellred} Protecting\newline against bounce tracking\newline\newline \iconURL\,\iconCookie
+  & Debouncing skips known bounce-tracker redirects;\newline Unlinkable bouncing rou- tes visits through temporary unlinkable storage (D)
+  & Heuristics-based deletion of site storage for bounce domains without any recent user interaction (D)
+  & NA
+  & ETP Strict uses blocklists; deletes storage without recent interaction (D)
+  & Behavioral heuristics for deletion of storage for suspected trackers lacking legitimate interaction (D)
+  & ---\\
+\midrule
+
+\cellcolor{cellred} Blocking known trackers\newline via filter/block lists\newline\newline \iconCookie\,\iconURL\,\iconJS\,\iconFingerprint
+  & Shields blocks known 3P ads, trackers, crypto (D)
+  & NA
+  & Balanced and Strict mode blocks trackers from Disconnect list (D)
+  & ETP blocks trackers from Disconnect list (D)
+  & ITP and ATFP blocks kn- own and CNAME-cloaked trackers (D)
+  & \textit{List}: easylist, easyprivacy, disconnect, Fanboy's lists, Peter Lowe's list, AdGuard lists, DuckDuckGo Tracker Radar;\newline \textit{Extension}: Ghostery, Ad- Guard, Privacy Badger, uBO;\newline \textit{DNS}: Pi-hole, NextDNS \\
+\midrule
+
+\cellcolor{cellred} ML-based\newline ad/tracker blocking\newline\newline \iconCookie\,\iconURL\,\iconJS\,\iconFingerprint
+  & PageGraph detects trackers via page-level graph analysis (D)
+  & NA
+  & NA
+  & NA
+  & ITP uses ML classifier to identify tracking domains from cross-site loading patterns (D)
+  & Privacy Badger learns fr- om observed cross-site behavior;\newline Blacklight scans sites for trackers and fingerprinting \\
+
+\bottomrule
+\end{tabular}%
+}% end scalebox
+\end{table*}

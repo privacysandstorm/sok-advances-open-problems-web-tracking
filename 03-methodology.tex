@@ -1,134 +1,64 @@
-%%
 \section{Methodology}
 \label{sec:methodology}
+\label{sec:lit-review}
+\label{sec:systematization}
+
+
+\para{Literature Review.}
+%
+To systematize the evolution of web tracking, we perform a literature search (see~\autoref{fig:methodology}) to identify all relevant papers published at any of the following seven venues---IEEE S\&P, USENIX Security, ACM CCS, NDSS, ACM IMC, PETS, and WWW---since their creation (i.e., from 1980 to 2026\footnote{Only papers available on DBLP (\url{https://dblp.org/db/conf}) by June 1st, 2026 were included. Papers were queried using conference-specific paths, e.g., for PETS, we use `conf/pet' (2000-2014) \& `journals/popets' (2015+).}).
+%
+We obtain a total of 19438 papers that we filter using keywords (see~\refappendix{sec:keywords}). % on the title, abstract, or PDF of these publications.
+%
+These keywords were refined over multiple iterations by discussion among two expert authors.
+%
+The resulting list of 768 candidate papers is manually reviewed to further exclude  publications unrelated to web tracking techniques, mitigations, or regulatory compliance (e.g., IoT tracking, advertising use cases).
+
+
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\columnwidth]{figures/methodology.pdf}
-    \caption{Overview of our literature search.}
+    \caption{Overview of our literature search.}% Note that a same paper can be matched along more than one dimension.}
     \label{fig:methodology}
 \end{figure}
 
-\subsection{Literature Review}
-\label{sec:lit-review}
-% 
-Online tracking comprises a vast body of literature published over the last few decades---spanning across technical mechanisms, defenses, and regulatory compliance. 
-%
-To systematize evolution of web tracking, we begin by performing a literature search to identify all papers related to web tracking published at any of the following seven web security and privacy venues---IEEE S\&P, USENIX Security, ACM CCS, NDSS, ACM IMC, PETS, and WWW.
 
+
+\para{Systematization.}
+%
+This yields a final set of 255 research papers across the following dimensions: 58 tracking techniques and 108 measurements, 65 defenses, and 34 regulatory compliance papers (see~\refappendix{sec:thematic-analysis} for details).
+%
+We systematize the evolution of web tracking along these dimensions by following Clarke and Braun’s thematic analysis~\cite{clarke2013successful} that eliminates the need for inter-rater reliability.
+%
+First, one researcher with expertise in web tracking, reviewed each included paper in detail to evaluate it based on our systematization criteria listed in~\autoref{tab:systematization-criteria}.
+%
+For each criteria, the expert assigned one or more relevant categories. % based on the provided description.
+%
+Next, the evaluator convened with a second expert to deliberate the assigned categories, resolve any ambiguities, and reach a consensus on the final taxonomy.
+% to ensure a high quality of analysis as suggested in Clarke and Braun’s approach.
 %%
-We first identify all papers published at these conferences since their inception (i.e., from 1980 to 2026) using DBLP (\url{https://dblp.org/db/conf}) with conference-specific paths (see~\autoref{fig:methodology})\footnote{For PETS, we use `conf/pet' (2000-2014) \& `journals/popets' (2015+)}. 
+We structure the SoK around this taxonomy and systematize evolution of tracking techniques, defenses, and regulatory compliance, while identifying research gaps and future directions.
 %
-We obtain a total of 19438 papers along with their metadata (title, authors, year, and DOI). 
+When needed, we use our domain expertise to complement our explanations with other relevant publications or aspects.
+
+
+\input{tables/systematization-criteria}
+
+\para{Approach Limitations.}
+% We acknowledge the following limitations in our approach.
+% with our methodology that are inherent from any SoK effort.
 %
-Since paper abstracts were not always available, we perform a DOI-based query on Semantic Scholar\footnote{\url{https://www.semanticscholar.org/}} and OpenALex\footnote{\url{https://openalex.org/}} to obtain abstracts for each paper. 
-
-%%
-Next, to retain papers purely relevant to web tracking techniques, mitigations, and regulations, we use inclusion and exclusion criteria (see~\refappendix{sec:keywords}) based on the presence of certain keywords in the title, abstract, or PDF of these publications. 
+\textbf{\textit{Selection Bias.}} We scope our SoK to the seven aforementioned venues where web tracking research has been commonly published, and so, we may have missed other relevant publications.
 %
-These keywords were refined over multiple iterations and discussion among the two authors. 
+\textbf{\textit{Coding Bias.}} As with any qualitative analysis, our systematization is subject to a degree of subjectivity.
+%in how papers are evaluated against the criteria in~\autoref{tab:systematization-criteria}.
+We mitigate this following Clarke and Braun's thematic analysis approach~\cite{clarke2013successful} coupled with our domain expertise.
 %
-First, exclusion keywords remove potential papers that could be incorrectly retained under web tracking. 
+% While this reduces inconsistencies, it is still possible that other researchers may arrive at slightly varying interpretations of the taxonomy.
 %
-Second, two sets of inclusion keywords are used to narrow down potential candidates for manual review. 
+\textbf{\textit{Focus on EU and US Regulations.}} We scope our approach to the EU and US contexts because they are the closest to our expertise and their regulations have often been precursors to others around the globe\footnote{See \url{https://cnil.fr/en/data-protection-around-the-world}}.
+% (LGPD in Brazil, DPDPA in India, Data Protection Act in the U.K., etc.).
+For a broader exploration of privacy regulations elsewhere and their nuances, we refer readers to the following SoK from Birrell et al. ~\cite{birrellSoKTechnicalImplementation2024}.
 %
-The first set is used to filter publications that are related to web tracking techniques and defenses based on their title and abstract text. 
-%
-The second set of keywords is used to identify papers discussing privacy regulations and compliance in the context of web tracking in their full text. 
-%
-We rely on full text search to identify papers that may not primarily be regulation-focused (hence lower probability of a match in title or abstract), but may still discuss regulatory implications of the studied tracking technique or defense in the paper. 
-% (an initial query on just title and abstract yielded too few relevant results).
-
-%%
-%
-We scope this SoK's focus on web tracking in context of desktop and mobile. 
-%
-To this end, we manually review the filtered 768 candidate papers by discussing among the authors to further exclude publications unrelated to online tracking or those out of scope from our general focus (e.g., tracking in IoT ecosystem, tracking use cases such as online advertising, etc.). 
-%
-This yielded a final set of 259 research papers related to three web tracking dimensions: measurements and techniques (N=135), defenses (N=62) and regulatory compliance (N=34).
-
-
-%%
-\subsection{Systematization}
-% 
-To systematize the evolution of web tracking along these three dimensions, we follow Clarke and Braun’s thematic analysis approach~\cite{clarke2013successful} that eliminates the need for inter-rater reliability. 
-%
-First, one researcher with expertise in web tracking, reviews each included paper to evaluate it based on our systematization criteria listed in Table~\ref{tab:systematization-criteria}. 
-%
-Next, the evaluator convened with the second expert researcher to deliberate any ambiguities and reach
-a consensus on the final evaluation in order to ensure a high quality of analysis as suggested in Clarke and Braun’s approach.
-%
-The finalized taxonomy for each criteria is listed in Tables~\ref{tab:systematization-criteria}, \ref{tab:??} and \ref{tab:??}.
-%
-% A total of 40 topical themes were identified (see~\refappendix{sec:thematic-analysis}), with the top 15 (by number of papers) being tracking measurements, tracking in browsers and mobile, browser fingerprinting, regulation compliance, profiling, third-party tracking, cookie consent, cookies, user studies in tracking, ad blocking, JavaScript-based tracking, side-channels, advertising and tracking defenses, and browser extension fingerprinting.
-% 
-% \subsection{Coding Tracking Techniques and Mitigations Papers}
-% \subsection{Coding Regulations and Compliance Papers}
-% \subsection{Identifying Advances and Open Problems}
-%
-We use our domain expertise to structure the SoK around this taxonomy to systematize evolution of tracking techniques, defenses, and regulatory compliance, while identifying gaps and open problems to guide future research. 
-
-%%
-\begin{table*}[t]
-\centering
-\caption{Summary of systematization criteria and taxonomy for tracking techniques, defenses, and regulatory compliance.}
-\label{tab:systematization-criteria}
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{p{0.03cm} p{9.2cm} p{7.0cm}}
-\toprule
-& \textbf{Criteria and Description} & \textbf{Taxonomy} \\
-\midrule
-
-\multirow[c]{7}{*}{\rotatebox[origin=c]{90}{\parbox{2.5cm}{\centering\textbf{Techniques}}}}
- & \textbf{Tracked Artifacts}: What artifacts are used to track users using this technique? & see Table~\ref{tab:} \\
- & \textbf{Tracked State}: What state does this tracking technique maintain to track users? & Stateful, Stateless, Both \\
- & \textbf{Tracking Context}: In what context does this tracking technique function? & Third-party, First-party, Both \\
- & \textbf{Tracker Goals}: What are goals of the tracker employing this tracking? & Same-site, Cross-site, Cross-device \\
- & \textbf{Tracker Capabilities}: What capabilities are required to use this technique? & \symInclusion\ Inclusion, \symExecution\ Execution, \symObservation\ Observation, \symStorage\ Storage, \symSharing\ Sharing \\
- & \textbf{Gaps}: What are potential gap(s) in the evolution of this tracking techniques? & see Section~\ref{sec:} \\
- & \textbf{Open problems}: What are potential future research direction(s) related to this tracking? & see Section~\ref{sec:} \\
-
-\midrule
-
-\multirow[c]{6}{*}{\rotatebox[origin=c]{90}{\parbox{2.2cm}{\centering\textbf{Defenses}}}}
- & \textbf{Tracking technique}: What tracking does this defense protect against? & see Table~\ref{tab:} \\
- & \textbf{Defense Artifact}: What tracking artifact(s) does this defense apply protection to? & see Table~\ref{tab:} \\ 
- & \textbf{Defense Development}: Who developed this tracking defense? & Research-based, Community-based, Industrial \\
- & \textbf{Defense Deployment}: How can or is this defense deployed? & \dNative\ in-browser, \dExt\ extension, \dTool\ offline, \dServer\ infrastructural \\  % server-/network-/protocol-/OS-level
- & \textbf{Defense Support}: What is support for this and related practically deployed defenses? & see Figure~\ref{fig:} for browser-specific support \\
- & \textbf{Gaps}: What are potential gap(s) in the evolution of these tracking defenses? & see Section~\ref{sec:} \\
- & \textbf{Open problems}: What are potential future research direction(s) for defenses? & see Section~\ref{sec:} \\
-
-\midrule
-
-% \multirow[c]{1}{*}{\rotatebox[origin=c]{90}{\parbox{3.8cm}{\centering\textbf{Regulations \&}\\\textbf{Compliance}}}}
-%  & & & \\
-
-\bottomrule
-\end{tabular}
-\end{table*}
-
-
-
-\subsection{Approach Limitations}
-
-\noindent We acknowledge the following limitations in our approach.
-% with our metho that are inherent from any SoK effort.
-
-\para{Selection Bias.} We scope our SoK to seven of the top security and privacy conferences where web tracking research has been commonly published. Consequently, some publications relevant to web tracking techniques, defenses, and regulations published elsewhere may have been left out from our systematization approach. 
-% Mitigations: 
-% - broad search further refined automatically on identified exclusion keywords and manual evaluation
-% - venues aligned with our expertise and where we have seen most relevant papers in the past to web tracking
-% - 
-
-\para{Coding Bias.}
-As with any qualitative analysis, our systematization is subject to a degree of subjectivity in how papers are evaluated against the criteria in Table~\ref{tab:systematization-criteria}. We mitigate this following Clarke and Braun's thematic analysis approach~\cite{clarke2013successful}
-% , in which two expert researchers collaboratively deliberated ambiguities and refined the taxonomy through consensus
-. While this approach reduces inconsistencies, it does not entirely eliminate the possibility that different researchers may arrive at slightly varying interpretations of the taxonomy.
-% coding + interpretation
-% extracting general and common trends
-
-\para{Regulation Focus on EU and US Contexts.}
-% in literature search (keywords)
-% but US/EU contexts are the closest to our expertise
-% GDRP (+ePD) and CCPA are seen as the precursors and have influenced many other regulations around the world
+\textbf{\textit{Scope coverage.}} We consider adjacent topics such as advertising out-of-scope. Also, we focus on systematizing high-level advances across literature rather than detailing findings from individual papers. Due to space constraints, mixed tracking techniques and their defenses are deferred to \refappendix{sec:mixed-tracking}.

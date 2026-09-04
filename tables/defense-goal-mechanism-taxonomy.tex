@@ -1,0 +1,32 @@
+\begin{table}[H]
+  \small
+  \centering
+  \caption{Taxonomy of research-based tracking defenses along with its distribution across the literature (\# = paper count).}
+  \label{tab:defense-goal-mechanism-taxonomy}
+  \begin{tabular}{>{\raggedleft\arraybackslash}p{0.8cm} >{\raggedright\arraybackslash}p{6cm} >{\centering\arraybackslash}p{0.1cm}}
+    \toprule
+    \multicolumn{1}{c}{\textbf{Goal}} & \multicolumn{1}{c}{\textbf{Defense Technique}} & \multicolumn{1}{l}{\textbf{\#}} \\
+    \midrule
+
+    \cellcolor{cellred}
+      & Machine Learning based Classification            & 28 \\
+\cellcolor{cellred}
+      & Program Analysis and Code Instrumentation        & 17 \\
+\cellcolor{cellred}
+      & Circumvention based Behavioral Classification    &  4 \\
+\cellcolor{cellred}\multirow[c]{-4}{*}{\rotatebox[origin=c]{90}{\makecell{Detection \&\\Blocking}}}
+      & LLM based Classification                         &  2 \\
+    \midrule
+
+    \cellcolor{cellyellow}
+      & API Output Perturbation                          &  8 \\
+\cellcolor{cellyellow}
+      & Browser State Isolation and Partitioning         &  6 \\
+\cellcolor{cellyellow}
+      & Network Protocol level Modifications             &  4 \\
+\cellcolor{cellyellow}\multirow[c]{-4}{*}{\rotatebox[origin=c]{90}{\makecell{Signal\\ Reduction \&\\Obfuscation}}}
+      & Cryptographic Defenses                           &  6 \\
+    \bottomrule
+  \end{tabular}
+% \vspace{-1mm}
+\end{table}

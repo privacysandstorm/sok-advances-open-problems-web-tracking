@@ -12,15 +12,15 @@ The Web is comprised of a client-server architecture built on the HTTP(S) protoc
 %
 A typical website is composed of a primary HTML document embedded with numerous resources. 
 %
-These resources are either hosted on the web server of the site directly visited by the user (\ie{}, \textit{first-party}) or on other websites (\ie{}, \textit{third-party}).
+These resources are either hosted on the web server of the site directly visited by the user (i.e., \textit{first-party}) or on other websites (i.e., \textit{third-party}).
 %
-The HTML document defines the webpage structure and is parsed by the browser to build a logical representation of the document objects, \ie{}, the DOM or Document Object Model. 
+The HTML document defines the webpage structure and is parsed by the browser to build a logical representation of the document objects, i.e., the DOM or Document Object Model. 
 %
-At a high level, resources are included on a webpage in two ways: (1)~as inline content, directly within the HTML tags (\eg{},~\texttt{<style>}, \texttt{<script>}, or \texttt{<img>} tags) or (2)~as external references to fetch content (\eg{},~\texttt{<script src="...">}, \texttt{<img src="...">}, and \texttt{<iframe src="...">}). 
+At a high level, resources are included on a webpage in two ways: (1)~as inline content, directly within the HTML tags (e.g.,~\texttt{<style>}, \texttt{<script>}, or \texttt{<img>} tags) or (2)~as external references to fetch content (e.g.,~\texttt{<script src="...">}, \texttt{<img src="...">}, and \texttt{<iframe src="...">}). 
 %
 As the browser processes HTML to construct the DOM, it immediately renders inline content such as text and images or executes scripts, and for each external inclusion it issues additional HTTP requests to retrieve those resources. 
 %
-% Modern websites often include and fetch hundreds of such resources from a mix of site’s own server and external servers (\eg{}, CDNs or third-party service providers such as analytics or advertising). 
+% Modern websites often include and fetch hundreds of such resources from a mix of site’s own server and external servers (e.g., CDNs or third-party service providers such as analytics or advertising). 
 %
 Notably, different resource types have different behaviors upon their inclusion in a webpage.
 %
@@ -55,7 +55,7 @@ This enforcement is called the Same-Origin Policy (SOP)~\cite{mdnSameoriginPolic
 %%
 \para{Browser’s Context Model.} 
 %
-A browsing context is the environment that contains the document along with a scripting environment (\eg{}, the global window object in HTML). 
+A browsing context is the environment that contains the document along with a scripting environment (e.g., the global window object in HTML). 
 %
 In practice, it corresponds to a browser tab, window, top-level browsing context comprising the loaded webpage, or any of its iframes~\cite{MDNBrowsingContext}. 
 %
@@ -72,7 +72,7 @@ The browser maintains this isolation by labeling each context with the origin of
 %%
 \para{Browser's Security Model: Context-Origin Boundaries.} 
 %
-The browser's context model denotes that every document runs in a container (frame or window) that maintains its state (\eg{}, its DOM, variables, and scripts) separate from others, while the origin model associates the document with an origin determining the code’s privileges.
+The browser's context model denotes that every document runs in a container (frame or window) that maintains its state (e.g., its DOM, variables, and scripts) separate from others, while the origin model associates the document with an origin determining the code’s privileges.
 %
 Thus, the browser uses both the origin and context to enforce policies---it isolates contexts from each other, and when an interaction is attempted, it checks the origins involved. 
 %
@@ -124,7 +124,7 @@ Inclusion represents an implicit trust declaration by the webpage, as it trusts 
 % \para{\textit{Browser Storage}.} 
 \para{Browser-Enforced Policies on Browser Storage.} 
 %
-Browser-provided client-side storage mechanisms (\eg{},~\texttt{localStorage}, \texttt{sessionStorage}, and \texttt{IndexedDB}) are partitioned by origin.
+Browser-provided client-side storage mechanisms (e.g.,~\texttt{localStorage}, \texttt{sessionStorage}, and \texttt{IndexedDB}) are partitioned by origin.
 %
 So scripts from one origin cannot read or write to another origin’s storage. 
 %
@@ -140,15 +140,15 @@ Functionally, they both store data in a user's browser, however, they differ in 
 %
 HTTP cookies are automatically read and included in the network request or set by the browser from the response using corresponding headers based on specified cookie's domain and path information.
 %
-While JavaScript cookies (\ie{}, cookies set using JavaScript or HTTP cookies that are not flagged to be HTTPOnly) are set and/or accessed by client-side scripts running in the browser. 
+While JavaScript cookies (i.e., cookies set using JavaScript or HTTP cookies that are not flagged to be HTTPOnly) are set and/or accessed by client-side scripts running in the browser. 
 %
-Thus, JavaScript cookies can be accessed (\eg{}, using \texttt{document.cookie} or CookieStore API) by any script running in the same execution context regardless of its source. 
+Thus, JavaScript cookies can be accessed (e.g., using \texttt{document.cookie} or CookieStore API) by any script running in the same execution context regardless of its source. 
 %
 This means that third-party scripts included in the main execution context can read/write first-party cookies. 
 %
 JavaScript cookies are shared either in the query string or the request payload with a server.
 %
-% Third-party cookies also allow cross-site tracking---if a third-party is embedded as a resource (\eg{}, iframe) on multiple first-party websites, it can set and read user ID cookie across those first-party websites.
+% Third-party cookies also allow cross-site tracking---if a third-party is embedded as a resource (e.g., iframe) on multiple first-party websites, it can set and read user ID cookie across those first-party websites.
 
 
 %%

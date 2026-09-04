@@ -1,0 +1,70 @@
+\begin{table*}[ht]
+  \small
+\centering
+\caption{Web tracking artifact taxonomy: mapping of tracked artifacts to artifact labels.}
+\label{tab:artifact-taxonomy}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{} p{3.4cm} p{13.8cm} @{}}
+\toprule
+\textbf{Artifact Label} & \textbf{Artifacts Observed in the Literature Review} \\
+\midrule
+
+Browser Storage \& Cache &
+  \textit{Cookies};
+  \textit{Web Storage} (localStorage, sessionStorage, IndexedDB);
+  \textit{Browser Caches} (HTTP, HSTS, favicon, Alt-Svc, Service Worker, and Cache API) \\
+
+\midrule
+
+JavaScript-Accessible Browser APIs &
+  \textit{Fingerprinting APIs} (e.g., Navigator, Screen, Canvas, WebGL, AudioContext);
+  \textit{Device APIs} (Battery Status, Media Devices, Gamepad, Speech Synthesis voices); 
+  \textit{Browser Permissions} (e.g., camera, microphone) \\
+
+\midrule
+
+Hardware Artifacts &
+  \textit{GPU Rendering Behavior} (timing variations, memory allocation, performance counters);
+  \textit{Sensor Calibration Data} (accelerometer or gyroscope imperfections, speaker frequency response);
+  \textit{Clock Drift Patterns} (system time offset, TCP timestamp skew);
+  \textit{CPU Microarchitectural State} (scheduling statistics, memory footprint) \\
+
+\midrule
+
+Network Protocol Artifacts &
+  \textit{IP Address};
+  \textit{TLS/SSL Handshake Parameters} (cipher suites, SNI, client certificates);
+  \textit{TCP/IP Stack Characteristics} (source port selection, IP ID fields, IPv6 flow labels);
+  \textit{DNS Records} (CNAME records, reverse hostnames, TTL values);
+  \textit{QUIC/HTTP2+ Transport Metadata} (connection IDs, retry tokens, transport parameters) \\
+
+\midrule
+
+HTTP Traffic Artifacts &
+  Request Metadata, Response Content, Headers, Payload \\
+
+\midrule
+
+Navigational Artifacts &
+  \textit{URL Components} (host, domain, path, query parameters);
+  \textit{Redirect Chains} \\
+
+\midrule
+
+Webpage Artifacts &
+  \textit{Resources} (DOM elements and their modifications, stylesheets, scripts);
+  \textit{Interaction Patterns} (click traces, touch gesture characteristics, keystrokes, mouse movements, scroll depth, click coordinates, interaction timing);
+  \textit{Rendering Characteristics} (font rendering, CSS feature detection, element bounding dimensions) \\
+
+\midrule
+
+Identifiers &
+  \textit{Authentication IDs} (OAuth tokens, SSO redirect parameters, session IDs);
+  \textit{PII} (email addresses, phone, PII hashes);
+  \textit{Device-specific IDs} (IDFA, EMEI, MAC address); 
+  \textit{Advertiser-specific IDs} (e.g., UUIDs)\\
+
+\bottomrule
+\end{tabular}
+% \vspace{-2mm}
+\end{table*}

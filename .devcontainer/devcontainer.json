@@ -24,6 +24,7 @@
                 "latex-workshop.linting.chktex.enabled": true,
                 "latex-workshop.latex.clean.subfolder.enabled": true,
                 "latex-workshop.latex.autoClean.run": "onBuilt",
+                "latex-workshop.latex.autoBuild.run": "never",
                 "files.associations": {
                     "*.tex": "latex"
                 },

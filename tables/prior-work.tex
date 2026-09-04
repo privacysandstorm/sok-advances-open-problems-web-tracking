@@ -1,38 +1,38 @@
-% for table:
-% Author et al. or Title [cite], year, scope, (audience?), technique, defense, regulations, future directions, nb papers/refs
 \begin{table*}[!ht]
+    \small
     \centering
-    \begin{tabular}{cccccccc}
+    \caption{Comparison overview to prior SoK and survey papers related to web tracking. \iconCookie: Cookie-based, \iconURL: Navigational,\\ \iconFingerprint: Fingerprinting, \iconJS: JavaScript-based, \iconSC: Side-channels, \iconPrivacy: Privacy proposals. \protect\pie{180}: Partial coverage compared to our SoK.
+     }
+    \label{tab:prior-work}
+    \setlength{\tabcolsep}{2pt}
+    \renewcommand{\arraystretch}{.7}
+    \begin{tabular}{ccccccccccccc}
     \toprule
-    & & & \multicolumn{2}{c}{\textbf{Techniques}} & \multicolumn{2}{c}{\textbf{Defenses}}\\
-    \textbf{Work} & \textbf{Year} & \textbf{Scope}& \textbf{Stateful} & \textbf{Stateless} & \textbf{Academic} & \textbf{Industrial} & \textbf{Regulations}\\
+    & & & \multicolumn{3}{c}{\footnotesize\textbf{Tracking}} & & \multicolumn{3}{c}{\footnotesize\textbf{Defenses}}\\
+    \footnotesize\textbf{Work} & \footnotesize\textbf{Year} & \footnotesize\textbf{Scope}&\rot{\footnotesize\textbf{Stateful}} &\rot{\footnotesize\textbf{Stateless}} &\rot{\footnotesize\textbf{Mixed}} &\footnotesize\textbf{Techniques} &\rot{\footnotesize\textbf{Industry}} &\rot{\footnotesize\textbf{Research}} &\rot{\footnotesize\textbf{Community}} &\footnotesize\textbf{Regulations} &\rot{\footnotesize\begin{tabular}[c]{@{}c@{}}\textbf{Future}\\ \textbf{Directions} \end{tabular}}
+    &\rot{\footnotesize\begin{tabular}[c]{@{}c@{}}\textbf{Nb Papers}\\ \textbf{Studied} \end{tabular}}\\
     \midrule
-         Mayer and Mitchell~\cite{mayerThirdPartyWebTracking2012} & 2012 & Third-party tracking techniques and policy\\
-         
-         Bujlow et al.~\cite{bujlowSurveyWebTracking2017} & 2017 & Techniques and defenses\\
-         
-         Sanchez-Rola et al.~\cite{sanchez-rolaWebWatchingYou2017} & 2017 & Techniques and countermeasures\\
-         
-         Laperdrix et al.~\cite{laperdrix2020browser} & 2020 & Browser fingerprinting techniques and defenses\\
-         
-         % Schnitzler et al.~\cite{schnitzlerSoKManagingLongitudinal2021} & 2021 & \\ %out-of-scope (online service/social media data sharing)
-         
-         Rokicki et al.~\cite{rokickiSoKSearchLost2021} & 2021 & JS timers-based attacks\\
-         
-         Sprecher et al.~\cite{sprecherSoKAllNothing2022} & 2022 & Script inclusion and permissions\\
-         
-         Subramani et al.~\cite{subramaniSoKWorkeroundsCategorizing2022} & 2022 & Service workers-based attacks and mitigations\\
-         
-         Stafeev and Pellegrino~\cite{stafeevSoKStateKrawlers2024} & 2024 & Measurement crawlers and methodology\\
-         
-         Birrell et al.~\cite{birrellSoKTechnicalImplementation2024} & 2024 & Internet Privacy Regulations \\
-         
-         Rieder et al.~\cite{riederSoKDecadesWeb2026} & 2026 & Tracker detection (methodology measurements)\\
-         
-         \hline
-         Ours & 2026 & Techniques, mitigations, and regulations & \pie{360} & \pie{360} & \pie{360} & \pie{360} &\\
+         Mayer et al.~\cite{mayerThirdPartyWebTracking2012} & 2012 & Third-party tracking and policy & \pie{180} & \pie{180} & \emptypie{} & \iconCookie~\iconURL~\iconFingerprint~\iconJS & \emptypie{} & \pie{180} & \pie{180} & EU \& US & \xmark & $\approx 65$\\
+
+         Bujlow et al.~\cite{bujlowSurveyWebTracking2017} & 2017 & Tracking techniques and defenses & \pie{180} & \pie{180} & \emptypie{} & \iconCookie~\iconURL~\iconFingerprint~\iconJS~\iconSC & \pie{180} & \pie{180} & \pie{180} & EU (briefly) & \checkmark & $\approx 70$ \\
+
+         Sanchez-Rola et al.~\cite{sanchez-rolaWebWatchingYou2017} & 2017 & Techniques and countermeasures & \pie{180} & \pie{180} & \emptypie{} & \iconCookie~\iconFingerprint~\iconJS & \emptypie{} & \pie{180} & \pie{180} & EU \& US & \xmark &$\approx 35$\\
+
+         Ermakova et al.~\cite{ermakova2018web} & 2018 & High-level tracking survey & \pie{180} & \pie{180} & \pie{180} & \iconCookie~\iconFingerprint~\iconJS & \emptypie{} & \pie{180} & \pie{180} & \xmark & \xmark  & $31$\\
+
+         Laperdrix et al.~\cite{laperdrix2020browser} & 2020 & Browser fingerprinting & \emptypie{} & \pie{360} & \pie{180} & \iconFingerprint~\iconJS~\iconSC & \pie{180} & \pie{180} & \pie{360} & EU (briefly) & \checkmark &$\approx57$\\
+
+         Rokicki et al.~\cite{rokickiSoKSearchLost2021} & 2021 & JS timers-based attacks &\emptypie{} & \pie{360} & \emptypie{} & \iconJS~\iconSC & \pie{360} & \pie{360} & \emptypie{} & \xmark & \checkmark &$\approx30$\\
+
+         Stafeev et al.~\cite{stafeevSoKStateKrawlers2024} & 2024 & Crawlers' measurement methodology & \emptypie{} & \emptypie{} & \emptypie{} & \xmark & \emptypie{} & \emptypie{} & \emptypie{} & \xmark & \checkmark & $403 + 27$\\
+
+         Birrell et al.~\cite{birrellSoKTechnicalImplementation2024} & 2024 & Internet privacy regulations  & \emptypie{} & \emptypie{} & \emptypie{} & \xmark & \emptypie{} & \emptypie{} & \emptypie{} & Worldwide & \checkmark & $270$\\
+
+         Rieder et al.~\cite{riederSoKDecadesWeb2026} & 2026 & Detection measurement methodology & \pie{360} & \pie{180} & \emptypie{} & \iconCookie~\iconURL~\iconFingerprint~\iconJS & \emptypie{} & \pie{180} & \pie{180} & \xmark & \checkmark & $59 + 16$\\
+
+         \midrule
+         \textbf{Ours} & 2026 & Techniques, mitigations, regulations & \pie{360} & \pie{360} & \pie{360} & \iconCookie~\iconURL~\iconFingerprint~\iconJS~\iconSC~\iconPrivacy & \pie{360} & \pie{360} & \pie{360} & EU \& US & \checkmark & $255$\\
      \bottomrule
     \end{tabular}
-    \caption{Comparison overview to prior SoK and survey papers related to web tracking.}
-    \label{tab:prior-sok-comparaisons}
+    % \vspace{-2mm}
 \end{table*}

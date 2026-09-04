@@ -1,0 +1,137 @@
+% ── Adjustable parameters ──
+\newcommand{\tablescale}{0.8}        % Scale factor for entire table (1.0 = full size)
+\newcommand{\rowheight}{1.0}          % Row height multiplier (1.0 = default, lower = tighter)
+
+\newlength{\colBrowser}   \setlength{\colBrowser}{0.7cm}
+\newlength{\colDate}      \setlength{\colDate}{2cm}
+\newlength{\colVersion}   \setlength{\colVersion}{2.2cm}
+\newlength{\colProtects}  \setlength{\colProtects}{2cm}
+\newlength{\colDesc}      \setlength{\colDesc}{13.2cm}
+
+
+\begin{table*}[t]
+  \scriptsize
+\centering
+\caption{\textbf{Evolution of industry-driven tracking defenses across different browsers.} \iconCookie: Cookie-based tracking, \iconURL: Navigational tracking, \iconFingerprint: Fingerprinting, \iconJS: JavaScript-based tracking, \iconSC: Side-channels, \iconPrivacy: Privacy proposals.}
+\label{tab:defenses-industrial}
+\footnotesize
+\renewcommand{\arraystretch}{\rowheight}
+\scalebox{\tablescale}{%
+\begin{tabular}{
+  >{\centering\arraybackslash}m{\colBrowser}
+  >{\centering\arraybackslash}m{\colDate}
+  >{\centering\arraybackslash}m{\colVersion}
+  >{\centering\arraybackslash}m{\colProtects}
+  m{\colDesc}
+}
+\toprule
+\textbf{Browser} & \textbf{Release Date} & \textbf{Browser Version} & \textbf{Protects Against} & \textbf{Description of the Introduced Tracking Defenses} \\
+\toprule
+
+% ─────────────────────────────────────────────
+%  INTERNET EXPLORER  (4 rows)
+% ─────────────────────────────────────────────
+% multirow vertical centering: adjust the value in brackets [Xpt]
+% positive = shift up, negative = shift down
+\multirow{4}{*}[0pt]{\iconIE}
+  & Aug 2001 & 6  & \iconCookie                                & P3P support; 3P cookies restricted by default unless an acceptable P3P compact policy is present \\
+  & Mar 2009 & 8  & \iconCookie\,\iconSC       & Introduced InPrivate Browsing and InPrivate Filtering (blocks 3P content loaded across $>$10 sites) \\
+  % ; also clears some Flash supercookies \\
+  & Mar 2011 & 9  & \iconCookie\,\iconURL\,\iconFingerprint  & Tracking Protection Lists (TPL) replaces InPrivate Filtering; Do Not Track (DNT) support added \\
+  & Jun 2022 & 11 &       ---       & Last IE~11 desktop app retired and disabled, redirecting to Microsoft Edge \\
+\midrule
+
+% ─────────────────────────────────────────────
+%  EDGE  (7 rows)
+% ─────────────────────────────────────────────
+\multirow{7}{*}[-5pt]{\iconEdge}
+  & Jul 2015    & 20      & --- & Edge launches with Windows~10, InPrivate browsing, and DNT; drops IE's TPL \\
+  & Jan 2020    & 79      & \iconCookie\,\iconURL\,\iconFingerprint & Chromium Edge with Disconnect-based blocking; blocks cryptomining+fingerprinting trackers \\
+  & Oct 2020    & 86      & \iconSC                                  & Inherits Chromium HTTP cache partitioning \\
+  & 2022--2023  & 101--116 & \iconFingerprint\, \iconPrivacy                           & Inherits Chromium User-Agent reduction (reduced UA string; UA Client Hints) \\
+  & May 2023    & 114     & \iconCookie\,\iconSC\, \iconPrivacy                     & Inherits Chromium CHIPS (partitioned 3P cookies) \\
+  & Aug 2023    & 115     & \iconSC                                  & Inherits Chromium Storage Partitioning \\
+  & Jun 2024    & 139     & ---                                & Inherits Chromium Manifest~V3 enforcement; MV2 ad/tracker blockers phased out \\
+\midrule
+
+% ─────────────────────────────────────────────
+%  FIREFOX  (14 rows)
+% ─────────────────────────────────────────────
+\multirow{14}{*}[-15pt]{\iconFirefox}
+  & Sep 2002 & 0.1       & \iconCookie                                 & Launch of Phoenix~0.1 with basic cookie management \\
+  & Nov 2004 & 1         & \iconCookie                                 & Launch of Firefox~1.0: cookie manager with exceptions; option to block 3P cookies \\
+  & Jun 2009 & 3.5       & ---                                  & Private Browsing mode introduced \\
+  & Mar 2011 & 4         & ---                             & Do Not Track (DNT) header adopted; first browser to implement DNT \\
+  & Nov 2015 & 42        & \iconCookie\,\iconURL\,\iconFingerprint          & Tracking Protection blocks known trackers in Private Browsing using Disconnect list \\
+  & Nov 2017 & 57        & \iconCookie\,\iconURL\,\iconFingerprint                   & Tracking Protection available outside Private Browsing (optional) \\
+  & Oct 2018 & 63        & \iconCookie\,\iconJS          & Enhanced Tracking Protection (ETP) introduced (off by default) \\
+  & Jun 2019 & 67        & \iconCookie\,\iconJS                                 & ETP turned on by default for new installs (Standard mode) \\
+  & Jan 2020 & 72        & \iconFingerprint\,\iconJS                   & Fingerprinting-script blocking enabled by default via Disconnect's fingerprinting list \\
+  & Jul 2020 & 79        & \iconURL                                    & Basic redirect (bounce) tracking protection introduced \\
+  & Jan 2021 & 85        & \iconCookie\,\iconSC                     & Supercookie protection via network partitioning (caches/connections isolated per top-level site) \\
+  & Feb 2021 & 86        & \iconCookie                     & Total Cookie Protection introduced (separate cookie jar per website under ETP Strict) \\
+  & Jun 2022 & 102       & \iconURL                                    & URL query-parameter stripping for known tracking parameters (ETP Strict and Private Browsing) \\
+  & Aug 2024     & 128       & \iconURL                                    & Bounce Tracking Protection introduced to ETP Strict \\
+\midrule
+
+% ─────────────────────────────────────────────
+%  SAFARI  (10 rows)
+% ─────────────────────────────────────────────
+\multirow{10}{*}[-15pt]{\iconSafari}
+  & Jun 2003 & 1    & \iconCookie                                          & Launch of Safari~1.0: blocks 3P cookies from unvisited sites by default \\
+  & Apr 2005 & 2    & ---                                           & Private Browsing mode introduced; first browser to offer it \\
+  & Jul 2011     & 5.1  & ---                                      & DNT header support added \\
+  & Sep 2017 & 11   & \iconCookie                         & ITP~1.0: ML identifies tracking cookies; 24h 3P cookie window; purges 30d+ unused cookies \\
+  & Sep 2019 & 13   & \iconURL\,\iconJS\,\iconSC                        & ITP~2.3: 7-day cap on all script-writable storage to counter storage and link-decoration tracking \\
+  & Mar 2020 & 13.1 & \iconCookie                                          & Complete 3P cookie blocking enabled by default; first mainstream browser to block all 3P cookies \\
+  & Apr 2021 & 14.1 & \iconPrivacy                        & Private Click Measurement (PCM) enabled by default for privacy-preserving ad click attribution \\
+  & Sep 2023 & 17   & \iconCookie\,\iconURL\,\iconFingerprint\ & Advanced Tracking and Fingerprinting Protection (ATFP) in Private Browsing: Link Tracking Protection, API noise injection, blocks known/CNAME-cloaked trackers \\
+  & Mar 2025 & 18.4 & \iconCookie\,\iconSC                              & Support for the CHIPS-styled partitioned cookie attribute introduced \\
+  & Sep 2025 & 26   & \iconFingerprint                                     & Advanced Fingerprinting Protection extended to default (non-Private) browsing \\
+\midrule
+
+% ─────────────────────────────────────────────
+%  CHROME  (14 rows)
+% ─────────────────────────────────────────────
+\multirow{14}{*}[-15pt]{\iconChrome}
+  & Dec 2008 & 1              & ---                    & Launch of Chrome~1.0 stable: Incognito mode \\
+  & Nov 2012 & 23             & ---               & DNT header support added \\
+  & Aug 2019 & ---            & \iconPrivacy                  & Privacy Sandbox initiative announced \\
+  & May 2020 & 83             & \iconCookie\       & 3P cookies blocked by default in Incognito mode; new cookie controls \\
+  & Oct 2020 & 86             & \iconSC                    & HTTP cache partitioning (cache keyed by top-level site) \\
+  & Apr 2021 & 89             & \iconPrivacy & FLoC origin trial begins (interest cohorts as a 3P cookie alternative) \\
+  & Jan 2022 & 101--115 (OT)  
+  & \iconPrivacy                  & FLoC abandoned; Topics API proposed as replacement \\
+  & Apr 2022 & 100--116 (OT)  
+  & \iconPrivacy & FLEDGE in-browser ad-auction origin trial begins \\
+  & Jun 2022 & 101--110 (OT)  
+  & \iconFingerprint\,\iconPrivacy              & UA Reduction introduced: browser minor version reduced to 0.0.0 in the UA string \\
+  & May 2023 & 100--115 (OT)  
+  & \iconCookie\,\iconSC,\iconPrivacy & CHIPS (Cookies Having Independent Partitioned State) introduced \\
+  & Aug 2023 & 105--115 (OT)  
+  & \iconSC                    & Storage Partitioning (localStorage, IndexedDB, CacheStorage partitioned by top-level site) \\
+  & Apr 2025 & ---            & \iconCookie\,\iconPrivacy     & Google drops planned 3P cookie prompt; cookies remain; deprecation effort ended \\
+  & Sep 2025 & 138            & ---                  & Manifest~V3 enforcement; MV2 ad/tracker blockers phased out \\
+  & Oct 2025 & ---            & \iconPrivacy                  & Privacy Sandbox APIs (Topics, Protected Audience, Attribution Reporting, etc.) retired \\
+\midrule
+
+% ─────────────────────────────────────────────
+%  BRAVE  (11 rows)
+% ─────────────────────────────────────────────
+\multirow{11}{*}[-10pt]{\iconBrave}
+  & Jan 2016 & 0.7  & \iconCookie\,\iconURL\,\iconFingerprint\,\iconSC & Developer preview: blocks 3P ads/trackers and 3P storage by default; HTTPS Everywhere \\
+  & Nov 2019 & 1    & \iconCookie\,\iconURL\,\iconFingerprint\,\iconSC           & Launch of Brave~1.0: Shields blocks 3P ads/trackers, cross-site cookies, and fingerprinting by default \\
+  & Mar 2020 & 1.5  & \iconFingerprint                                        & Fingerprint randomization (farbling) introduced \\
+  & Jul 2020 & 1.12 & \iconURL                                                & URL query-parameter stripping, stricter referrer policy, Reporting API limits \\
+  & Jul 2020 & 1.17 & \iconCookie\,\iconURL\,\iconFingerprint                                & Defense against CNAME-cloaked trackers \\
+  & Feb 2021 & 1.21 & \iconCookie\,\iconSC                                 & Ephemeral 3P site storage (partitioned and cleared when site closes) \\
+  & Oct 2021 & 1.32 & \iconURL                                                & Debouncing introduced; skips known bounce-tracker redirects \\
+  & Dec 2021 & 1.35 & \iconCookie\,\iconSC                                 & Partitioning of network state \\
+  & Mar 2022 & 1.37 & \iconURL                                                & Unlinkable Bouncing: routes suspected-site visits through temporary, unlinkable storage \\
+  & May 2023 & 1.53 & \iconCookie\,\iconSC                                 & Forgetful Browsing: auto-clear first-party storage per-site \\
+  & Jan 2024 & 1.64 & \iconFingerprint                                        & Simplified fingerprinting protections \\
+
+\bottomrule
+\end{tabular}%
+}% end scalebox
+\end{table*}

@@ -1,0 +1,118 @@
+\documentclass[letterpaper,twocolumn,10pt]{article}
+\usepackage{usenix}
+
+\input{imports}
+
+
+
+%-------------------------------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------------------------------
+
+%don't want date printed
+\date{}
+
+% make title bold and 14 pt font (Latex default is non-bold, 16 pt)
+\title{\Large \bf SoK: Advances and Open Problems in Web Tracking}
+
+\ifanonymous
+\author{\em Anonymous Authors}
+\else
+\author{
+{\rm Yash Vekaria}\\
+University of California, Davis
+\and
+{\rm Yohan Beugin}\\
+University of Wisconsin–Madison
+\and
+{\rm Shaoor Munir}\\
+University of California, Davis
+\and
+{\rm Güneş Acar}\\
+Radboud University
+\and
+{\rm Nataliia Bielova}\\
+Inria Centre at Université Côte d’Azur
+\and
+{\rm Steven Englehardt}\\
+Independent Researcher
+\and
+{\rm Umar Iqbal}\\
+Washington University in St. Louis
+\and
+{\rm Alexandros Kapravelos}\\
+North Carolina State University
+\and
+{\rm Pierre Laperdrix}\\
+Centre National de la Recherche Scientifique (CNRS)
+\and
+{\rm Nick Nikiforakis}\\
+Stony Brook University
+\and
+{\rm Jason Polakis}\\
+University of Illinois Chicago
+\and
+{\rm Franziska Roesner}\\
+University of Washington
+\and
+{\rm Zubair Shafiq}\\
+University of California, Davis
+\and
+{\rm Sebastian Zimmeck}\\
+Wesleyan University
+} % end author
+\fi
+
+\maketitle
+
+%-------------------------------------------------------------------------------
+\begin{abstract}
+\input{00-abstract}
+\end{abstract}
+
+\input{01-introduction}
+\input{02-background}
+\input{03-methodology}
+\input{04-tracking-techniques}
+\input{05-tracking-mitigations}
+\input{06-regulations}
+\input{07-discussion}
+\input{08-conclusion}
+
+%-------------------------------------------------------------------------------
+% \section*{Acknowledgments}
+%-------------------------------------------------------------------------------
+
+\ifanonymous
+% Anonymized for review.
+\else
+\section*{Acknowledgments}
+\input{acknowledgment}
+\fi
+
+%-------------------------------------------------------------------------------
+% optional clearing of the page
+% \cleardoublepage
+\appendix
+\section*{Ethical Considerations}
+% \textbf{Papers in-scope for USENIX Security frequently, if not always, have both ethical considerations and implications that should be addressed prior to conducting research. We strongly encourage that you use this appendix, up to one page, to explain the ethical considerations of your work.}
+\input{appendix/ethics}
+
+% optional clearing of the page
+% \cleardoublepage
+
+\section*{Open Science}
+% \textbf{Within up to one page, this appendix must list all artifacts necessary to evaluate the contribution of the paper and make clear how the review committees can access each artifact. See the Call for Papers for details.}
+\input{appendix/open-science}
+
+% optional clearing of the page
+% \cleardoublepage
+
+\bibliographystyle{custom-style}%plainurl
+\bibliography{refs-avoid-editing,refs-new,refs-sok}
+
+% \appendix
+% \cleardoublepage
+\input{appendix/sok-methodology}
+
+\end{document}

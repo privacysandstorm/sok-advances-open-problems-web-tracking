@@ -1,0 +1,169 @@
+%%
+% \vspace{-1mm}
+\section{Mixed Tracking}
+\label{sec:mixed-tracking}
+
+
+\subsection{Mixed Tracking Techniques}
+\label{sec:mixed-techniques}
+
+%%
+Prior stateful and stateless approaches can also be combined to track users across contexts---bridging identity across login boundaries, devices, browsers, and native apps. 
+% We refer to these techniques as mixed tracking.
+
+% \vspace{-1mm}
+\subsubsection{JavaScript-based Tracking}
+\label{sec:mixed-techniques-js-tracking}
+
+%%
+% JavaScript is the unifying substrate of both stateful and stateless web tracking. 
+%
+JavaScript can be used to read and write browser cookies and storage for persistence by stateful techniques while also be used to probe browser APIs to construct a fingerprint by stateless techniques.
+%
+Although JS-based approaches don't constitute a different tracking technique, it is included here as a canonical example of mixed tracking in practice.
+
+
+%%
+% \vspace{-1mm}
+\subsubsection{Authentication-based Tracking}
+\label{sec:mixed-techniques-auth-tracking}
+
+%%
+Authentication creates a deterministic, cross-context identifier (an account or email address) far more durable than any cookie or fingerprint.
+%
+Logged-in users are served more third-party trackers and personalized content~\cite{kaizerCharacterizingWebsiteBehaviors2016}, and logged-in pages exhibit more fingerprinting than other pages on the same site, suggesting trackers use authentication to link a stateless fingerprint to stable account identifiers to extend identification into anonymous sessions~\cite{senolDoubleEdgedSword2024}.
+%
+Moreover, OAuth-based single sign-on itself routinely leaks identifying information to identity providers and relying parties~\cite{dimovaEverybodysLookingSSOmething2023}.
+%
+As email addresses survive cookie clears and device changes, first parties increasingly hash and share them with advertising partners to build cross-site identity graphs that restore the linkage that third-party cookie restrictions were designed to prevent.
+
+
+%%
+\subsubsection{Cross-device Tracking}
+\label{sec:mixed-techniques-cross-device}
+
+%%
+When deterministic identifiers are unavailable (e.g., logged out state), trackers fall back to probabilistic signals to link activity across devices---shared IP addresses, browsing patterns~\cite{caoCrossBrowserFingerprintingOS2017}, and behavioral features such as typing dynamics~\cite{yuanCrossdeviceTrackingIdentification2018}.
+%
+These signals are combined into proprietary \textit{cross-device graphs}, a practice found to be largely opaque to both users and regulators~\cite{zimmeckPrivacyAnalysisCrossdevice2017,brookmanCrossDeviceTrackingMeasurement2017}.
+%
+Because probabilistic identifiers are inherently noisy (e.g., ISPs dynamically rotate and share public IP addresses across households), trackers apply heuristics such as ignoring commercial, private, and proxied IP ranges or setting temporal thresholds to filter false matches.
+
+%%
+\begin{opbox}
+Given the lack of ground truth and diversity of proprietary linking algorithms forming cross-device identity graphs, how can cross-device tracking be reliably measured and systematically attributed to uncover specific signals used by different trackers?
+\end{opbox}
+
+
+
+%%
+\subsubsection{Other Cross-Context Tracking}
+\label{sec:mixed-techniques-cross-context}
+
+%%
+Trackers also bridge contexts within the same device.
+%
+Cross-browser fingerprinting uses OS- and hardware-level features stable across browsers to link users across browser boundaries~\cite{caoCrossBrowserFingerprintingOS2017}.
+%
+On mobile, Android Custom Tabs and WebViews share the browser's cookie jar with native apps, letting a tracker plants an identifier in one context that resurfaces in the other, surviving app reinstalls and device backups~\cite{wessels2025hytrack}.
+%
+% A complementary vector operates without any shared cookie jar, 
+Recently, some native apps and in-browser scripts have been found to silently link identities by communicating over \texttt{localhost}, a channel neither the browser's permission model nor the OS sandbox was designed to police~\cite{localmess-usenix-sec-26}.
+%
+These vectors share a common root cause---OS- and browser-level integration points enabling legitimate app-to-web handoffs that are invisible to in-browser tracking defenses.
+
+%%
+\begin{opbox}
+Cross-context tracking exploits integration boundaries between browsers, between apps and the web, and between user profiles that no single platform controls end to end. What architectural principles can unify isolation across these boundaries without fragmenting the seamless cross-context experiences users and developers expect?
+\end{opbox}
+
+
+
+
+
+\subsection{Defenses Against Mixed Tracking}
+\label{sec:mixed-defenses}
+
+
+\subsubsection{Industry-based Defenses}
+\label{sec:mixed-defenses-industry}
+
+
+\para{Against Cross-device and Cross-context Tracking.}
+%
+Deterministic cross-device tracking through shared login accounts is inherently difficult to defend against at the browser level, since the user has explicitly linked their devices by authenticating.
+%
+Browsers instead address the authentication pathway with purpose-built APIs: the Storage Access API, now shipped by all five major browsers, lets a third party request first-party-equivalent storage explicitly. Chrome and Edge additionally support Federated Credential Management (FedCM), which preserves single sign-on while preventing the identity provider from learning which relying party the user logs into. Brave blocks unrecognized identity providers by default.
+%
+On mobile, Apple's ATT framework has required explicit opt-in before an app can access the device's advertising identifier since iOS 14.5, and Google's Privacy Sandbox for Android proposed similar restrictions before being abandoned.
+%
+However, WebViews and in-app browsers share few of the standalone browser's tracking defenses---no extension support, no storage partitioning, no filter-list blocking---leaving users exposed in these embedded contexts.
+
+\begin{opbox}
+In cases such as WebViews and in-app browsers, can browser-level tracking protections be extended to embedded rendering engines, or does defense in these contexts require OS-level enforcement that applies regardless of which engine serves the page?
+\end{opbox}
+
+
+%%
+\subsubsection{Research-based Defenses}
+\label{sec:mixed-defenses-research}
+
+
+
+%%
+\para{Hardening the Identity Layer.}
+%
+Because cross-device and authentication-based tracking often runs through a shared identity provider, several proposals harden that layer directly.
+%
+SPRESSO inserts a forwarder between the relying party and the identity provider so the provider cannot learn which site a user logs into~\cite{fettSPRESSOSecurePrivacyRespecting2015}, encrypted access logging lets a service audit device access without retaining a persistent identifier~\cite{ortegaperezEncryptedAccessLogging2025}, and identity-system reform proposals re-architect national- and platform-level infrastructure to decouple shared identity from cross-service activity correlation~\cite{brandaoMendingTwoNationScale2015}.
+% so that the same identity across services does not let those services correlate a user's activity~\cite{brandaoMendingTwoNationScale2015}.
+
+
+%%
+\para{Cryptographic Advertising Proposals.}
+%
+A parallel line of work shows that measurements advertisers need such as conversion attribution and bid optimization, can be computed without either party learning individual user data.
+%
+Adnostic, Privad, and ObliviAd demonstrated this for on-device ad selection~\cite{toubianaAdnosticPrivacyPreserving2010,guhaPrivadPracticalPrivacy2011,backesObliviAdProvablySecure2012}, and Ibex later extended the guarantee to conversion attribution and bid optimization jointly using cryptographic aggregation~\cite{zhongIbexPrivacypreservingAd2022}.
+%
+Few of these designs have been adopted by browser vendors, largely due to computation and coordination costs, but they remain the clearest evidence that interest-based advertising does not inherently require disclosing anything about an individual user.
+
+
+%%
+\subsubsection{Community-based Defenses}
+\label{sec:mixed-defenses-community}
+
+
+\para{Universal Opt-out Signals.}
+%
+Several attempts were made at implementing opt out and consent signals for users to communicate their privacy preferences to services. However, the adoption and enforcement of such signals by both senders and recipients is an unresolved coordination problem~\cite{hilsPrivacyPreferenceSignals2021}.
+
+%%
+\noindent
+\textit{Platform for Privacy Preferences Project (P3P)}~\cite{reaglePlatformPrivacyPreferences1999,cranorPlatformPrivacyPreferences2002,byersSearchingPrivacyDesign2005,cranorPlatformPrivacyPreferences2006} enabled websites to communicate their privacy practices to users in a standardized and fine-grained format.
+%
+The P3P specification was published by the W3C in 2002, but was rapidly criticized for being too complex to implement or understand.
+%
+Its utility was limited by the low number of sites that were adopting it~\cite{cranorUseP3PUser2002} and those implementing it correctly and transparently~\cite{cranorAnalysisP3PDeployment2003, leonTokenAttemptMisrepresentation2010}.
+%
+Ultimately, the specification was officially obsoleted by the W3C in 2018.
+
+\noindent
+\textit{Do Not Track (DNT)}~\cite{fieldingTrackingPreferenceExpression2019}, proposed in 2009 as a binary opt out signal, was adopted by every major browser but was never given legal force.
+%
+Indeed, CalOPPA, which influenced the design of DNT, only requires online services to say whether or not they respect it~\cite{CaliforniaCodeBPC2003}.
+%
+The W3C working group for DNT closed in 2019 without industry consensus.
+
+\noindent\textit{Global Privacy Control (GPC)}~\cite{zimmeckGlobalPrivacyControl2024} can be viewed as a successor to DNT, but succeeds where DNT failed by being legally enforceable: California's 2022 settlement with Sephora~\cite{bontaAttorneyGeneralBonta2022} established that ignoring GPC violates the CCPA~\cite{attorneygeneralbecerraCCPARequiresBusinesses2021}, and Colorado has since imposed a similar requirement in 2024~\cite{coloradodepartmentoflawUniversalOptOutShortlist2024}.
+%
+Additional recognition of universal opt outs by states like Connecticut, Montana, Oregon, and Texas is driving broader adoption than DNT ever achieved, although it is still slow despite people finding the signal useful and usable~\cite{zimmeckUsabilityEnforceabilityGlobal2023,zimmeckGeneralizableActivePrivacy2024,azizJohnnyStillCant2024}.
+%
+DuckDuckGo, Brave, and Firefox send GPC by default; Chrome added support only in 2026~\cite{googleGlobalPrivacyControl2025}.
+%
+As GPC is not tied to any single storage or fingerprinting mechanism, it acts as a cross-cutting signal that covers every technique discussed in this SoK, given a site honors it.
+
+\begin{opbox}
+The applicability of GPC in the EU within ePD and GDPR context is an open discussion~\cite{berjonGPCGDPR2021,bielovaEffectDesignPatterns2024
+}. Will EU regulators incorporate GPC as an opt-out signal? 
+\end{opbox}

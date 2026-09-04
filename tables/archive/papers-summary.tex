@@ -1,0 +1,49 @@
+% ── Column widths (tracking-techniques table) ──
+\newlength{\colTTech}   \setlength{\colTTech}{3.9cm}
+\newlength{\colTNum}    \setlength{\colTNum}{1.7cm}
+
+\begin{table}[ht]
+\centering
+\caption{Systematized literature for tracking techniques.\todo{Yash to combine 3P and 1P cookie columns into "cookie-based tracking". What about server-side tracking?}}
+\label{tab:papers-summary}
+\footnotesize
+\renewcommand{\arraystretch}{1.0}
+\scalebox{0.8}{%
+\begin{tabular}{
+  m{\colTTech}
+  >{\centering\arraybackslash}m{\colTNum}
+  >{\centering\arraybackslash}m{\colTNum}
+  >{\centering\arraybackslash}m{\colTNum}
+}
+\toprule
+\centering\arraybackslash\textbf{Tracking Techniques} & \textbf{\#Technique Papers} & \textbf{\#Measurement Papers} & \textbf{\#Defense Papers} \\
+\toprule
+Third-party Cookie Tracking        & 2  & 44 & 14 \\
+Cookie Respawning                  & 2  & 2  & 0  \\
+Cookie Syncing                     & 1  & 7  & 1  \\
+First-party Cookie Tracking        & 3  & 5  & 3  \\
+Tracking Pixels/Tags               & 2  & 16 & 1  \\
+CNAME Tracking                     & 1  & 0  & 2  \\
+Server-side Tracking               & 1  & 1  & 0  \\
+Link Decorations                   & 2  & 5  & 1  \\
+Bounce Tracking                    & 1  & 0  & 1  \\
+Authentication-based Tracking      & 1  & 1  & 2  \\
+Javascript-based Tracking          & 34 & 53 & 22 \\
+Browser Fingerprinting             & 10 & 24 & 15 \\
+Browser Extension Fingerprinting   & 5  & 0  & 1  \\
+Device Fingerprinting              & 12 & 0  & 3  \\
+Passive Fingerprinting (IPUA)      & 2  & 0  & 2  \\
+Kernel-based Side-channels         & 3  & 0  & 0  \\
+Network-based Side-channels        & 5  & 1  & 2  \\
+Storage-based Side-channels        & 6  & 1  & 3  \\
+Timing-based Side-channels         & 3  & 1  & 2  \\                     
+Behavioral Tracking                & 2  & 13 & 5  \\
+Cross-context Tracking             & 2  & 2  & 1  \\
+FLoC / Topics API                  & 3  & 0  & 0  \\
+Protected Audience                 & 1  & 1  & 0  \\
+Ad-Blocking                        & 0  & 8  & 13 \\
+Ad-Blocking Circumvention          & 2  & 3  & 4  \\
+\bottomrule
+\end{tabular}%
+}% end scalebox
+\end{table}

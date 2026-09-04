@@ -72,7 +72,7 @@ This origin boundary is fundamental to web security: by default, content from on
 %
 This \textit{same-origin policy} (SOP)~\cite{mdnSameoriginPolicySecurity2024} prevents, for instance, a script from \texttt{news.com} from accessing sensitive data in a page from \texttt{sports.com}.
 %
-Modern browsers also group related origins into a broader notion of ``site'' based on the effective top-level domain plus one (eTLD+1)~\cite{TrackingPreventionWebKit2020} using public suffix lists\footnote{\eg{}, \url{https://publicsuffix.org/}}.
+Modern browsers also group related origins into a broader notion of ``site'' based on the effective top-level domain plus one (eTLD+1)~\cite{TrackingPreventionWebKit2020} using public suffix lists\footnote{e.g., \url{https://publicsuffix.org/}}.
 %
 For instance, the site of \texttt{foo.news.com} is \texttt{news.com}, which it shares with other subdomains like \texttt{bar.news.com}, whereas \texttt{sports.com} constitutes a different site.
 %
@@ -214,9 +214,9 @@ Functionally, they both store data in a user's browser, however, they differ in 
 %
 HTTP cookies are automatically read and included in the network request or set by the browser from the response using corresponding headers based on specified cookie's domain and path information.
 %
-While JavaScript cookies (\ie{}, cookies set using JavaScript or HTTP cookies that are not flagged to be HTTPOnly) are set and/or accessed by client-side scripts running in the browser. 
+While JavaScript cookies (i.e., cookies set using JavaScript or HTTP cookies that are not flagged to be HTTPOnly) are set and/or accessed by client-side scripts running in the browser. 
 %
-JavaScript cookies can be accessed (\eg{}, using \texttt{document.cookie} or CookieStore API) by any script running in the same execution context regardless of its source. 
+JavaScript cookies can be accessed (e.g., using \texttt{document.cookie} or CookieStore API) by any script running in the same execution context regardless of its source. 
 %
 This means that third-party scripts included in the main execution context can read/write first-party cookies. 
 %

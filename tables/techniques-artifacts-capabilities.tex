@@ -1,0 +1,32 @@
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{1pt}
+\renewcommand{\arraystretch}{1}
+\caption{Tracker capabilities most commonly exercised over each artifact (rows) for each tracking technique (columns). \protect\symInclusion~Inclusion, \protect\symExecution~Execution, \protect\symStorage~Storage, \protect\symSharing~Sharing, \protect\symObservation~Observation.}
+\label{tab:artifact-capability-matrix}
+\begin{tabular}{%
+|>{\raggedright\arraybackslash}m{3.0cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|>{\centering\arraybackslash}m{0.63cm}|%
+}
+\toprule
+\multicolumn{1}{|>{\centering\arraybackslash}b{3.0cm}|}{\shortstack[c]{\textbf{Tracked}\\\textbf{Artifacts}}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Third-party Cookie Tracking}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Cookie Respawning}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Cookie Syncing}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{First-party Cookie Tracking}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Tracking Pixels/Tags}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{CNAME Tracking}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Link Decorations}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Bounce Tracking}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Authentication-based Tracking}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Cross-context Tracking}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Javascript-based Tracking}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Browser Fingerprinting}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Extension Fingerprinting}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Device Fingerprinting}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Passive Fingerprinting}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Kernel-based Side-channels}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Network-based Side-channels}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Timing-based Side-channels}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Storage-based Side-channels}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.63cm}|}{\rot{Behavioral Tracking}} \\
+\midrule
+\rh Browser Storage and Cache & \cellsym{\symStorage} & \cellsym{\symStorage} & \cellsym{\symStorage} & \cellsym{\symStorage} & \cellsym{\symStorage} & \cellsym{\symStorage} & \cellsym{\symStorage} & \cellsym{\symStorage} & \cellsym{\symStorage} & \cellsym{\symStorage} & \cellsym{\symStorage} & \ec & \ec & \ec & \ec & \ec & \ec & \ec & \cellsym{\symStorage} & \ec \\
+\hline
+\rh JS-Accessible Browser APIs & \cellsym{\symExecution} & \cellsym{\symExecution} & \cellsym{\symExecution} & \cellsym{\symExecution} & \cellsym{\symExecution} & \ec & \ec & \cellsym{\symExecution} & \ec & \cellsym{\symExecution} & \cellsym{\symExecution} & \cellsym{\symExecution} & \cellsym{\symExecution} & \cellsym{\symExecution} & \ec & \cellsym{\symExecution} & \ec & \cellsym{\symExecution} & \cellsym{\symExecution} & \cellsym{\symExecution} \\
+\hline
+\rh Webpage Artifacts & \cellsym{\symInclusion} & \cellsym{\symInclusion} & \cellsym{\symInclusion} & \cellsym{\symInclusion} & \cellsym{\symInclusion\,\symExecution} & \cellsym{\symInclusion} & \cellsym{\symInclusion} & \cellsym{\symInclusion} & \cellsym{\symInclusion} & \cellsym{\symInclusion} & \cellsym{\symInclusion\,\symExecution} & \cellsym{\symInclusion\,\symExecution} & \cellsym{\symInclusion\,\symExecution} & \cellsym{\symInclusion\,\symExecution} & \cellsym{\symInclusion} & \cellsym{\symInclusion} & \ec & \cellsym{\symInclusion} & \cellsym{\symInclusion} & \cellsym{\symInclusion\,\symExecution} \\
+\hline
+\rh Hardware Artifacts & \ec & \ec & \ec & \ec & \ec & \ec & \ec & \ec & \ec & \cellsym{\symExecution\,\symObservation} & \ec & \ec & \ec & \cellsym{\symExecution\,\symObservation} & \ec & \cellsym{\symExecution\,\symObservation} & \ec & \cellsym{\symExecution\,\symObservation} & \ec & \ec \\
+\hline
+\rh Network Protocol Artifacts & \ec & \ec & \ec & \ec & \ec & \cellsym{\symSharing} & \ec & \ec & \ec & \ec & \ec & \ec & \ec & \cellsym{\symObservation} & \cellsym{\symObservation} & \cellsym{\symObservation} & \cellsym{\symObservation} & \ec & \ec & \ec \\
+\hline
+\rh HTTP Traffic Artifacts & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symObservation} & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} \\
+\hline
+\rh Navigational Artifacts & \ec & \ec & \cellsym{\symSharing} & \ec & \cellsym{\symSharing} & \ec & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \ec & \ec & \ec & \ec & \ec & \ec & \ec & \ec & \ec & \ec & \ec \\
+\hline
+\rh Identifiers & \cellsym{\symStorage\,\symSharing} & \cellsym{\symStorage\,\symSharing} & \cellsym{\symStorage\,\symSharing} & \cellsym{\symStorage\,\symSharing} & \cellsym{\symStorage\,\symSharing} & \cellsym{\symStorage\,\symSharing} & \cellsym{\symSharing} & \cellsym{\symStorage\,\symSharing} & \cellsym{\symStorage\,\symSharing} & \cellsym{\symStorage\,\symSharing} & \cellsym{\symStorage\,\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \cellsym{\symSharing} & \ec & \ec & \ec & \ec & \ec & \ec \\
+\bottomrule
+\end{tabular}
+% \vspace{-2mm}
+\end{table*}

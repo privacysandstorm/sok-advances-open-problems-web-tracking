@@ -1,0 +1,262 @@
+% =========================================================
+% Systematization Table: tracking mechanisms x defenses
+%   (research-based + industrial/browser defenses)
+% Deployment legend (research column):
+%   \ding{108} in-browser / engine-level (Chromium/Firefox/WebKit modification, shippable as native)
+%   \ding{117} browser extension / add-on
+%   \ding{109} offline / list-augmentation or auditing tool (aids filter lists, not user-deployed)
+%   \ding{115} server-, network-, protocol-, or OS-level (requires server/ISP/network/mobile-OS adoption)
+% =========================================================
+
+\begin{table*}[tp]
+\centering
+\scriptsize
+\caption{\textbf{Systematization of research-based and industrial defenses for each tracking technique studied}. Research-defense deployment: \dNative\ in-browser/engine-level; \dExt\ browser extension; \dTool\ offline / list-augmentation / auditing tool; \dServer\ server-, network-, protocol-, or OS-level. Absence of dedicated browser defense ( \dNo\ ). Industrial columns report each browser's \emph{current} (SOTA) deployed defense, whereas the research column lists the major research-based proposals across the years.}
+% \autoref{fig:evolution} gives the chronological view of all defenses.
+\label{tab:defenses-research}
+\setlength{\tabcolsep}{2.5pt}
+\renewcommand{\arraystretch}{1.05}
+
+
+\begin{tabular}{%
+>{\raggedright\arraybackslash}p{1.55cm}     % mechanism
+>{\raggedright\arraybackslash}p{1.4cm}      % targeted artifacts
+>{\raggedright\arraybackslash}p{2.7cm}      % research-based defenses
+*{5}{>{\raggedright\arraybackslash}p{2.15cm}}      % 5 browsers
+}
+
+\toprule
+\multirow{2}{*}{\makecell[tl]{\textbf{Tracking}\\\textbf{Mechanism}}} &
+\multirow{2}{*}{\makecell[tl]{\textbf{Targeted}\\\textbf{Artifacts}}} &
+\multirow{2}{*}{\makecell[tl]{\textbf{Research-based Defenses}}} &
+\multicolumn{5}{c}{\textbf{Industrial Defenses}} \\
+\cmidrule(lr){4-8}
+ & & & \textbf{Edge} & \textbf{Chrome} & \textbf{Firefox} & \textbf{Brave} & \textbf{Safari} \\
+\midrule
+
+\rowcolor{lightgray}\multicolumn{8}{l}{\rule{0pt}{1.2em}\textbf{STATEFUL TRACKING}}\\
+\addlinespace[1.5pt]
+
+% --- Third-party cookies ---
+3P cookies &
+HTTP; Storage/cache &
+TrackingFree\cite{ikramSeamlessTrackingFreeWeb2017}\,\dTool, TrackMeOrNot\cite{mengTrackMeOrNotEnablingFlexible2016}\,\dExt, WebGraph\cite{sibyWebGraphCapturingAdvertising2022}\,\dNative\,\dTool &
+Tracking Prevention (Disconnect): limits 3P trackers and restricts cross-site &
+SameSite=Lax; CHIPS partitioning; restricts 3P cookies per-site &
+ETP + Total Cookie Protection: Blocks known trackers; 3P cookie partitioning &
+Blocks 3P cookies; enforces ephemeral 3P storage &
+ITP: default 3P cookie block \\
+
+\midrule
+
+% --- Cookie syncing ---
+Cookie syncing &
+HTTP; Navigational &
+WebGraph\cite{sibyWebGraphCapturingAdvertising2022}\,\dNative\,\dTool, Khaleesi\cite{iqbalKhaleesiBreakerAdvertising2022}\,\dExt &
+Tracking Prevention limits sync networks &
+Partitioning prevents cross-site sync matching &
+ETP blocks cookie sync endpoints &
+3P block prevents syncs &
+ITP blocks 3P syncs \\
+
+\midrule
+
+% --- First-party cookies ---
+1P cookies &
+JS APIs; Storage/cache &
+CookieGraph\cite{munirCookieGraphUnderstandingDetecting2023}\,\dNative\,\dTool, CookieGuard\cite{bahramiCOOKIEGUARDCharacterizingIsolating2024}\,\dNative\,\dExt, Semantics-aware\cite{chenSemanticsAwareCookiePurpose2025}\,\dTool &
+\dNo\ (Chromium-defaults) &
+\dNo\ &
+\dNo\ &
+Caps script-set lifetime (7\,d); Forgetful Browsing &
+ITP: uses 7-day storage cap \\
+
+\midrule
+
+% --- Supercookies / respawning ---
+Cookie respawning (supercookies) &
+Network; Storage/cache &
+TrackingFree\cite{ikramSeamlessTrackingFreeWeb2017}\,\dTool &
+Storage and cache partitioned by site &
+Storage and HTTP-cache partitioned by site &
+Network partitioning blocks cross-site; Cookie Clearing &
+Partitions all network states; ephemeral storage &
+Partitioned cache; ITP time-based cap \\
+
+\midrule
+
+% --- CNAME cloaking ---
+CNAME cloaking &
+Network; Storage &
+CookieGraph\cite{munirCookieGraphUnderstandingDetecting2023}\,\dNative\,\dTool, CookieGuard\cite{bahramiCOOKIEGUARDCharacterizingIsolating2024}\,\dNative\,\dExt &
+\dNo &
+\dNo &
+\dNo \newline (uBO uncloaks) &
+Detects and uncloaks CNAME &
+ITP CNAME detection \\
+
+\midrule
+
+% --- Tracking pixels / tags ---
+Tracking pixels/tags &
+HTTP; JS APIs; Webpage &
+TGNN\cite{xiongTGNNEnhancingPixel2026}\,\dTool, AdFlush~\cite{leeAdFlushRealWorldDeployable2024}\,\dExt, Khaleesi~\cite{iqbalKhaleesiBreakerAdvertising2022}\,\dExt &
+Tracking Prevention limits tracking pixels and tags &
+\dNo &
+ETP blocks tracking pixels and tags &
+Shields block pixels and tags &
+ITP blocks tracking pixels and tags \\
+
+\midrule
+
+% --- Link decoration ---
+Link decoration &
+JS APIs; Navigational &
+PURL~\cite{munirPURLSafeEffective2024}\,\dNative\,\dTool &
+\dNo &
+\dNo &
+URL query-params stripping (ETP strict) &
+URL query-params stripping &
+Link Tracking Protection \\
+
+\midrule
+
+% --- Bounce / navigational tracking ---
+Bounce / Navigational &
+Navigational; Storage &
+Khaleesi~\cite{iqbalKhaleesiBreakerAdvertising2022}\,\dExt &
+Bounce Tracking Mitigations &
+Mitigates bounce tracking chains &
+Blocks bounce tracking &
+Debouncing; Unlinkable Bouncing &
+ITP bounce detection \\
+
+\midrule
+
+% --- Tracking scripts (JS-based) ---
+JS-based tracking \& ad blocking &
+JS APIs; HTTP &
+AdGraph~\cite{iqbalAdGraphGraphBasedApproach2020}\,\dNative\,\dTool, WebGraph~\cite{sibyWebGraphCapturingAdvertising2022}\,\dNative\,\dTool, AdFlush~\cite{leeAdFlushRealWorldDeployable2024}\,\dExt, TrackerSift~\cite{amjadTrackerSiftUntanglingMixed2021}\,\dTool, AutoFR~\cite{leAutoFRAutomatedFilter2023}\,\dExt\,\dTool, SINBAD~\cite{hajjchehadeSINBADSaliencyinformedDetection2024}\,\dTool, Duumviri~\cite{shuangDuumviriDetectingTrackers2025}\,\dExt\,\dTool &
+Blocks known tracking scripts &
+\dNo\ \newline (MV3 extensions) &
+ETP detects scripts; SmartBlock unblocks sites &
+PageGraph ML and SugarCoat detects JS-based tracking &
+ITP blocks JS trackers; WebKit anti-tracking \\
+
+\midrule
+
+% --- Server-side tracking ---
+Server-side tracking &
+HTTP; Network &
+Only measurement research exists &
+\dNo &
+\dNo &
+\dNo &
+De-AMP removes wrappers; shims replace trackers &
+\dNo \\
+
+\addlinespace[1.5pt]
+\rowcolor{lightgray}\multicolumn{8}{l}{\rule{0pt}{1.2em}\textbf{STATELESS TRACKING}}\\
+\addlinespace[1.5pt]
+
+% --- Browser fingerprinting ---
+Browser fingerprinting &
+JS APIs; Webpage &
+FP-Inspector~\cite{iqbalFingerprintingFingerprintersLearning2021}\,\dNative\,\dTool, PriVaricator~\cite{nikiforakisPriVaricatorDeceivingFingerprinters2015}\,\dNative, FP-Sandbox~\cite{torokOnlyPayWhat2023}\,\dNative, ML-CB~\cite{reitingerMLCBMachineLearning2021}\,\dExt, FP-tracer~\cite{boussahaFPtracerFinegrainedBrowser2024}\,\dNative, Byte-by-Byte~\cite{bahramiByteByteUnmasking2025}\,\dTool &
+Blocks known FP scripts &
+\dNo\ \newline (Privacy Budget dropped) &
+RFP + FP blocking + randomization &
+Farbling &
+Advanced FP Protection (API noise injection) \\
+
+\midrule
+
+% --- Device / hardware fingerprinting ---
+Device fingerprinting &
+Hardware; JS APIs &
+UNIGL~\cite{wuRenderedPrivateMaking2019}\,\dNative &
+\dNo &
+\dNo &
+RFP reduces FP precision &
+Farbling + precision reduction &
+AFP + MAC randomization \\
+
+\midrule
+
+% --- Extension fingerprinting ---
+Extension fingerprinting &
+Extensions; JS APIs; Webpage &
+Simulacrum~\cite{karamiUnleashSimulacrumShifting2022}\,\dNative &
+\dNo &
+\dNo &
+\dNo &
+\dNo &
+\dNo \\
+
+\midrule
+
+% --- Behavioral tracking ---
+Behavioral tracking &
+HTTP; Webpage &
+HARPO~\cite{zhangHARPOLearningSubvert2022}\,\dExt, Bloom-Cookies~\cite{morBloomCookiesWeb2015}\,\dExt\,\dServer, UPS~\cite{zhuAnonymizingUserProfiles2010}\,\dExt\,\dServer &
+\dNo &
+\dNo &
+ETP blocks behavioral trackers &
+Shields block tracking scripts &
+\dNo \\
+
+
+\midrule
+
+% --- Passive fingerprinting (IP/UA) ---
+Passive (IPUA) fingerprinting &
+Network; HTTP &
+Nymble~\cite{johnsonNymbleAnonymousIPAddress2007}\,\dNative\,\dServer, IP-Addr-Mixing~\cite{raghavanEnlistingISPsImprove2009}\,\dServer &
+UA reduction &
+UA reduction; IP masking (limited) &
+UA freezing + reduction &
+UA spoofing; font randomization &
+UA reduction; IP hiding (PrivateRelay) \\
+
+\midrule
+
+% --- Side-channels ---
+Side-channels &
+JS APIs; storage; Network &
+XSinator~\cite{knittelXSinatorcomFormalModel2021}\,\dTool, Net-track~\cite{leeNettrackGenericWeb2023}\,\dServer, browser-state~\cite{jacksonProtectingBrowserState2006}\,\dNative &
+Site Isolation + state partitioning &
+Site Isolation + cache/storage/history partitioning &
+Network partitioning prevents timing attacks &
+Pool-party mitigates timing/resource contention &
+Partitioned caches and storage \\
+
+\addlinespace[1.5pt]
+\rowcolor{lightgray}\multicolumn{8}{l}{\rule{0pt}{1.2em}\textbf{\textsc{CROSS-CONTEXT TRACKING}}}\\
+\addlinespace[1.5 pt]
+
+% --- Cross-device ---
+Cross-device tracking &
+Hardware; Network &
+CSAL~\cite{ortegaperezEncryptedAccessLogging2025}\,\dNative\,\dServer, identity-reform~\cite{brandaoMendingTwoNationScale2015}\,\dServer &
+\dNo &
+\dNo &
+Containers isolate state; 1P isolation &
+\dNo &
+\dNo \\
+
+\midrule
+
+% --- Authentication-based ---
+Auth.-based tracking &
+HTTP; Navigational &
+SPRESSO~\cite{fettSPRESSOSecurePrivacyRespecting2015}\,\dNative\,\dServer, CSAL~\cite{ortegaperezEncryptedAccessLogging2025}\,\dNative\,\dServer &
+SAA for 3P auth; FedCM &
+SAA for 3P auth; FedCM &
+Storage Access API (SAA) for 3P auth &
+Blocks tracking via sign-in services &
+SAA for legitimate 3P auth (ITP-gated) \\
+
+\bottomrule
+\end{tabular}
+
+\end{table*}

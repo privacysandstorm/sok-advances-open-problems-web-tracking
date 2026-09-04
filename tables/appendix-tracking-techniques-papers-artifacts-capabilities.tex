@@ -1,0 +1,75 @@
+\begin{table}[!t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{0.6pt}
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular}{%
+>{\raggedright\arraybackslash}m{2.6cm}|%
+*{8}{>{\centering\arraybackslash}m{0.7cm}}%
+}
+
+\toprule
+\multicolumn{1}{>{\centering\arraybackslash}b{2.6cm}|}{\shortstack[c]{\textbf{Tracking Technique}\\\textbf{Literature}}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.7cm}}{\rot{Browser Storage and Cache}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.7cm}}{\rot{JavaScript-Accessible Browser APIs}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.7cm}}{\rot{Webpage Artifacts}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.7cm}}{\rot{Hardware Artifacts}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.7cm}}{\rot{Network Protocol Artifacts}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.7cm}}{\rot{HTTP Traffic Artifacts}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.7cm}}{\rot{Navigational Artifacts}} & \multicolumn{1}{>{\centering\arraybackslash}b{0.7cm}}{\rot{Identifiers}} \\
+\midrule
+Felten et al.~\cite{feltenTimingAttacksWeb2000} & {\symStorage} & {\symExecution} & {\symInclusion} &  &  &  &  & \\
+Kohno et al.~\cite{kohnoRemotePhysicalDevice2005} &  &  &  & {\symObservation} & {\symObservation} &  &  & \\
+Chen et al.~\cite{chenSideChannelLeaksWeb2010} &  &  &  &  & {\symObservation} &  &  & \\
+Yen et al.~\cite{yenHostFingerprintingTracking2012} & {\symStorage} & {\symExecution} & {\symInclusion} &  & {\symObservation} & {\symInclusion\,\symSharing} &  & {\symObservation} \\
+Jana et al.~\cite{janaMementoLearningSecrets2012} &  &  &  & {\symObservation} & &  &  & \\
+Nikiforakis et al.~\cite{nikiforakisCookielessMonsterExploring2013} &  & {\symExecution} & {\symInclusion\,\symExecution} &  &  & {\symInclusion\,\symSharing} &  & \\
+Zhou et al.~\cite{zhouAcousticFingerprintingRevisited2014} &  &  &  & {\symExecution} &  &  &  & \\
+Acar et al.~\cite{acarWebNeverForgets2014} & {\symStorage} & {\symExecution} & {\symInclusion\,\symExecution} &  &  & {\symInclusion\,\symSharing} & {\symSharing} & {\symStorage\,\symSharing}\\
+Oren et al.~\cite{orenSpySandboxPractical2015} &  & {\symExecution} &  & {\symExecution} &  &  &  & \\
+Das et al.~\cite{dasWebsSixthSense2018, dasTrackingMobileWeb2016, dasEveryMoveYou2018} &  & {\symExecution} &  & {\symExecution} &  &  &  & \\
+Laperdrix et al.~\cite{laperdrixBeautyBeastDiverting2016} &  & {\symExecution} & {\symInclusion\,\symExecution} &  &  & {\symInclusion\,\symSharing} &  & \\
+Jain et al.~\cite{jainMiningLatentClient2016} &  &  &  &  & {\symObservation} &  &  & {\symObservation}\\
+Gonzalez et al.~\cite{gonzalezUserProfilingTime2016} &  &  &  &  & {\symObservation} & {\symObservation} &  & \\
+Kaizer et al.~\cite{kaizerCharacterizingWebsiteBehaviors2016} & {\symStorage} &  & {\symInclusion\,\symExecution} &  &  & {\symInclusion\,\symSharing} &  & {\symStorage}\\
+Cao et al.~\cite{caoCrossBrowserFingerprintingOS2017} &  & {\symExecution} & {\symInclusion\,\symExecution} & {\symExecution} &  &  &  & \\
+Starov et al.~\cite{starovXHOUNDQuantifyingFingerprintability2017} &  &  & {\symInclusion\,\symExecution} &  &  &  &  & \\
+Vastel et al.~\cite{vastelFPSTALKERTrackingBrowser2018} &  & {\symExecution} & {\symInclusion\,\symExecution} &  &  & {\symInclusion\,\symSharing} &  & \\
+Foppe et al.~\cite{foppeExploitingTLSClient2018} &  &  &  &  & {\symObservation} &  &  & {\symObservation}\\
+Masood et al.~\cite{masoodTouchYoureTrappcked2018} &  & {\symExecution} & {\symInclusion\,\symExecution} &  &  &  &  & \\
+Olejnik et al.~\cite{olejnikLeakingBatteryPrivacy2016} &  & {\symExecution} &  &  &  &  &  & \\
+Bashir et al.~\cite{bashirHowTrackingCompanies2018} & {\symStorage} & {\symExecution} & {\symInclusion} &  &  & {\symInclusion\,\symSharing} &  & \\
+Klein et al.~\cite{klein2019dns} &  & {\symExecution} & {\symInclusion} &  & {\symObservation} &  &  & \\
+Hu et al.~\cite{huCharacterizingPixelTracking2019} & {\symStorage} &  & {\symInclusion} &  &  & {\symInclusion\,\symSharing} & {\symSharing} & {\symStorage\,\symSharing}\\
+Sy et al.~\cite{syQUICLookWeb2019} &  &  &  &  & {\symObservation} &  &  & {\symObservation}\\
+Martin et al.~\cite{martinHandoffAllYour2019} &  & &  & {\symObservation} &  &  &  & {\symObservation}\\
+Karami et al.~\cite{karamiCarnusExploringPrivacy2020} &  &  & {\symInclusion\,\symExecution} &  &  & {\symInclusion\,\symSharing} &  & \\
+Koop et al.~\cite{koopInDepthEvaluationRedirect2020} & {\symStorage} &  & {\symInclusion} &  &  &  & {\symSharing} & \\
+Li et al.~\cite{liShimShimmenyEvaluating2020} &  &  & {\symInclusion} &  &  & {\symInclusion\,\symSharing} & {\symSharing} & \\
+Mishra et al.~\cite{mishraDontCountMe2020} & {\symStorage} &  &  &  & {\symObservation} & {\symInclusion\,\symSharing} &  & \\
+Solomos et al.~\cite{solomosTalesFaviconsCaches2021} & {\symStorage} &  &  &  &  &  &  & \\
+Klein et al.~\cite{kleinCrossLayerAttacks2021} &  &  &  & {\symObservation} & {\symObservation} &  &  & \\
+Mishra et al.~\cite{mishraDejaVuAbusing2021} & {\symStorage} &  & {\symInclusion} &  &  & {\symInclusion\,\symSharing} &  & \\
+Dimova et al.~\cite{dimovaCNAMEGameLargescale2021} & {\symStorage} &  & {\symInclusion} &  & {\symSharing} & {\symInclusion\,\symSharing} &  & \\
+Laperdrix et al.~\cite{laperdrixFingerprintingStyleDetecting2021} &  & {\symExecution} & {\symInclusion\,\symExecution} &  &  &  &  & \\
+Chen et al.~\cite{chenCookieSwapParty2021} & {\symStorage} &  & {\symInclusion\,\symExecution} &  &  & {\symInclusion\,\symSharing} &  & \\
+Rye et al.~\cite{ryeFollowScentDefeating2021} &  &  &  &  & {\symObservation} &  &  & \\
+Laor et al.~\cite{laorDRAWNAPARTDevice2022} &  & {\symExecution} & {\symInclusion\,\symExecution} & {\symExecution} &  &  &  & \\
+Khodayari et al.~\cite{khodayariStateSameSiteStudying2022} & {\symStorage} &  &  &  &  & {\symSharing} &  & \\
+Jin et al.~\cite{jinTimingBasedBrowsingPrivacy2022} &  & {\symExecution} &  & {\symExecution} &  &  &  & \\
+Randall et al.~\cite{randallMeasuringUIDSmuggling2022} & {\symStorage} & {\symExecution} & {\symInclusion\,\symExecution} &  &  & {\symInclusion\,\symSharing} & {\symSharing} & {\symStorage\,\symSharing}\\
+Berke et al.~\cite{berkePrivacyLimitationsInterestbased2022} &  & {\symExecution} &  &  &  &  &  & \\
+Solomos et al.~\cite{solomosEscapingConfinesTime2022} &  & {\symExecution} & {\symInclusion\,\symExecution} &  &  &  &  & \\
+Nomoto et al.~\cite{nomoto2023browser} &  & {\symExecution} &  &  &  &  &  & \\
+Ali et al.~\cite{aliNavigatingMurkyWaters2023} & {\symStorage} &  &  &  &  &  &  & \\
+Lin et al.~\cite{linFashionFauxPas2023} &  & {\symExecution} & {\symInclusion\,\symExecution} &  &  &  &  & \\
+Jha et al.~\cite{jhaRobustnessTopicsAPI2023} &  & {\symExecution} &  &  &  &  &  & \\
+Kol et al.~\cite{kol2023device} &  &  &  & {\symObservation} & {\symObservation} &  &  & \\
+Snyder et al.~\cite{snyderPoolPartyExploitingBrowser2023} & {\symStorage} & {\symExecution} &  &  &  &  &  & \\
+Su et al.~\cite{suAutomaticDiscoveryEmerging2023} &  & {\symExecution} & {\symInclusion\,\symExecution} &  &  &  &  & \\
+Beugin et al.~\cite{beuginInterestdisclosingMechanismsAdvertising2024} &  & {\symExecution} &  &  &  &  &  & \\
+Fouad et al.~\cite{fouadDevilDetailsDetection2024} & {\symStorage} &  & {\symInclusion} &  & {\symSharing} & {\symInclusion\,\symSharing} &  & \\
+Chehade et al.~\cite{chehade2025double} &  &  & {\symInclusion\,\symExecution} &  &  & {\symInclusion\,\symSharing} &  & \\
+Wessels et al.~\cite{wessels2025hytrack} & {\symStorage} &  &  &  &  &  &  & {\symStorage}\\
+Huyghe et al.~\cite{huygheFPRainbowFingerprintBasedBrowser2025} &  & {\symExecution} & {\symInclusion\,\symExecution} &  &  &  &  & \\
+Ukani et al.~\cite{ukaniLocalFramesExploiting2025} & {\symStorage} & {\symExecution} & {\symInclusion\,\symExecution} &  &  &  &  & \\
+Bekos et al.~\cite{bekosPIIxelLeaksPassive2025} & {\symStorage} & {\symExecution} & {\symInclusion\,\symExecution} &  &  & {\symInclusion\,\symSharing} & {\symSharing} & \\
+
+\bottomrule
+\end{tabular}
+\caption{Tracker capabilities exercised over artifacts as studied in each tracking techniques related paper.}
+\label{tab:paper-artifacts}
+\end{table}

@@ -3,12 +3,13 @@
 
 \subsection{Search Criteria for Literature Review}
 \label{sec:keywords}
-% Here, we report on the inclusion and exclusion keywords used to identify relevant publications in our literature review (see~\autoref{sec:methodology}).
 
+Web tracking comprises a vast body of literature published over the last few decades---spanning across technical mechanisms, defenses, and regulatory compliance. Through our literature search (see~\autoref{sec:methodology}), we obtained a list of 19438 papers along with their metadata (title, authors, year, and DOI), missing abstracts were completed by performing a DOI-based query on Semantic Scholar\footnote{\url{https://www.semanticscholar.org/}} and OpenAlex\footnote{\url{https://openalex.org/}}.
+%
+To further filter that list, we first use exclusion keywords to remove potential papers that could be incorrectly retained under web tracking.
 
-\begin{framedBox}
-\paragraph{Exclusion Keywords.}
-
+\begin{exclusionkeywordbox}
+\textbf{Exclusion Keywords:}
 \noindent
 NOT [\textbf{Title} OR \textbf{abstract}: crypto* OR
 blockchain* OR
@@ -49,11 +50,15 @@ certificate authorit* OR
 public key* OR
 vehicle* OR
 robot*]
-\end{framedBox}
+\end{exclusionkeywordbox}
 
-\begin{framedBox}
-\paragraph{Inclusion Keywords for Techniques and Mitigations.}
+Second, two sets of inclusion keywords are used to narrow down potential candidates for manual review.
+%
+The first set is used to filter publications that are related to web tracking techniques and defenses based on their title and abstract text.
 
+
+\begin{keywordbox}
+\textbf{Inclusion Keywords for Techniques and Defenses:}
 \noindent
 [\textbf{Title} OR \textbf{abstract}: tracking OR
 web track* OR
@@ -70,11 +75,15 @@ track* defen* OR
 track* block* OR
 ad*block* OR
 ad* block*]
-\end{framedBox}
+\end{keywordbox}
 
-\begin{framedBox}
-\paragraph{Inclusion Keywords for Regulations and Compliance.}
 
+The second set of keywords is used to identify papers discussing privacy regulations and compliance in the context of web tracking in their full text.
+%
+We rely on full text search to identify papers that may not primarily be regulation-focused (hence lower probability of a match in title or abstract), but may still discuss regulatory implications of the studied tracking technique or defense in the paper.
+
+\begin{keywordbox}
+\textbf{Inclusion Keywords for Regulations and Compliance:}
 \noindent
 [\textbf{Full paper}: regulat* compliance OR
 regulation* OR
@@ -94,71 +103,65 @@ track* consent OR
 consent management* OR
 opt*out OR
 opt* out]
-\end{framedBox}
+\end{keywordbox}
 
 %%
 \subsection{Thematic Literature Analysis}
 \label{sec:thematic-analysis}
 %%
 
-\autoref{tab:tracking-topics} shows the distribution of papers across 40 topics generated during the thematic analysis of the web tracking literature published at one of the seven following security and privacy venues since their creation--IEEE S\&P, USENIX Security, ACM CCS, NDSS, ACM IMC, PETS, and WWW. This thematic organization is available in our artifact (see~\refappendix{sec:open-science}).
 
-\begin{table}
-\centering
-\small
-\renewcommand{\arraystretch}{1.15}
+We consider a paper to be a \textit{tracking technique} paper if it provides an in-depth or foundational understanding of a specific tracking mechanism (e.g., first or reference paper on a technique).
+%
+Similarly, a \textit{tracking defense} paper comprises research that builds a system or an approach to block, prevent, or defend against a tracking technique, while \textit{regulatory compliance} research discusses different aspects of public policies (i.e., privacy regulation, standard, or guideline), their enforcement, and perhaps limitations.
+%
+Other papers focusing on measuring the prevalence or impact of different tracking techniques are classified as \textit{measurement} research and used throughout this SoK to support systematization of advances in web tracking.
+%
+This thematic organization is available as part of our artifact (see our~\refopenscience{sec:open-science} statement).
 
-\begin{tabular}{l r}
-\hline
-\noalign{\vskip 1.5pt}
-\textbf{Topic} & \textbf{\# Papers} \\
-\noalign{\vskip 1.5pt}
-\hline
-\noalign{\vskip 1.5pt}
-Tracking Measurements & 50 \\
-Tracking in Browsers & 23 \\
-Browser Fingerprinting Measurement/Detection & 20 \\
-Regulation Compliance & 20 \\
-Online Profiling & 19 \\
-Tracking in Mobile & 19 \\
-Third-party Tracking & 18 \\
-Cookie Consent/Banners & 17 \\
-Cookie Measurements & 17 \\
-User Studies on Tracking & 15 \\
-Ad Blocking Measurements & 13 \\
-Javascript-based Tracking & 10 \\
-Side Channel Tracking & 10 \\
-ATS Defense Solutions & 9 \\
-Browser Extension Fingerprinting & 8 \\
-Tracker-Advertiser Flows & 7 \\
-URL-based Tracking & 7 \\
-Browser Fingerprinting Defense & 6 \\
-Cross-site Tracking & 6 \\
-Anti Ad Blocking & 5 \\
-Same-site Tracking & 5 \\
-Tracking Analysis Tools & 5 \\
-Cross-device Tracking & 4 \\
-Device Fingerprinting & 4 \\
-PII-based Tracking & 4 \\
-Privacy Sandbox & 4 \\
-Ad Blocking Solution & 3 \\
-Bounce Tracking & 3 \\
-Breakage Studies & 3 \\
-First-party Tracking & 3 \\
-Privacy Policy Analysis & 3 \\
-Privacy Studies of Browser Extensions & 3 \\
-Search Engine Privacy & 3 \\
-Behavioral Tracking & 2 \\
-Cookie Blocking & 2 \\
-Cookie Syncing & 2 \\
-DNS Tracking & 2 \\
-Form-based Tracking & 2 \\
-Location-based Tracking & 2 \\
-Pixel Tracking & 2 \\
-\noalign{\vskip 1.5pt}
-\hline
-\end{tabular}
+We complement our systematization of research-based tracking defenses with industry-based ones by performing a systematic review of changelogs and release notes for each version of five popular browsers---Brave, Google Chrome, Microsoft Edge (including former Internet Explorer), Mozilla Firefox, and Apple Safari---since their creation.
+% ---Brave\footnote{\url{https://github.com/brave/brave-browser/blob/master/CHANGELOG_DESKTOP.md}}, Google Chrome\footnote{\url{https://developer.chrome.com/release-notes}}, Microsoft Edge\footnote{\url{https://learn.microsoft.com/deployedge/microsoft-edge-relnote-archive-stable-channel}} (including former Internet Explorer\footnote{\url{https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/dev-guides/}}), Mozilla Firefox\footnote{\url{https://www.mozilla.org/en-US/firefox/releases/}}, and Apple Safari\footnote{\url{https://developer.apple.com/documentation/safari-release-notes} \& \url{https://webkit.org/tracking-prevention/}}---since their creation.
+%
+Specifically, we extract tracking defense related features across stable versions of browsers based on the description of changes and apply our defense-specific systematization criteria from~\autoref{tab:systematization-criteria} to each defense technique.
+%
+For each tracking technique and defense technique identified, we also find and associate community-built defenses (if any).
 
-\caption{Distribution of papers across different topics.}
-\label{tab:tracking-topics}
-\end{table}
+\input{tables/artifact-systematization}
+
+\input{appendix/need-for-fp.tex}
+
+
+\input{appendix/mixed-tracking}
+
+
+% \newpage
+\input{tables/appendix-tracking-technique-papers-techniques}
+
+
+% \newpage
+\input{tables/appendix-tracking-techniques-papers-artifacts-capabilities}
+\input{tables/defense-deployment-mechanism-type}
+
+% \newpage
+%%
+\begin{figure*}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/evolution-tracking-defenses-regulations.pdf}
+    \caption{Evolution of \emph{industry-}, \emph{community-}, and \emph{research-based} defenses from 2000--2026 with EU and US \textit{regulations}.}
+    \label{fig:evolution-defenses}
+\end{figure*}
+
+
+% \newpage
+\input{tables/stateful-tracking-defenses}
+\input{tables/stateless-tracking-defenses}
+
+
+% \newpage
+\input{tables/defenses-industrial}
+\input{tables/defenses-community}
+
+% \newpage
+\input{tables/regulations-paper-distribution}
+\input{tables/regulations-aspects}
+

@@ -27,7 +27,7 @@ In a world without cookies, what alternative forms of user tracking might emerge
 
 \paragraph{More Reliance on First-party Data \& Identity Graphs.}
 \label{sec:id-providers}
-As restrictions are being put in place on third-party cookies, websites now lean on a handful of major \emph{identity providers} (\eg{}, Google\,/\,YouTube, Facebook\,/\,Meta, Apple) and on in-house ``first-party’’ data to recognize returning users across sessions and devices.
+As restrictions are being put in place on third-party cookies, websites now lean on a handful of major \emph{identity providers} (e.g., Google\,/\,YouTube, Facebook\,/\,Meta, Apple) and on in-house ``first-party’’ data to recognize returning users across sessions and devices.
 Single Sign-On (SSO) widgets, e-mail–based login links, and device-level IDs let these gatekeepers authenticate users while quietly attaching persistent, service-specific identifiers.
 % To close the attribution gap left by blocked cookies, providers encourage sites to ship server-to-server \emph{Conversions APIs} (e.g., Meta CAPI, Google Enhanced Conversions) that forward hashed e-mail addresses, phone numbers, or purchase metadata directly from the merchant’s backend—beyond the reach of client-side tracking controls.
 Many platforms further fuse this stream with offline sources such as loyalty-card swipes and point-of-sale data, constructing proprietary \emph{identity graphs} that map a single user (or household) to multiple browsers, mobile apps, and physical transactions.
@@ -86,7 +86,7 @@ Consequently, if paywalls become more pervasive, privacy-conscious users may fin
 
 %%
 \begin{opbox}
-How do publishers leverage paywalls to build and enrich first-party profiles, and how do they associate authenticated user identities with online behaviors (\eg{}, shopping) to enable targeted advertising within their own networks?
+How do publishers leverage paywalls to build and enrich first-party profiles, and how do they associate authenticated user identities with online behaviors (e.g., shopping) to enable targeted advertising within their own networks?
 \end{opbox}
 
 %%%
@@ -112,13 +112,13 @@ How does server-side tracking work, how can it be effectively detected and mitig
 Prior studies on fingerprinting diversity have been carried out on datasets with a wide range of sizes; 470k~\cite{eckersleyHowUniqueYour2010}, 118k~\cite{laperdrixBeautyBeastDiverting2016}, 2.07M~\cite{gomez-boixHidingCrowdAnalysis2018}, 7.2M~\cite{liWhoTouchedMy2020}, and 1.5B~\cite{wuHimManyFaces2023} fingerprints. As a result, conclusions are varied with smaller datasets having more unique fingerprints globally and largest ones presenting proportionally more unique values for specific collected attributes. Thus, it is still unclear if these findings about fingerprinting effectiveness hold across different audiences and device types~\cite{berkeHowUniqueWhose2025}. A recent work also suggests automated crawls to not accurately capture fingerprinting~\cite{muthu2025beyond}. Additionally, if existing work explain how fingerprinting can be leveraged for tracking and additional security, real purposes and integration within live systems are not well understood.
 
 \begin{opbox}
-What is the real impact of fingerprinting at scale, on vulnerable populations (\eg{}, minorities, children, marginalized), and paired with other techniques?
+What is the real impact of fingerprinting at scale, on vulnerable populations (e.g., minorities, children, marginalized), and paired with other techniques?
 \end{opbox}
 %%%
 
 \paragraph{Intent of Fingerprinting.}
 %%
-A main challenge with fingerprinting is that the same techniques can be used for very different purposes by websites; (re-)identify users across the web allowing cross-site tracking and targeted advertising, but also differentiating between a bot and human visitor trying to authenticate into an account. This duality in use has hindered attempts at only allowing fingerprinting for ``benign’’ purposes, \ie{}, to ensure security, while also preserving users' privacy.
+A main challenge with fingerprinting is that the same techniques can be used for very different purposes by websites; (re-)identify users across the web allowing cross-site tracking and targeted advertising, but also differentiating between a bot and human visitor trying to authenticate into an account. This duality in use has hindered attempts at only allowing fingerprinting for ``benign’’ purposes, i.e., to ensure security, while also preserving users' privacy.
 
 %%
 \begin{opbox}
@@ -130,7 +130,7 @@ A main challenge with fingerprinting is that the same techniques can be used for
 \paragraph{Stronger Hardware Fingerprinting Signals.}
 With the growing restrictions on storing client-side identifiers, trackers increasingly turn to hardware-level attributes to identify and re-identify users without relying on persistent cookies or local storage.
 %
-Unlike conventional browser attributes (\eg{}, User-Agent, language settings, or installed fonts), hardware-oriented fingerprints (\eg{}, signals originating from CPU and RAM imperfections during manufacturing) are more difficult for users to spoof or reset, as they tap into the intrinsic properties of a device’s components~\cite{venugopalanFPRowhammerDRAMBasedDevice2024}.
+Unlike conventional browser attributes (e.g., User-Agent, language settings, or installed fonts), hardware-oriented fingerprints (e.g., signals originating from CPU and RAM imperfections during manufacturing) are more difficult for users to spoof or reset, as they tap into the intrinsic properties of a device’s components~\cite{venugopalanFPRowhammerDRAMBasedDevice2024}.
 %
 Hardware fingerprinting allows trackers to maintain cross-session and cross-site tracking capabilities---potentially circumventing existing browsers' privacy measures and users' evasion strategies to block or partition stateful identifiers.
 
@@ -173,7 +173,7 @@ Various studies have measured the compliance of online services by comparing the
 
 
 \begin{opbox}
-While the existing focus is on privacy policy and consent, other types of compliance (\eg{}, EU-US data transfer laws) is understudied.
+While the existing focus is on privacy policy and consent, other types of compliance (e.g., EU-US data transfer laws) is understudied.
 \end{opbox}
 
 %%
@@ -196,7 +196,7 @@ This market capture allows these actors to dictate terms when it comes to cost e
 \subsection{Evolving role of browsers}
 
 \paragraph{In Preventing Tracking.}
-While most modern browsers ship tracking countermeasures, passive fingerprinting (relying on IP address, HTTP and Accept headers, User-Agent, \etc{}) remains a stealthy tracking mechanism~\cite{mayerThirdPartyWebTracking2012,dotyMitigatingBrowserFingerprinting2019,fraihiClientsideServersideTracking2024}.
+While most modern browsers ship tracking countermeasures, passive fingerprinting (relying on IP address, HTTP and Accept headers, User-Agent, etc.) remains a stealthy tracking mechanism~\cite{mayerThirdPartyWebTracking2012,dotyMitigatingBrowserFingerprinting2019,fraihiClientsideServersideTracking2024}.
 %%
 In order to curb it, browser vendors reduced the information available in the User-Agent header~\cite{davisReleaseNotesSafari2017,kimura1609304ReduceGeckos2020,googleWhatUserAgentReduction2024}.
 %
@@ -252,7 +252,7 @@ If cross-device tracking is understood theoretically, characterizing its occurre
 %%
 Generative AI models are already being deployed to improve ad targeting~\cite{adv-week-genai-targeting} and contextual advertising~\cite{cognitiv2024cookieless}.
 %
-Moreover, while generative AI deployed in web browsers~\cite{google2024chromeai} or as browser assistants~\cite{vekaria2025big} may enable novel capabilities, it may also amplify the harms (\eg{}, privacy risks) or create new attack surfaces~\cite{mcp-security}. 
+Moreover, while generative AI deployed in web browsers~\cite{google2024chromeai} or as browser assistants~\cite{vekaria2025big} may enable novel capabilities, it may also amplify the harms (e.g., privacy risks) or create new attack surfaces~\cite{mcp-security}. 
 %
 We believe browsers have a key role to play here to ensure that security and privacy are key considerations as AI is integrated into web browsers.
 

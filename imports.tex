@@ -1,4 +1,4 @@
-\RequirePackage{doi}
+
 \usepackage[all]{nowidow}
 \usepackage{siunitx}
 \usepackage{multirow}
@@ -8,32 +8,28 @@
 \usepackage{array}
 \usepackage{makecell} % optional (not required below)
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
-% Enable those needed
-% \usepackage{enumitem}
 \usepackage[most]{tcolorbox}
-% \usepackage[linesnumbered,ruled,vlined]{algorithm2e}
-% \usepackage{caption}
 \usepackage{subcaption}
-% \usepackage{colortbl}
-% % \usepackage[subtle]{savetrees}
-% \usepackage{diagbox, eqparbox, hhline}
-% %autoref rename subsection
-\usepackage{hyperref}
-\usepackage{booktabs}
+% \usepackage[hidelinks]{hyperref}
+\RequirePackage{doi}
 \usepackage{comment}
 \usepackage{amssymb}
 \usepackage{fancyhdr}
 \usepackage{pifont} %dingautolist 
+\usepackage{float}
 % break urls
-\usepackage{breakurl}
-\def\UrlBreaks{\do\/\do-}
+% \usepackage{breakurl}
+\def\UrlBreaks{\do\/\do-\do_}
 
 \renewcommand{\sectionautorefname}{Section}
 \renewcommand{\subsectionautorefname}{Section}
 \renewcommand{\subsubsectionautorefname}{Section}
 \renewcommand{\appendixautorefname}{Appendix}
-% For appendix in IEEE template
+% For appendix references
 \newcommand{\refappendix}[1]{\hyperref[#1]{Appendix~\ref*{#1}}}
+\newcommand{\refethics}[1]{\hyperref[#1]{Ethical Considerations}}
+\newcommand{\refopenscience}[1]{\hyperref[#1]{Open Science}}
+
 % \renewcommand{\algorithmautorefname}{Algorithm}
 
 % Prior work comparison table
@@ -51,21 +47,22 @@
  \draw (0,0) circle (.75ex);\fill[rotate=90] (.75ex,0) arc (0:#1:.75ex) -- (0,0) -- cycle;
 \end{tikzpicture}%
 }
+\newcommand{\xmark}{\ding{55}}%
 
-\usepackage{xspace}
-% Add a period to the end of an abbreviation unless there's one
-% already, then \xspace.
-\makeatletter
-\DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
-\def\@onedot{\ifx\@let@token.\else.\null\fi\xspace}
+% \usepackage{xspace}
+% % Add a period to the end of an abbreviation unless there's one
+% % already, then \xspace.
+% \makeatletter
+% \DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
+% \def\@onedot{\ifx\@let@token.\else.\null\fi\xspace}
 
-\def\eg{e.g\onedot}\def\Eg{E.g\onedot}
-\def\ie{i.e\onedot} \def\Ie{I.e\onedot}
-\def\cf{c.f\onedot} \def\Cf{C.f\onedot}
-\def\etc{etc\onedot} \def\vs{vs\onedot}
-\def\wrt{w.r.t\onedot} \def\dof{d.o.f\onedot}
-\def\etal{et al\onedot}
-\makeatother
+% \def\eg{e.g\onedot}\def\Eg{E.g\onedot}
+% \def\ie{i.e\onedot} \def\Ie{I.e\onedot}
+% \def\cf{c.f\onedot} \def\Cf{C.f\onedot}
+% \def\etc{etc\onedot} \def\vs{vs\onedot}
+% \def\wrt{w.r.t\onedot} \def\dof{d.o.f\onedot}
+% \def\etal{et al\onedot}
+% \makeatother
 
 \newcommand{\todo}[1]{\textcolor{red}{[#1]}}
 \newcommand{\subscript}[2]{$#1 _ #2$}
@@ -77,7 +74,7 @@
 
 
 %% Gaps and Open Problem Boxed Frame
-\newcommand{\gap}{\textbf{Gaps}:}
+\newcommand{\gap}{\textbf{Gap}:}
 \newcommand{\openproblem}{\textbf{Open Problem}:}
 
 \usepackage[strict]{changepage}
@@ -89,39 +86,52 @@
 \definecolor{lightred}{HTML}{FAD9D5}
 
 % keywords search criteria
-\newenvironment{framedBox}{%
+\newenvironment{exclusionkeywordbox}{%
   \def\FrameCommand{%
-    {\color{cosmiclatte}\vrule width 2pt}%
-    \colorbox{cosmiclatte}%
+    {\color[HTML]{f8cecc}\vrule width 2pt}%
+    \colorbox[HTML]{f8cecc}%
   }%
   \MakeFramed{\advance\hsize-\width\FrameRestore}%
   \noindent\hspace{-4.55pt}%
   \begin{adjustwidth}{}{7pt}%
 }
 {%
-% \vspace{2pt}
 \end{adjustwidth}\endMakeFramed%
 }
 
-% gaps
-\newenvironment{gapbox}{%
+\newenvironment{keywordbox}{%
+  \def\FrameCommand{%
+    {\color[HTML]{d5e8d4}\vrule width 2pt}%
+    \colorbox[HTML]{d5e8d4}%
+  }%
+  \MakeFramed{\advance\hsize-\width\FrameRestore}%
+  \noindent\hspace{-4.55pt}%
+  \begin{adjustwidth}{}{7pt}%
+}
+{%
+\end{adjustwidth}\endMakeFramed%
+}
+
+% open problems
+\newenvironment{opbox}{%
+  \vspace{-8pt}%
   \def\FrameCommand{%
     {\color{darkred}\vrule width 2pt}%
     \colorbox{lightred}%
   }%
   \MakeFramed{\advance\hsize-\width\FrameRestore}%
   \noindent\hspace{-4.55pt}%
-  \begin{adjustwidth}{}{7pt}%
-  \gap%
+  \begin{adjustwidth}{}{2pt}%
+  \openproblem%
 }
 {%
-% \vspace{2pt}
 \end{adjustwidth}\endMakeFramed%
+\vspace{-8pt}%
 }
 
 
-% open problems
-\newenvironment{opbox}{%
+% gaps
+\newenvironment{gapbox}{%
   \def\FrameCommand{%
     {\color{darkgray}\vrule width 2pt}%
     \colorbox{lightgray}%
@@ -129,10 +139,9 @@
   \MakeFramed{\advance\hsize-\width\FrameRestore}%
   \noindent\hspace{-4.55pt}%
   \begin{adjustwidth}{}{7pt}%
-  \openproblem%
+  \gap%
 }
 {%
-% \vspace{2pt}
 \end{adjustwidth}\endMakeFramed%
 }
 
@@ -177,6 +186,75 @@
 \newcommand{\symSharing}{\capsym{capShaBg}{capShaBd}{S}}
 
 
+
+
+
+% Icons for tracking mechanisms
+
+\newlength{\iconsize}
+\setlength{\iconsize}{0.9em}
+ 
+\newcommand{\iconURL}{\raisebox{-0.15em}{\includegraphics[height=\iconsize]{figures/icons/url.png}}}
+\newcommand{\iconFingerprint}{\raisebox{-0.15em}{\includegraphics[height=\iconsize]{figures/icons/fingerprint.png}}}
+\newcommand{\iconCookie}{\raisebox{-0.15em}{\includegraphics[height=\iconsize]{figures/icons/cookie.png}}}
+\newcommand{\iconJS}{\raisebox{-0.15em}{\includegraphics[height=\iconsize]{figures/icons/js.png}}}
+\newcommand{\iconPrivacy}{\raisebox{-0.15em}{\includegraphics[height=\iconsize]{figures/icons/privacy.jpg}}}
+\newcommand{\iconBehavioral}{\raisebox{-0.15em}{\includegraphics[height=\iconsize]{figures/icons/behavioral.png}}}
+\newcommand{\iconSC}{\raisebox{-0.15em}{\includegraphics[height=\iconsize]{figures/icons/sc.png}}}
+
+\newcommand{\iconAdBlock}{\raisebox{-0.15em}{\includegraphics[height=\iconsize]{figures/icons/block.png}}}
+\newcommand{\iconCNAME}{\raisebox{-0.15em}{\includegraphics[height=\iconsize]{figures/icons/cname.png}}}
+
+
+
+\newcommand{\iconBlocklist}{\raisebox{-0.15em}{\includegraphics[height=\iconsize]{figures/icons/blocklist.png}}}
+\newcommand{\iconExtension}{\raisebox{-0.15em}{\includegraphics[height=\iconsize]{figures/icons/extension.png}}}
+\newcommand{\iconTool}{\raisebox{-0.15em}{\includegraphics[height=\iconsize]{figures/icons/tool.png}}}
+
+
+
+% Browser icons
+\newcommand{\iconIE}{\raisebox{-0.3em}{\includegraphics[height=1.6em]{figures/icons/ie.png}}}
+\newcommand{\iconEdge}{\raisebox{-0.3em}{\includegraphics[height=1.6em]{figures/icons/edge.png}}}
+\newcommand{\iconFirefox}{\raisebox{-0.3em}{\includegraphics[height=1.6em]{figures/icons/firefox.png}}}
+\newcommand{\iconSafari}{\raisebox{-0.3em}{\includegraphics[height=1.6em]{figures/icons/safari.png}}}
+\newcommand{\iconChrome}{\raisebox{-0.3em}{\includegraphics[height=1.6em]{figures/icons/chrome.png}}}
+\newcommand{\iconBrave}{\raisebox{-0.3em}{\includegraphics[height=1.6em]{figures/icons/brave.png}}}
+
+
+
+
+
+% Defense Goals
+
+% Detection and Blocking
+\definecolor{cellred}{RGB}{252,235,235}
+% Signal Reduction and Obfuscation
+\definecolor{cellyellow}{RGB}{255,253,230}
+% Regulation compliance
+% Incentives
+\definecolor{cellpink}{RGB}{243,230,248}
+% Expectations
+\definecolor{cellblue}{RGB}{230,241,253}
+% Responsibilities
+\definecolor{cellgreen}{RGB}{232,250,235}
+
+
+
+\definecolor{cellempty}{RGB}{242,242,248}
+\newcommand{\ec}{\cellcolor{cellempty}}
+\newcommand{\rh}{\rule[-0.9em]{0pt}{2.0em}}
+\newcommand{\cellsym}[1]{\parbox[c][2.0em][c]{\linewidth}{\centering #1}}
+
+
+
+
+% \usepackage[landscape,margin=0.35in]{geometry}
+\usepackage{calc}
+\usepackage[table]{xcolor}
+
+
+
 % TBD to create a warning at compilation (i.e., to not forget to edit later)
 \newcommand{\TBD}[2]{\errmessage{#1}{[#2]}}
 % \newcommand{\TBD}[1]{\errmessage{TBD}{\color{red}{[#1]}}}
@@ -203,7 +281,7 @@
 \newcommand{\para}[1]{\smallskip \noindent \textbf{#1}}
 \newcommand{\parait}[1]{\smallskip \noindent \textit{#1}}
 
-%Logos
+%Logos affiliations
 \newcommand{\ucDavis}{\raisebox{2pt}{\includegraphics[width=30pt]{figures/logos/uc-davis.pdf}}}
 \newcommand{\uwMadison}{\includegraphics[height=10pt]{figures/logos/uw-madison.pdf}}
 \newcommand{\radboud}{\includegraphics[height=10pt]{figures/logos/radboud.pdf}}

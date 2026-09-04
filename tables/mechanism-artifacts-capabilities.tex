@@ -1,0 +1,67 @@
+\newlength{\artfirstcol}
+\setlength{\artfirstcol}{4.0cm}          % <- change to widen/narrow first column
+\newlength{\artdatacol}
+\setlength{\artdatacol}{0.58cm}           % <- change to widen/narrow every data column
+% To auto-fill page width instead, uncomment the next line and comment the one above:
+% \setlength{\artdatacol}{\dimexpr(\textwidth - \artfirstcol - 58\tabcolsep - 7\arrayrulewidth) / 28\relax}
+ 
+% ---- Column type for data columns ----
+\newcolumntype{Y}{>{\centering\arraybackslash}m{\artdatacol}}   % data cells: vertically centered
+\newcolumntype{Z}{>{\centering\arraybackslash}b{\artdatacol}}   % header cells: bottom-aligned
+ 
+\begin{table*}[!t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{0.6pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{%
+>{\raggedright\arraybackslash\rule[-1.2em]{0pt}{2.4em}}m{\artfirstcol}|%
+*{4}{Y}|%          Cookies (4)
+*{2}{Y}|%          Navigational Tracking (2)
+*{4}{Y}|%          Fingerprinting (4)
+*{4}{Y}|%          Side-channel (4)
+*{3}{Y}|%          Privacy Proposals (3)
+*{8}{Y}%           Remaining (8)
+}
+ 
+\toprule
+% ---- Group header row ----
+\multicolumn{1}{>{\centering\arraybackslash}m{\artfirstcol}|}{}
+ & \multicolumn{4}{c|}{\shortstack[c]{~\\\textbf{\textit{Cookies}}}}
+ & \multicolumn{2}{c|}{\shortstack[c]{\textbf{\textit{Navigation}}\\\textbf{\textit{Tracking}}}}
+ & \multicolumn{4}{c|}{\shortstack[c]{~\\\textbf{\textit{Fingerprinting}}}}
+ & \multicolumn{4}{c|}{\shortstack[c]{~\\\textbf{\textit{Side-channel}}}}
+ & \multicolumn{3}{c|}{\shortstack[c]{\textbf{\textit{Privacy}}\\\textbf{\textit{Proposals}}}}
+ & \multicolumn{8}{c}{}
+ \\
+% ---- Thick partial rules under group names (preserves vertical rules) ----
+\noalign{\global\arrayrulewidth=\heavyrulewidth}%
+\cline{2-5}\cline{6-7}\cline{8-11}\cline{12-15}\cline{16-18}%
+\noalign{\global\arrayrulewidth=0.4pt}%
+% ---- Column header row (bottom-aligned via Z overrides) ----
+\multicolumn{1}{>{\centering\arraybackslash}b{\artfirstcol}|}{\textbf{Tracked Artifacts}} & \multicolumn{1}{Z}{\rot{Cookie Respawning}} & \multicolumn{1}{Z}{\rot{Cookie Syncing}} & \multicolumn{1}{Z}{\rot{First-party Cookie Tracking}} & \multicolumn{1}{Z|}{\rot{Third-party Cookie Tracking}} & \multicolumn{1}{Z}{\rot{Bounce Tracking}} & \multicolumn{1}{Z|}{\rot{Link Decorations}} & \multicolumn{1}{Z}{\rot{Browser Fingerprinting}} & \multicolumn{1}{Z}{\rot{Extension Fingerprinting}} & \multicolumn{1}{Z}{\rot{Device Fingerprinting}} & \multicolumn{1}{Z|}{\rot{Passive Fingerprinting}} & \multicolumn{1}{Z}{\rot{Kernel-based}} & \multicolumn{1}{Z}{\rot{Network-based}} & \multicolumn{1}{Z}{\rot{Storage-based}} & \multicolumn{1}{Z|}{\rot{Timing-based}} & \multicolumn{1}{Z}{\rot{FLoC}} & \multicolumn{1}{Z}{\rot{Protected Audience}} & \multicolumn{1}{Z|}{\rot{Topics API}} & \multicolumn{1}{Z}{\rot{Tracking Pixels/Tags}} & \multicolumn{1}{Z}{\rot{Javascript-based Tracking}} & \multicolumn{1}{Z}{\rot{Authentication-based Tracking}} & \multicolumn{1}{Z}{\rot{Cross-context Tracking}} & \multicolumn{1}{Z}{\rot{Behavioral Tracking}} & \multicolumn{1}{Z}{\rot{CNAME Tracking}} & \multicolumn{1}{Z}{\rot{Server-side Tracking}} & \multicolumn{1}{Z}{\rot{Ad-Blocking Circumvention}} \\
+\midrule
+Browser Storage and Cache & \shortstack[c]{\symObservation\\[-1pt]\symStorage} & \shortstack[c]{\symObservation\\[-1pt]\symStorage} & \shortstack[c]{\symObservation\\[-1pt]\symStorage} & \shortstack[c]{\symObservation\\[-1pt]\symStorage} & \symStorage &  &  &  &  &  &  &  & \shortstack[c]{\symObservation\\[-1pt]\symStorage} & \symObservation &  & \symStorage &  &  & \shortstack[c]{\symObservation\\[-1pt]\symStorage} & \shortstack[c]{\symObservation\\[-1pt]\symStorage} & \shortstack[c]{\symObservation\\[-1pt]\symStorage} &  & \symStorage & \symStorage &  \\
+\hline
+JavaScript-Accessible Browser APIs & \symExecution &  & \symExecution &  & \symExecution & \symExecution & \shortstack[c]{\symObservation\\[-1pt]\symExecution} & \shortstack[c]{\symObservation\\[-1pt]\symExecution} & \shortstack[c]{\symObservation\\[-1pt]\symExecution} &  &  &  & \symExecution & \shortstack[c]{\symObservation\\[-1pt]\symExecution} & \shortstack[c]{\symObservation\\[-1pt]\symExecution} & \symExecution & \shortstack[c]{\symObservation\\[-1pt]\symExecution} & \symExecution & \shortstack[c]{\symObservation\\[-1pt]\symExecution} & \symExecution & \symExecution & \shortstack[c]{\symObservation\\[-1pt]\symExecution} &  &  & \symExecution \\
+\hline
+\raisebox{-2pt}{Browser Extensions} &  &  &  &  &  &  &  & \symObservation &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \symObservation \\
+\hline
+\raisebox{-2pt}{Hardware Artifacts} &  &  &  &  &  &  & \symObservation &  & \symObservation &  & \symObservation &  &  & \symObservation &  &  &  &  &  &  & \symObservation &  &  &  &  \\
+\hline
+HTTP Traffic Artifacts & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \symObservation &  & \symObservation & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} & \shortstack[c]{\symInclusion\\[-1pt]\symSharing} \\
+\hline
+\raisebox{-2pt}{Network Protocol Artifacts} &  &  &  &  &  &  &  &  &  & \symObservation &  & \symObservation &  &  &  &  &  &  &  &  & \symObservation &  & \symObservation & \symObservation &  \\
+\hline
+Navigational Artifacts &  & \symSharing &  &  & \shortstack[c]{\symObservation\\[-1pt]\symSharing} & \shortstack[c]{\symObservation\\[-1pt]\symSharing} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \symObservation &  \\
+\hline
+Webpage Artifacts & \shortstack[c]{\symInclusion\\[-1pt]\symExecution} & \symInclusion & \shortstack[c]{\symInclusion\\[-1pt]\symExecution} & \symInclusion & \symInclusion & \shortstack[c]{\symInclusion\\[-1pt]\symExecution} & \shortstack[c]{\symInclusion\\[-1pt]\symExecution} & \shortstack[c]{\symInclusion\\[-1pt]\symExecution} & \shortstack[c]{\symInclusion\\[-1pt]\symExecution} &  &  &  & \shortstack[c]{\symInclusion\\[-1pt]\symExecution} & \shortstack[c]{\symInclusion\\[-1pt]\symExecution} & \symInclusion & \shortstack[c]{\symInclusion\\[-1pt]\symExecution} & \symInclusion & \shortstack[c]{\symInclusion\\[-1pt]\symExecution} & \shortstack[c]{\symInclusion\\[-1pt]\symExecution} & \shortstack[c]{\symInclusion\\[-1pt]\symExecution} & \shortstack[c]{\symInclusion\\[-1pt]\symExecution} & \shortstack[c]{\symInclusion\\[-1pt]\symExecution} & \symInclusion & \symInclusion & \shortstack[c]{\symInclusion\\[-1pt]\symExecution} \\
+
+\bottomrule
+\end{tabular}%
+}% end resizebox
+\caption{Tracker capabilities of the tracker over artifacts tracked under different tracking techniques as systematized from ~\autoref{??} and \autoref{??}.
+Symbols: \protect\symInclusion~Inclusion, \protect\symExecution~Execution,
+\protect\symStorage~Storage, \protect\symSharing~Sharing, \protect\symObservation~Observation.}
+\label{tab:artifact-mechanism}
+\end{table*}
