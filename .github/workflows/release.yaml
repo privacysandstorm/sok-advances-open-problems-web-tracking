@@ -1,0 +1,25 @@
+name: Build and Release Long Paper Version
+on:
+  push:
+    branches:
+      - main  # Set a branch name to trigger deployment
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+        contents: write
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Build docker image
+        run: docker build -t latex-local-setup .devcontainer/
+      - name: Build
+        run: docker run --user root --rm -v ${PWD}:/workspace -w /workspace latex-local-setup -c "git config --global --add safe.directory /workspace && make main-long-version.pdf"
+      - id: release
+        uses: ncipollo/release-action@v1.21.0
+        with:
+          tag: release-${{ github.sha }}
+          name: Release ${{ github.sha }}
+          draft: false
+          prerelease: false
+          artifacts: main-long-version.pdf
+          artifactContentType: application/pdf

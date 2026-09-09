@@ -1,0 +1,121 @@
+\input{tables/regulations-paper-distribution}
+
+\input{tables/regulations-aspects}
+
+\section{Regulations \& Compliance}
+\label{sec:regulations}
+
+
+
+Here, we describe the enactment and evolution of EU and US privacy regulations.
+%
+We start by curating the 34 research papers identified in~\autoref{sec:methodology} to systematize the different regulations and standards they cover (\autoref{tab:regulations-paper-distribution}) according to~\autoref{tab:systematization-criteria}.
+%
+We map in~\autoref{tab:regulations-aspects} the mentioned policy aspects onto the six self-managed rights\footnote{For a taxonomy of rights and requirements imposed by privacy regulations, we refer to the SoK on Internet Regulations from Birrell et al.~\cite{birrellSoKTechnicalImplementation2024}.} granted by regulations and their applicability in the EU and US (California) contexts.
+%
+Then, we categorize the suggested limitations with compliance (\autoref{tab:regulations-compliance}).
+%
+Finally, we complement this taxonomy with our expertise to provide a cohesive view of the evolution of regulatory actions in the EU and US (overview in~\autoref{fig:evolution-defenses}).
+
+
+\subsection{Regulatory Actions}
+
+\para{In the EU.}
+\label{sec:eu-regulations}
+%
+First data protection national laws were established in the late 1970s, followed by the EU Data Protection Directive in 1995, and the General Data Protection Regulation (GDPR) applicable to all EU members in 2018.
+%
+Personal EU-US data transfers are currently regulated by the EU–US Data Privacy Framework that replaced the EU-US Privacy Shield from 2016 and invalidated in 2020---which itself had replaced the EU-US Safe Harbor from 2000 invalidated in 2015.
+%
+The ePrivacy Directive (ePD, 2002, amended in 2009) requires in its Article 5(3) a valid user’s consent before \textit{``storing of information, or the gaining of access to information already stored, in the terminal equipment’’}.
+This notion was redefined by GDPR by setting higher-level legal requirements~\cite{santosAreCookieBanners2020}.
+%
+EU regulators continuously update their national laws and compliance guidelines to further interpret and implement the ePD~\cite{Bielova2024-zr}, for instance to: (1)~require as early as 2009 the need for consent before cookies are set, read, or sent to third-parties, but also (2)~establish a legitimate interest exemption that consent is not required for all tracking technologies if their use is \textit{``strictly necessary’’} (e.g.,~for load balancing) or needed for \textit{``enabling the communication’’}, and (3)~cover various types of devices (such as mobile and IoT) and technologies (tracking pixels, link decoration).
+%
+In recent years, the EU Commission’s Cookie Pledge tried to establish simpler rules for consent, and new EU laws, such as the Digital Markets Act and Digital Services Act have set up additional rules on valid consent for the major companies (defined as \textit{``gatekeepers’’}) as well as new requirements for dark patterns and advertising on online platforms, respectively.
+%
+Currently, the Digital Omnibus proposal aims to amend, simplify, and optimize the EU's digital rulebook to reduce compliance burden and increase EU competitiveness.
+
+
+\para{In the US.}
+\label{sec:us-regulations}
+%
+States enact their own privacy legislation: California passed the CCPA (2020) and CPRA (2023), soon followed by other states~\cite{birrellSoKTechnicalImplementation2024,vannortwickSettingBarLow2022} as depicted in~\autoref{fig:evolution-defenses}: in 2023 by Virginia, Colorado, Utah, and Connecticut, in 2024 by Montana, Texas, and Oregon, all joined in 2025 by nine other states (Iowa, Indiana, Tennessee, Delaware, New Jersey, New Hampshire, Nebraska, Maryland, and Minnesota), and soon in 2026 by at least Kentucky and Rhode Island.
+%
+At the federal level, only a few narrow privacy laws exist, notably; the Children’s Online Privacy Protection Act (COPPA), the Health Insurance Portability and Accountability Act (HIPAA), and the Gramm–Leach–Bliley Act about children’s personal, protected health, and personal financial information, respectively.
+%
+Thus, apart from mandatory provisions, the notice and choice principle---generally implemented via privacy policies (required as mandatory on websites for the very first time by CalOPPA in 2003)---governs what a recipient of personal information can do with it~\cite{zimmeckInformationPrivacyLaw2013,schaubDesignSpaceEffective2015}.
+%
+Additionally, under its jurisdiction, the FTC can consider privacy policies that misrepresent a business's data handling practices as unfair or deceptive, affecting commerce per 15 U.S.C. §45(a)(1).
+%
+The systematization and enforcement of privacy laws in the US (and elsewhere) is advancing, although in California, recent changes to CCPA via CPRA may negatively impact the usability, scope, and visibility of the right to opt-out of sale~\cite{charatanTwoStepsForward2024}.
+
+\begin{opbox}
+Does the EU's Digital Omnibus carry similar risks to the CPRA in its proposed amendments?
+\end{opbox}
+
+
+\para{Policy-oriented Solutions.}
+\label{sec:policy-solutions}
+Several attempts were made at policy-oriented protocols through opt-out signals (see~\refappendix{sec:mixed-defenses-community}) or by the industry with the Data Rights Protocol, GDPR consent (TCF), or CCPA compliance frameworks---whose efforts overall remain in early stages~\cite{hilsMeasuringEmergenceConsent2020,matteCookieBannersRespect2020,azizJohnnyStillCant2024}. It also appears unclear how opt out functionalities elsewhere (such as with mobile applications) align with the opt out right.
+
+
+\subsection{Regulatory Compliance}
+
+\para{EU Regulators.}
+EU Regulators have actively investigated tracking technologies, consent, and malpractices.
+%
+In the Planet49 case~\cite{bouhoulaAutomatedLargeScaleAnalysis2024}, the highest court in the EU (CJEU) established legal precedent by declaring pre-ticked boxes in consent design interfaces illegal. Similarly the French Data Protection Authority (CNIL) found that consent banners must offer a reject option on the first layer~\cite{bielovaEffectDesignPatterns2024},
+and companies have been fined for setting cookies prior to consent~\cite{sunGDPRxivEstablishingState2023,marjanovDataSecurityGround2023}.
+For more GDPR-related decisions, see the GDPRhub\footnote{At \url{https://gdprhub.eu/}} inventory maintained by the Noyb NGO.
+
+\para{US Regulators.} Through its enforcement actions over the years, the FTC has effectively created a body of common law of privacy~\cite{soloveFTCNewCommon2013}; bringing charges against Snapchat for transmitting geolocation information from its Android users in contradiction to its privacy policy~\cite{ftcSnapchatSettlesFTC2014} or fining Facebook \$5 billion for privacy violations related to the Cambridge Analytica scandal~\cite{FTCImposes52019}.
+%
+To inform the ad industry of the privacy-invasive nature of cross-device tracking, the FTC held a cross-device tracking workshop in 2015~\cite{ftcCrossDeviceTracking2015}. It also issued warning letters to developers integrating Silverpush, an ad network performing cross-device tracking via inaudible ultrasound signals~\cite{ftcFTCIssuesWarning2016}.
+%
+Similarly, state attorney generals increased their regulatory activity based on new state privacy laws~\cite{azizJohnnyStillCant2024}.
+
+
+\para{In Literature.} Various studies have shown that many websites' actual behaviors are not compliant with their own privacy policies~\cite{libertAutomatedApproachAuditing2018,ouViopolicyDetectorAutomatedApproach2022,manandharAutomatedRegulationAnalysis2024}, or do not respect or register users’ consent correctly~\cite{carpinetoAutomaticAssessmentWebsite2016,sanchezrolaCanIOptOutYet2019,matteCookieBannersRespect2020,mehrnezhadCrossPlatformEvaluationPrivacy2020,bouhoulaAutomatedLargeScaleAnalysis2024,vannortwickSettingBarLow2022,birrellSoKTechnicalImplementation2024,Kanc-etal-25-PETs,liuOptedOutTracked2024}.
+%
+Similarly, surveys have shown that the notice and choice principle suffers from a lack of regulatory enforcement~\cite{cranorNecessaryNotSufficient2012}, vagueness and ambiguity of notices~\cite{reidenbergAmbiguityPrivacyPolicies2016}, unusable choice implementations~\cite{habibItsScavengerHunt2020}, and other inconvenience factors~\cite{oconnorUnclearInconspicuousRight2021}.
+%
+Researchers also studied the effects of GDPR, CCPA, or both on (a) privacy policies, noting improved transparency and undesired reduction of specificity in some updates~\cite{lindenPrivacyPolicyLandscape2020,hosseiniBilingualLongitudinalAnalysis2024,cuiUnderstandingPrivacyNorms2025}, (b) business practices related to incomplete data redaction~\cite{luWHOISWHOWASLargeScale2021} and deletion requests~\cite{ruppLeaveNoData2022,dimartinoRevisitingIdentificationIssues2022,mehrnezhadHowCanWould2022,jordanVICEROYGDPRCCPAcompliant2023}, and (c) non compliance of consent management platforms (CMPs) with the right to consent or opt-out~\cite{azizJohnnyStillCant2024,papadogiannakisUserTrackingPostcookie2021,bollingerAutomatingCookieConsent2022,tothDarkPatternsManipulation2022,biselliSupportingInformedChoices2024}
+
+
+\begin{opbox}
+While the existing focus is on privacy policy and consent, other types of compliance (e.g., EU-US data transfer law, revoking previously agreed opt-in, data minimization, consent propagation, etc.) are understudied.
+\end{opbox}
+
+\subsection{Compliance Challenges}
+
+Multiple reasons explain such low compliance rates, we map them to the need to reconcile actors' \colorbox{cellpink}{Incentives}, \colorbox{cellblue}{Expectations}, and \colorbox{cellgreen}{Responsibilities} (see~\autoref{tab:regulations-compliance}).
+
+\input{tables/regulations-compliance}
+
+\para{\colorbox{cellpink}{Incentives}.} A lack of incentive or knowledge from website publishers can lead to privacy compliance being overlooked when integrating third-parties or delegating consent management to CMPs---except when legal requirements or respective guidelines exist~\cite{utzPrivacyRarelyConsidered2023,Stov-etal-23-PETs}. In turn, embedded third-parties are placed in a privileged position, giving them access to user data, and may not act as transparently as desired resulting in the use of dark patterns or server-side tracking~\cite{tothDarkPatternsManipulation2022,grayDarkPatternsLegal2021,mehrnezhadHowCanWould2022}.
+
+\para{\colorbox{cellblue}{Expectations}.} Better enforcement power from regulators is needed~\cite{bollingerAutomatingCookieConsent2022,vannortwickSettingBarLow2022,mehrnezhadHowCanWould2022,motiTargetedTroublesomeTracking2024}. However, regulators may not have the required manpower, financial resources, and dedicated technical departments~\cite{edpbContributionEDPBReport2023} to investigate that websites are compliant not just ``at the surface''~\cite{kyiInvestigatingDeceptiveDesign2023}. The research community could step in to fill this gap, but user studies and web measurement artifacts are not always specific enough to be used by policymakers in guidelines or as evidence of violations~\cite{bielovaEffectDesignPatterns2024,Bielova2024-zr,bouhoulaAutomatedLargeScaleAnalysis2024}.
+This calls for closer collaboration to ensure compliance~\cite{saemannInvestigatingGDPRFines2022} and anticipate harms associated with future tracking techniques such as server-side tracking~\cite{fouadDevilDetailsDetection2024,cuiUnderstandingPrivacyNorms2025,tothDarkPatternsManipulation2022}, or consider the sensitivity of information leakage in new proposals~\cite{hoganMakingSensePrivate2026}.
+
+Beyond legally-binding decisions, regulators can also perform more supportive actions such as clarifying legal aspects. For example, they should provide guidelines and endorse specific designs of compliant CMP interfaces~\cite{fouadMyCookiePhoenix2022,hosseiniBilingualLongitudinalAnalysis2024,hilsMeasuringEmergenceConsent2020,matteCookieBannersRespect2020,mehrnezhadHowCanWould2022} and consider CMPs as data controllers~\cite{papadogiannakisUserTrackingPostcookie2021,tothDarkPatternsManipulation2022}. Similarly, ambiguity should be lifted~\cite{hosseiniBilingualLongitudinalAnalysis2024,azizJohnnyStillCant2024}, such as around data deletion in the contexts of cookies respawning, legitimate interest exemption, or further data sharing with other third-parties~\cite{fouadMyCookiePhoenix2022,ruppLeaveNoData2022,ruppLeaveNoData2022}. Related is the ask to clarify the website categories to which CCPA and CPRA apply to
+and for the removal of geofencing incentives for publishers
+~\cite{vannortwickSettingBarLow2022,azizJohnnyStillCant2024,charatanTwoStepsForward2024} and the applicability of GPC in the EU context~\cite{zimmeckUsabilityEnforceabilityGlobal2023,zimmeckGeneralizableActivePrivacy2024,azizJohnnyStillCant2024}.
+
+Finally, browsers should be expected to play a more prominent role. As an example, they could technically enforce in real time users' consent or opt-out choices~\cite{papadogiannakisUserTrackingPostcookie2021,bollingerAutomatingCookieConsent2022,bouhoulaAutomatedLargeScaleAnalysis2024}, removing the need to rely on a CMP, third-party, or web extension to fill in and respect users' preferences~\cite{azizJohnnyStillCant2024,demirLargeScaleStudyCookie2024}.
+
+\begin{opbox}
+How can we develop viable browser-based consent mechanisms, integrate automated real-time compliance verification, ensure their legal robustness, and enable effective enforcement?
+\end{opbox}
+
+% \begin{opbox}
+% Consent management platforms mediate tracking on most websites, yet no automated system verifies whether actual data collection matches the user consent---cookies are set before consent, trackers load despite opt-out, and consent strings are misinterpreted across the ad-tech chain. Can defenses move beyond blocking to real-time compliance verification that detect violations as they occur?
+% \end{opbox}
+
+\para{\colorbox{cellgreen}{Responsibilities}.} Finally, third-parties escape legal responsibility as current laws often place the main compliance obligations on website owners~\cite{santosConsentManagementPlatforms2021} even though several studies have identified problems around the default configurations of third-party services~\cite{Koch-etal-25-PETs,Rodr-etal-25-PETs,tothDarkPatternsManipulation2022}.
+
+\begin{opbox}
+What future transdisciplinary studies are needed to ensure that research and legal communities contribute to assigning responsibility to all actors fairly?
+\end{opbox}
+
+

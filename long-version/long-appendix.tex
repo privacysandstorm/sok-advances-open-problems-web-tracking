@@ -1,0 +1,354 @@
+\section{Web Ecosystem Background}
+\label{sec:appendix-background}
+
+
+\subsection{Architecture of the Web}
+%%
+% The Web is comprised of a client-server architecture built on the HTTP(S) protocol where browsers (client) send HTTP requests to servers---identified by URLs (Uniform Resource Locators) that specify the scheme (protocol), host (domain name), and resource path---sharing requested resources as HTTP responses.
+% %
+% The web server shares the requested resource as an HTTP response to the user's browser.
+%
+The Web is comprised of a client-server architecture built on the HTTP(S) protocol.
+%
+Web browsers (client) send HTTP requests to web servers identified by URLs (Uniform Resource Locators) that specify scheme (protocol), host (domain name), and resource path.
+%
+Web servers respond to the incoming requests with the requested content (e.g., HTML pages, scripts, images) that the browser renders to display a website.
+%
+The actual transmitted data is known as payload.
+%
+Browsers allow extending this stateless request-response model by associating some state on behalf of the servers via one of the browser-offered storage mechanisms such as cookies.
+%
+State allow servers to maintain sessions and user preferences across different requests.
+%
+Request and response headers are used to communicate necessary metadata to the server and the browser respectively.
+%
+Overall, when a user navigates to a website, the browser sends a request to fetch page's HTML from the website's server, and then iteratively fetches additional resources (e.g., stylesheets, scripts, media, etc.) embedded in the webpage to fully load the website.
+%
+Thus, the resultant webpage displayed to the user is an aggregate of content from the site visited by the user (referred to as \textit{first-party}) and resources provided from other servers (referred to as \textit{third-party}).
+
+
+%%
+\subsection{Website Structure}
+%
+A typical website is composed of a primary HTML document embedded with numerous first- and third-party resources.
+%
+The HTML document defines the structure of the webpage and is parsed by the browser to build a logical representation of the document objects referred to as DOM or Document Object Model.
+%
+DOM defines the way in which the document of the webpage should be accessed and manipulated.
+%
+At a high level, resources are included on a webpage in two ways: (1) as inline content, directly within the HTML tags (e.g., a \texttt{<style>} tag with CSS rules, a \texttt{<script>} tag with JavaScript code, or an \texttt{<img>} tag with base64-encoded image data) or (2) as external references to fetch content from (e.g., a \texttt{<script src="...">} tag referring to an external script file, an \texttt{<img src="...">} tag for an image file, and frames \texttt{<iframe src="...">}).
+%
+As the browser processes HTML to construct the DOM, it immediately renders inline content such as text and images or executes scripts, and for each external inclusion, it issues additional HTTP requests to fetch and render those resources.
+%
+Modern websites often include and fetch hundreds of such resources from a mix of site’s own server and external servers (e.g., CDNs or third-party service providers such as analytics or advertising).
+%
+Together, the primary HTML along with all included resources form the complete webpage presented to the user.
+%
+Notably, different resource types have different behaviors upon their inclusion in a webpage.
+%
+An image or a video is treated as passive content and does not have capability to execute code.
+%
+However, it can trigger a request to the web server hosting the resource.
+%
+Whereas a script fetched from an external URL can execute as code in the context of the including page once loaded.
+%
+An \texttt{<iframe>} is a special case that embeds a completely separate HTML document inside a parent page (with its own isolated context).
+%
+Thus, external resource inclusion is a powerful web feature that enables the reuse of content and functionality across websites.
+%
+This also means that multiple parties can be present in the context of a single webpage.
+
+
+\subsection{Browser's Origin Model}
+%
+Web browsers use a strict boundary called ``origin'', which is defined as a triplet of scheme (protocol), host (domain or IP address), and port.
+%
+Two URLs are considered to have the same origin only if all three components match exactly.
+%
+For instance, \texttt{https://foo.news.com/articles} and \texttt{https://foo.news.com/headlines} can be considered to share an origin.
+%
+However, \texttt{http://foo.news.com} (with a different scheme) or \texttt{https://foo.sports.com} (with a different host) would comprise of a different origin.
+%
+This origin boundary is fundamental to web security: by default, content from one origin is prevented from accessing content from another origin.
+%
+This \textit{same-origin policy} (SOP)~\cite{mdnSameoriginPolicySecurity2024} prevents, for instance, a script from \texttt{news.com} from accessing sensitive data in a page from \texttt{sports.com}.
+%
+Modern browsers also group related origins into a broader notion of ``site'' based on the effective top-level domain plus one (eTLD+1)~\cite{TrackingPreventionWebKit2020} using public suffix lists\footnote{e.g., \url{https://publicsuffix.org/}}.
+%
+For instance, the site of \texttt{foo.news.com} is \texttt{news.com}, which it shares with other subdomains like \texttt{bar.news.com}, whereas \texttt{sports.com} constitutes a different site.
+%
+By isolating content per origin, browsers ensure that code and data from different origins (or site groupings) cannot interfere with each other’s state maliciously.
+%
+% Thus, the origin (and by extension the site grouping) forms the primary boundary for browser behavior, scoping what data a web origin can access and store.
+%
+Browser tags each webpage document with it's origin.
+%
+Moreover, browser’s scripting engine and storage mechanisms enforce boundaries so that scripts running in one origin cannot directly read or modify data from another origin.
+
+%%
+\subsection{Browser’s Context Model}
+%
+A browsing context comprises of a document (the rendered HTML or DOM) along with a scripting and storage environment.
+%
+In practical terms, it corresponds to a browser tab, window, iframe, or any frame where a webpage is loaded~\cite{MDNBrowsingContext}.
+%
+When a webpage is loaded, the browser creates a new context (or uses an existing one for navigation) and associates it with the page’s origin.
+%
+For example, when a user navigates to \texttt{https://news.com} in a tab, the browser’s top-level context for that tab now contains a document with origin \texttt{https://news.com}.
+%
+If this page includes an \texttt{<iframe src="https://tracker.com">}, the iframe runs in a nested browsing context, with a separate document of its own, tagged with the origin \texttt{https://tracker.com}.
+%
+Browsing contexts can either be nested (e.g., iframes within a main page) or independent (e.g., separate tabs or windows).
+%
+Each context is isolated in terms of the DOM and JavaScript runtime---by default, code in one context cannot arbitrarily interfere with a document in another context, especially if their origins differ.
+%
+The browser maintains this isolation by labeling each context with the origin of its active document and enforcing boundaries between contexts.
+
+
+
+\subsection{Browser-Enforced Policies}
+\para{Context-Origin Boundaries.}
+%
+The concepts of origin and browsing context jointly provide the web’s security and privacy sandbox.
+%
+Essentially, the browsing context model denotes that every document runs in a container (frame or window) that maintains its state (such as its DOM, variables, and scripts) separate from others, while browser's origin model associates the document with an origin determining the code’s privileges.
+%
+Thus, browser uses both the origin and context when enforcing policies---it isolates different contexts from each other, and when an interaction is attempted, it checks the origins involved.
+%
+If two browsing contexts share the same origin, they are allowed to interact freely as part of the same trust domain.
+%
+For instance, a script in one window can directly call functions or manipulate the DOM in another window if and only if both windows have the same origin (e.g. two frames both from \texttt{https://news.com} can cooperate)---they behave as a single combined context in terms of scripting access.
+%
+Conversely, if the contexts are from different origins and even if they are loaded side by side, the browser’s SOP enforces separation---scripts in one context cannot directly read or modify the content of the other.
+%
+This means, for example, a page from \texttt{news.com} cannot inspect the DOM of an embedded \texttt{tracker1.com} iframe, nor can \texttt{tracker1.com} script alter the parent page, because their origins don’t match.
+%
+% Through this origin–context model, the browser ensures that content from different origins remain isolated, even if they are loaded side by side in the browser.
+%
+This is crucial not only for security (i.e., preventing malicious sites from stealing data from other sites) but also for privacy since content loaded as a third-party in a page runs in its own context with its own origin, limiting its ability to see the surrounding page’s state.
+
+%%
+\para{Cross-Origin Resource Inclusion and Sharing Policies.}
+%
+The browser initiates network requests to include and load different resources regardless of its origin.
+%
+Requesting a resource doesn’t violate the SOP because the including page isn’t directly accessing or manipulating the embedded resource’s DOM, state or data; it’s either displaying it or executing it as intended.
+%
+For example, a news site can embed \texttt{<img src="https://tracker1.com/track.gif">} or include a third-party JavaScript library with \texttt{<script src="https://tracker2.com/lib.js"></script>} inside its mainframe without the browser blocking it.
+%
+However, the news site cannot freely read the response data from an arbitrary external request as browsers differentiate between embedding a resource and actively retrieving its data via scripts.
+%
+For instance, if JavaScript on \texttt{news.com} tries to use \texttt{fetch()} or an \texttt{XMLHttpRequest} to \texttt{GET} data from \texttt{tracker2.com}, the browser will allow the network request to be sent, but will block the script from accessing the response unless \texttt{tracker2.com} explicitly consents.
+%
+This consent is managed via Cross-Origin Resource Sharing (CORS)~\cite{mdnCORS2024}.
+%
+The CORS policy is an HTTP-header based mechanism that allows a server to indicate any origin(s) other than its own from which a browser should permit loading resources.
+%
+In the absence of such a header, the browser, after fetching the resource, will prevent the calling script from seeing the response content, treating it as a cross-origin read violation.
+%
+Some resources (such as \texttt{<script src="...">} tags or \texttt{image} loads) are exempt from CORS checks because they do not grant the loader direct access to the raw data---i.e., a script is executed, but not read by the including page as data.
+%
+However, for \texttt{XHR}/\texttt{fetch} and other cases where the script including the resource would directly consume the response, CORS prevents unauthorized sharing.
+%
+% This suggests that a cross-origin image from \texttt{tracker1.com} can be loaded on \texttt{news.com}, without requiring \texttt{tracker1.com} to include any CORS header.
+%
+% However, if a script on \texttt{news.com} initiates a request to \texttt{fetch} some script resource from \texttt{tracker1.com}'s server, then the server must strictly include an appropriate CORS header.
+%
+This suggests that image resources can perform cross-origin tracking more easily than scripts.
+%
+CORS thus complements the SOP by opening safe channel for cross-site data access when needed, without collapsing the default restrictions.
+
+
+
+%%
+\para{Script Execution.}
+%
+When an external script is included from a different origin, the browser does not sandbox it by origin; instead, that script executes with the full privileges of the context that included it.
+%
+In other words, if \texttt{news.com} requests a third-party script from \texttt{tracker1.com}, that script runs as if it was a part of \texttt{news.com}’s page, operating under \texttt{news.com}’s origin.
+%
+Following browser's context-origin model, it can access the including page’s DOM, make network requests as that page, read and set storage for \texttt{news.com}, and generally do anything the page’s own scripts could do.
+%
+The act of inclusion in this case is essentially an implicit trust declaration by the webpage as if it trusts that code with its own origin’s privileges~\cite{TrackingPreventionWebKit2020}.
+%
+The browser does not enforce any origin-based restriction on the script’s execution once it’s injected.
+%
+Thus, a script's execution privileges are tied to its context’s origin---implying that it always ``acts as'' whatever origin its document has, which affects what it can do or access.
+
+
+%%
+\para{Storage.}
+%
+Browser-provided client-side storage mechanisms (such as \texttt{localStorage}, \texttt{sessionStorage}, and \texttt{IndexedDB}) are partitioned by origin.
+%
+So scripts from one origin cannot read or write to another origin’s storage.
+%
+However, there is one notable exception in how the browser treats cookies---cookies are scoped by domain (and path), not just the full origin.
+%
+By design, a script on \texttt{foo.news.com} can set a cookie for \texttt{.news.com} (a higher-level domain), which makes that cookie accessible to all subdomains under \texttt{news.com}, but not \texttt{news.com} itself or other eTLD+1 domains in future requests.
+%
+However, browsers disallow setting cookies for a domain that is a public suffix (like ``.com'' or ``.co.uk'') to prevent unrelated sites from sharing cookies.
+%
+Cookies may either be JavaScript cookies or HTTP cookies.
+%
+Functionally, they both store data in a user's browser, however, they differ in how they are accessed and their scope.
+%
+HTTP cookies are automatically read and included in the network request or set by the browser from the response using corresponding headers based on specified cookie's domain and path information.
+%
+While JavaScript cookies (i.e., cookies set using JavaScript or HTTP cookies that are not flagged to be HTTPOnly) are set and/or accessed by client-side scripts running in the browser.
+%
+JavaScript cookies can be accessed (e.g., using \texttt{document.cookie} or CookieStore API) by any script running in the same execution context regardless of its source.
+%
+This means that third-party scripts included in the main execution context can read/write first-party cookies.
+%
+JavaScript cookies are shared either in the query string or the request payload with a remote server.
+
+
+
+\section{SoK Methodology}
+\label{sec:appendix-methodology}
+
+\subsection{Search Criteria for Literature Review}
+\label{sec:keywords}
+
+Web tracking comprises a vast body of literature published over the last few decades---spanning across technical mechanisms, defenses, and regulatory compliance. Through our literature search (see~\autoref{sec:methodology}), we obtained a list of 19438 papers along with their metadata (title, authors, year, and DOI), missing abstracts were completed by performing a DOI-based query on Semantic Scholar\footnote{\url{https://www.semanticscholar.org/}} and OpenAlex\footnote{\url{https://openalex.org/}}.
+%
+To further filter that list, we first use exclusion keywords to remove potential papers that could be incorrectly retained under web tracking.
+
+\begin{exclusionkeywordbox}
+\textbf{Exclusion Keywords:}
+\noindent
+NOT [\textbf{Title} OR \textbf{abstract}: crypto* OR
+blockchain* OR
+website fingerprint* OR
+``tor'' OR
+``poster:'' OR
+differential* priva* OR
+``federated learning'' OR
+``membership inference'' OR
+``trusted execution'' OR
+``unlearning'' OR
+``inversion'' OR
+multi-party computation* OR
+airtag* OR
+privacy label* OR
+sdk* OR
+``app store'' OR
+``google play'' OR
+``social media'' OR
+smart tv* OR
+smart home* OR
+``iot'' OR
+``virtual reality'' OR
+``3g'' OR
+``4g'' OR
+``5g'' OR
+``wireless'' OR
+``censorship'' OR
+``voice'' OR
+``gaze'' OR
+``eye'' OR
+``genome'' OR
+scam* OR
+``bitcoin'' OR
+fuzz* OR
+cve* OR
+certificate authorit* OR
+public key* OR
+vehicle* OR
+robot*]
+\end{exclusionkeywordbox}
+
+Second, two sets of inclusion keywords are used to narrow down potential candidates for manual review.
+%
+The first set is used to filter publications that are related to web tracking techniques and defenses based on their title and abstract text.
+
+
+\begin{keywordbox}
+\textbf{Inclusion Keywords for Techniques and Defenses:}
+\noindent
+[\textbf{Title} OR \textbf{abstract}: tracking OR
+web track* OR
+online track* OR
+user track* OR
+track* user* OR
+web privacy OR
+online privacy OR
+user* privacy OR
+user *identifi* OR
+track* circumvent* OR
+track* eva* OR
+track* defen* OR
+track* block* OR
+ad*block* OR
+ad* block*]
+\end{keywordbox}
+
+
+The second set of keywords is used to identify papers discussing privacy regulations and compliance in the context of web tracking in their full text.
+%
+We rely on full text search to identify papers that may not primarily be regulation-focused (hence lower probability of a match in title or abstract), but may still discuss regulatory implications of the studied tracking technique or defense in the paper.
+
+\begin{keywordbox}
+\textbf{Inclusion Keywords for Regulations and Compliance:}
+\noindent
+[\textbf{Full paper}: regulat* compliance OR
+regulation* OR
+track* violat* OR
+privacy polic* OR
+privacy law* OR
+privacy regulation* OR
+``privacy compliance'' OR
+``gdpr'' OR
+``ccpa'' OR
+``cpra'' OR
+``cookie banner'' OR
+``cookie compliance'' OR
+compliance with cookie* OR
+``cookie consent'' OR
+track* consent OR
+consent management* OR
+opt*out OR
+opt* out]
+\end{keywordbox}
+
+%%
+\subsection{Thematic Literature Analysis}
+\label{sec:thematic-analysis}
+%%
+
+
+We consider a paper to be a \textit{tracking technique} paper if it provides an in-depth or foundational understanding of a specific tracking mechanism (e.g., first or reference paper on a technique).
+%
+Similarly, a \textit{tracking defense} paper comprises research that builds a system or an approach to block, prevent, or defend against a tracking technique, while \textit{regulatory compliance} research discusses different aspects of public policies (i.e., privacy regulation, standard, or guideline), their enforcement, and perhaps limitations.
+%
+Other papers focusing on measuring the prevalence or impact of different tracking techniques are classified as \textit{measurement} research and used throughout this SoK to support systematization of advances in web tracking.
+%
+This thematic organization is available as part of our artifact (see our~\refopenscience{sec:open-science} statement).
+
+We complement our systematization of research-based tracking defenses with industry-based ones by performing a systematic review of changelogs and release notes for each version of five popular browsers---Brave, Google Chrome, Microsoft Edge (including former Internet Explorer), Mozilla Firefox, and Apple Safari---since their creation.
+% ---Brave\footnote{\url{https://github.com/brave/brave-browser/blob/master/CHANGELOG_DESKTOP.md}}, Google Chrome\footnote{\url{https://developer.chrome.com/release-notes}}, Microsoft Edge\footnote{\url{https://learn.microsoft.com/deployedge/microsoft-edge-relnote-archive-stable-channel}} (including former Internet Explorer\footnote{\url{https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/dev-guides/}}), Mozilla Firefox\footnote{\url{https://www.mozilla.org/en-US/firefox/releases/}}, and Apple Safari\footnote{\url{https://developer.apple.com/documentation/safari-release-notes} \& \url{https://webkit.org/tracking-prevention/}}---since their creation.
+%
+Specifically, we extract tracking defense related features across stable versions of browsers based on the description of changes and apply our defense-specific systematization criteria from~\autoref{tab:systematization-criteria} to each defense technique.
+%
+For each tracking technique and defense technique identified, we also find and associate community-built defenses (if any).
+
+
+\input{appendix/need-for-fp.tex}
+
+
+% \newpage
+\input{tables/appendix-tracking-technique-papers-techniques}
+
+
+% \newpage
+\input{tables/appendix-tracking-techniques-papers-artifacts-capabilities}
+\input{tables/defense-deployment-mechanism-type}
+
+% \newpage
+\input{tables/stateful-tracking-defenses}
+\input{tables/stateless-tracking-defenses}
+
+% \newpage
+\input{tables/defenses-industrial}
+\input{tables/defenses-community}

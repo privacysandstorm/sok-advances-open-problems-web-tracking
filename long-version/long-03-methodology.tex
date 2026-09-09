@@ -1,0 +1,60 @@
+\section{Methodology}
+\label{sec:methodology}
+\label{sec:lit-review}
+\label{sec:systematization}
+
+
+\para{Literature Review.}
+%
+%
+To systematize the evolution of web tracking, we perform a literature search (see~\autoref{fig:methodology}) to identify all relevant papers published at any of the following seven venues---IEEE S\&P, USENIX Security, ACM CCS, NDSS, ACM IMC, PETS, and WWW---since their creation (i.e., from 1980 to 2026\footnote{Only papers available on DBLP (\url{https://dblp.org/db/conf}) by June 1st, 2026 were included. Papers were queried using conference-specific paths, e.g., for PETS, we use `conf/pet' (2000-2014) \& `journals/popets' (2015+).}).
+%
+We obtain a total of 19438 papers that we filter using keywords (see~\refappendix{sec:keywords}) on the title, abstract, or PDF of these publications.
+%
+These keywords were refined over multiple iterations by discussion among two expert authors.
+%
+The resulting list of 768 candidate papers is manually reviewed to further exclude  publications unrelated to web tracking techniques, mitigations, or regulatory compliance (e.g., IoT tracking, advertising use cases).
+
+
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/methodology.pdf}
+    \caption{Overview of our literature search.}% Note that a same paper can be matched along more than one dimension.}
+    \label{fig:methodology}
+\end{figure}
+
+\input{tables/systematization-criteria}
+
+\para{Systematization.}
+%
+The filtering previously described yields a final set of 255 research papers across the following dimensions: 58 tracking techniques and 108 measurements, 65 defenses, and 34 regulatory compliance papers (see~\refappendix{sec:thematic-analysis} for details).
+%
+We systematize the evolution of web tracking along these dimensions by following Clarke and Braun’s thematic analysis~\cite{clarke2013successful} that eliminates the need for inter-rater reliability.
+%
+First, one researcher with expertise in web tracking, reviewed each included paper in detail to evaluate it based on our systematization criteria listed in~\autoref{tab:systematization-criteria}.
+%
+For each criteria, the expert assigned one or more relevant categories based on the provided description.
+%
+Next, the evaluator convened with a second expert to deliberate the assigned categories, resolve any ambiguities, and reach a consensus on the final taxonomy to ensure a high quality of analysis as suggested in Clarke and Braun’s approach.
+%%
+We structure the SoK around this taxonomy and systematize evolution of tracking techniques, defenses, and regulatory compliance, while identifying research gaps and future directions.
+%
+When needed, we use our domain expertise to complement our explanations with other relevant publications or aspects.
+
+
+
+\para{Approach Limitations.}
+We acknowledge the following limitations in our approach and our methodology which some are inherent from any SoK effort.
+%
+\textbf{\textit{Selection Bias.}} We scope our SoK to the seven aforementioned venues where web tracking research has been commonly published, and so, we may have missed other relevant publications.
+%
+\textbf{\textit{Coding Bias.}} As with any qualitative analysis, our systematization is subject to a degree of subjectivity in how papers are evaluated against the criteria in~\autoref{tab:systematization-criteria}.
+We mitigate this following Clarke and Braun's thematic analysis approach~\cite{clarke2013successful} coupled with our domain expertise.
+%
+While this reduces inconsistencies, it is still possible that other researchers may arrive at slightly varying interpretations of the taxonomy.
+%
+\textbf{\textit{Focus on EU and US Regulations.}} We scope our approach to the EU and US contexts because they are the closest to our expertise and their regulations have often been precursors to others around the globe\footnote{See \url{https://cnil.fr/en/data-protection-around-the-world}} (LGPD in Brazil, DPDPA in India, Data Protection Act in the U.K., etc.).
+For a broader exploration of privacy regulations elsewhere and their nuances, we refer readers to the following SoK from Birrell et al. ~\cite{birrellSoKTechnicalImplementation2024}.
+%
+\textbf{\textit{Scope coverage.}} We consider adjacent topics such as advertising out-of-scope. Also, we focus on systematizing high-level advances across literature rather than detailing findings from individual papers.

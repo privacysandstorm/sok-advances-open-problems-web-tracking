@@ -1,0 +1,130 @@
+\documentclass[letterpaper,twocolumn,10pt]{article}
+\usepackage{usenix}
+
+\input{imports}
+
+% turn off anonymous flag as this is the preprint version
+\anonymousfalse{}
+
+%%this is to automatically add the git commit info as "(release git commit) when built by GitHub Actions
+\IfFileExists{version.tex}%
+  {\input{version.tex}}
+  {}
+
+%-------------------------------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------------------------------
+
+%don't want date printed
+\date{}
+
+% make title bold and 14 pt font (Latex default is non-bold, 16 pt)
+\title{\Large \bf SoK: Advances and Open Problems in Web Tracking}
+
+\ifanonymous
+\author{\em Anonymous Authors}
+\else
+\author{
+{\rm Yash Vekaria$^\star$~\ucDavis{}},
+{\rm Yohan Beugin$^\star$~\uwMadison{}},
+{\rm Shaoor Munir~\ucDavis{}},
+{\rm Gunes Acar~\radboud{}},
+{\rm Nataliia Bielova~\inria{}}, \\
+{\rm Steven Englehardt~\independent{}},
+{\rm Umar Iqbal~\washU{}},
+{\rm Alexandros Kapravelos~\ncstate{}},
+{\rm Pierre Laperdrix~\cnrs{}},\\
+{\rm Nick Nikiforakis~\stonybrook{}},
+{\rm Jason Polakis~\uic{}},
+{\rm Franziska Roesner~\uwashington{}},
+{\rm Zubair Shafiq~\ucDavis{}},
+{\rm Sebastian Zimmeck~\wu{}}\\
+%
+\ucDavis{}~\small{University of California, Davis, USA}\hfill{}
+\uwMadison{}~\small{University of Wisconsin–Madison, USA}\hfill{}
+\radboud{}~\small{Radboud University, Netherlands}\\
+\inria{}~\small{Inria Centre at Université Côte d’Azur, France}\hfill{}
+\independent{}~\small{Independent Researcher, USA}\hfill{}
+\washU{}~\small{Washington University in St. Louis, USA}\\
+\ncstate{}~\small{North Carolina State University, USA}\hfill{}
+\cnrs{}~\small{Centre National de la Recherche Scientifique, France}\hfill{}
+\stonybrook{}~\small{Stony Brook University, USA}\\
+\uic{}~\small{University of Illinois Chicago, USA}\hfill{}
+\uwashington{}~\small{University of Washington, USA}\hfill{}
+\wu{}~\small{Wesleyan University, USA}
+% \ucDavis{}~\small{University of California, Davis, USA}\hfill{}
+% \uwMadison{}~\small{University of Wisconsin–Madison, USA}\\
+% \radboud{}~\small{Radboud University, Netherlands}\hfill{}
+% \inria{}~\small{Inria Centre at Université Côte d’Azur, France}\\
+% \independent{}~\small{Independent Researcher, USA}\hfill{}
+% \washU{}~\small{Washington University in St. Louis, USA}\\
+% \ncstate{}~\small{North Carolina State University, USA}\hfill{}
+% \cnrs{}~\small{Centre National de la Recherche Scientifique (CNRS), France}\\
+% \stonybrook{}~\small{Stony Brook University, USA}\hfill{}
+% \uic{}~\small{University of Illinois Chicago, USA}\\
+% \uwashington{}~\small{University of Washington, USA}\hfill{}
+% \wu{}~\small{Wesleyan University, USA}
+}
+\fi
+
+\maketitle
+
+\begingroup\renewcommand\thefootnote{$\star$}
+\footnotetext{Equal contribution.\\ \href{https://github.com/privacysandstorm/sok-advances-open-problems-web-tracking}{This is the extended live version of the SoK built on \today{}
+%%this is to automatically add the git commit info as "(release git commit) when built by GitHub Actions
+\IfFileExists{version.tex}{(release \version{})}{}.
+}
+}
+\endgroup
+
+%-------------------------------------------------------------------------------
+\begin{abstract}
+\input{long-version/long-00-abstract}
+\end{abstract}
+
+\input{long-version/long-01-introduction}
+\input{long-version/long-02-background}
+\input{long-version/long-03-methodology}
+\input{long-version/long-04-tracking-techniques}
+\input{long-version/long-05-tracking-mitigations}
+\input{long-version/long-06-regulations}
+\input{long-version/long-07-discussion}
+\input{long-version/long-08-conclusion}
+
+%-------------------------------------------------------------------------------
+% \section*{Acknowledgments}
+%-------------------------------------------------------------------------------
+
+\ifanonymous
+% Anonymized for review.
+\else
+\section*{Acknowledgments}
+\input{acknowledgment}
+\fi
+
+%-------------------------------------------------------------------------------
+% optional clearing of the page
+% \cleardoublepage
+\appendix
+\section*{Ethical Considerations}
+% \textbf{Papers in-scope for USENIX Security frequently, if not always, have both ethical considerations and implications that should be addressed prior to conducting research. We strongly encourage that you use this appendix, up to one page, to explain the ethical considerations of your work.}
+\input{appendix/ethics}
+
+% optional clearing of the page
+% \cleardoublepage
+
+\section*{Open Science}
+% \textbf{Within up to one page, this appendix must list all artifacts necessary to evaluate the contribution of the paper and make clear how the review committees can access each artifact. See the Call for Papers for details.}
+\input{appendix/open-science}
+
+% optional clearing of the page
+% \cleardoublepage
+
+\bibliographystyle{custom-style}%plainurl
+\bibliography{refs}
+
+% \appendix
+% \cleardoublepage
+\input{long-version/long-appendix}
+
+\end{document}
