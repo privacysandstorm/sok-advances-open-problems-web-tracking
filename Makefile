@@ -15,7 +15,7 @@ all: main-arxiv.pdf main-usenix.pdf main-long-version.pdf arxiv-submit-files.tar
 clean:
 	latexmk -pdf -C
 
-main-arxiv.pdf, main-arxiv.bbl:
+main-arxiv.pdf main-arxiv.bbl:
 	latexmk -pdflatex='pdflatex -interaction nonstopmode' -bibtex -pdf main-arxiv.tex
 
 main-usenix.pdf:
