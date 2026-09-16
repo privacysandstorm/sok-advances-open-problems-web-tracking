@@ -13,7 +13,7 @@ jobs:
       - name: Build docker image
         run: docker build -t latex-local-setup .devcontainer/
       - name: Build
-        run: docker run --user root --rm -v ${PWD}:/workspace -w /workspace latex-local-setup -c "git config --global --add safe.directory /workspace && make main-long-version.pdf"
+        run: docker run --user root --rm -v ${PWD}:/workspace -w /workspace latex-local-setup -c "git config --global --add safe.directory /workspace && make main-long-version.pdf main-arxiv.pdf arxiv-submit-files.tar.gz"
       - id: release
         uses: ncipollo/release-action@v1.21.0
         with:
@@ -21,5 +21,4 @@ jobs:
           name: Release ${{ github.sha }}
           draft: false
           prerelease: false
-          artifacts: main-long-version.pdf
-          artifactContentType: application/pdf
+          artifacts: "main-long-version.pdf,main-arxiv.pdf,arxiv-submit-files.tar.gz"
